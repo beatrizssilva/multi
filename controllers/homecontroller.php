@@ -6,7 +6,8 @@ class homecontroller extends controller {
     $u = new usuarios();
     
     if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
-        
+        $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], 2);
+        $dados['listaUsuarios'] = $this->exibirFilhos($dados['filhos']);
         $this->loadTemplate('home', $dados);
         } else if(isset($_POST['email']) && !empty ($_POST['email'])) {
             $email = addslashes($_POST['email']);
@@ -15,6 +16,8 @@ class homecontroller extends controller {
                     $dados['user'] = $u->getUser($email, $senha);
                     $_SESSION['multLoginName'] = $dados['user']['name'];
                     $_SESSION['multLogin'] = $dados['user']['id'];
+                    $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], 2);
+                    $dados['listaUsuarios'] = $this->exibirFilhos($dados['filhos']);
                     $this->loadTemplate('home', $dados);
                   
                 } else {
@@ -27,6 +30,17 @@ class homecontroller extends controller {
             }
     }
     
-   
+    public function exibirFilhos($array){
+        echo '<ul>';
+        foreach ($array as $usuario){
+            echo '<li>';
+            echo $usuario['name'].' ('.count($usuario['filhos']).')';
+            if(count($usuario['filhos']) > 0) {
+                $this->exibirFilhos($usuario['filhos']);
+            }
+            echo '</li>';
+        }
+        echo '</ul>';
+    }
 }
 

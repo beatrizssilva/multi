@@ -44,4 +44,26 @@ class usuarios extends model {
         $sql->execute();
     }
     
+    public function getFilhos($id, $limite) {
+        $array = array();
+
+        $sql = "SELECT * FROM user WHERE id_dad = :id_dad";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue("id_dad", $id);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+            foreach($array as $chave => $usuario){
+                $array[$chave]['filhos'] = array();
+                if($limite > 0){
+                    
+                    $array[$chave]['filhos'] = $this->getFilhos($usuario['id'], $limite - 1);
+                }
+            }
+        }
+        return $array;
+    }
+    
+    
 }

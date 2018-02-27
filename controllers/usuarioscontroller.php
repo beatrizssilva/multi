@@ -24,6 +24,8 @@ class usuarioscontroller extends controller {
             $this->loadTemplate('home', $dados);
         }
     }
+    
+
    
 }
 
