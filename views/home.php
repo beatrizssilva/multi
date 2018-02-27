@@ -1,0 +1,21 @@
+<h2>HOME</h2>
+<h4>Olá <?php echo $_SESSION['multLoginName'].' ID: '.$_SESSION['multLogin'];?></h4>
+<br/><br/>
+<h3>Cadastrar Novo Usuário</h3>
+
+<form method="POST" action="<?php echo BASE_URL;?>usuarios/cadastrar">
+    <label>Nome:</label>
+    <input type="text" name="nome" /><br/><br/>
+    
+    <label>Email:</label>
+    <input type="email" name="email" /><br/><br/>
+    
+    <input type="submit" value="Cadastrar" />
+        
+</form><br/>
+<?php if(isset($msg)){
+    echo $msg;
+}
+?>
+<br/><br/>
+<a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a>
