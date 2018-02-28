@@ -17,11 +17,12 @@ class usuarioscontroller extends controller {
             $email = addslashes($_POST['email']);
             $nome = addslashes($_POST['nome']);
             $u->setNewUser($email, $nome);
+            $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], 2);
             $dados['msg'] = "Cadastro Realizado com Sucesso.";
-            $this->loadTemplate('home', $dados);
+            $this->loadTemplate('painel', $dados);
         } else {
             $dados['msg'] = "Preencha todos os campos.";
-            $this->loadTemplate('home', $dados);
+            $this->loadTemplate('login', $dados);
         }
     }
     
