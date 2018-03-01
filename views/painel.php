@@ -1,5 +1,5 @@
 
-<h4>Olá <?php echo $_SESSION['multLoginName'].' ID: '.$_SESSION['multLogin'];?></h4>
+<h4>Olá <?php echo $dadosUser['name'].' ('.utf8_encode($dadosUser['patente']).') ID: '.$dadosUser['id'];?></h4>
 <br/><br/>
 <h3>Cadastrar Novo Usuário</h3>
 
@@ -34,4 +34,5 @@
 
 <h4>Não há Usuários Cadastrados</h4>
 <?php endif; ?>
-<a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a>
+<a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a><br/><br/>
+<a href="<?php echo BASE_URL;?>usuarios/patentes">Patentes</a>
