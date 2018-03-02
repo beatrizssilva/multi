@@ -1,5 +1,5 @@
 
-<h4>Olá <?php echo $dadosUser['name'].' ('.utf8_encode($dadosUser['patente']).') ID: '.$dadosUser['id'];?></h4>
+<h4>Olá <?php echo $dadosUser['name'].' ('.utf8_encode($dadosUser['patente']).')  você tem '.count($filhos).' cadastros diretos';?></h4>
 <br/><br/>
 <h3>Cadastrar Novo Usuário</h3>
 
@@ -35,4 +35,5 @@
 <h4>Não há Usuários Cadastrados</h4>
 <?php endif; ?>
 <a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a><br/><br/>
-<a href="<?php echo BASE_URL;?>usuarios/patentes">Patentes</a>
+<a href="<?php echo BASE_URL;?>atualizar/patentes">Atualizar Patentes</a><br/>
+<a href="<?php echo BASE_URL;?>teste/arvore">Arvore</a>

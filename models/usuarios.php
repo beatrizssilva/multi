@@ -1,11 +1,11 @@
 <?php
 class usuarios extends model {
 
-    public function verifyUser($email, $senha){
+    public function verifyUser($name, $senha){
        
-        $sql = "SELECT * FROM user WHERE email = :email AND pass = :pass";
+        $sql = "SELECT * FROM user WHERE name = :name AND pass = :pass";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("email", $email);
+        $sql->bindValue("name", $name);
         $sql->bindValue("pass", MD5($senha));
         $sql->execute();
 
@@ -32,12 +32,12 @@ class usuarios extends model {
     }
 
 
-    public function getUser($email, $senha){
+    public function getUser($name, $senha){
         $array = array();
 
-        $sql = "SELECT * FROM user WHERE email = :email AND pass = :pass";
+        $sql = "SELECT * FROM user WHERE name = :name AND pass = :pass";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("email", $email);
+        $sql->bindValue("name", $name);
         $sql->bindValue("pass", MD5($senha));
         $sql->execute();
 
@@ -80,6 +80,45 @@ class usuarios extends model {
         return $array;
     }
     
+    public function patente() {
+        global $config;
+        $sql = "SELECT id FROM user";
+        $sql = $this->db->query($sql);
+        $usuarios = array();
+
+        if($sql->rowCount() > 0) {
+            $usuarios = $sql->fetchAll();
+            foreach($usuarios as $chave => $usuario) {
+		$usuarios[$chave]['filhos'] = $this->calcularPatente($usuario['id'], $config['limit']);
+                
+            }
+
+        }
+        $sql = "SELECT * FROM patent ORDER BY min DESC";
+        $sql = $this->db->query($sql);
+        $patentes = array();
+        if($sql->rowCount() > 0) {
+                $patentes = $sql->fetchAll();
+        }
+
+    foreach($usuarios as $usuario) {
+
+	foreach($patentes as $patente) {
+		if(intval($usuario['filhos']) >= intval($patente['min'])) {
+
+			$sql = "UPDATE user SET patent = :patente WHERE id = :id";
+			$sql = $this->db->prepare($sql);
+			$sql->bindValue(":patente", $patente['id']);
+			$sql->bindValue(":id", $usuario['id']);
+			$sql->execute();
+
+			break;
+		}
+            }
+    }
+        return $usuarios;
+    }
+
     public function calcularPatente($id, $limite) {
 	$lista = array();
 	

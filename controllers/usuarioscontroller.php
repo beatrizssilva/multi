@@ -20,6 +20,7 @@ class usuarioscontroller extends controller {
             $u->setNewUser($email, $nome);
             $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
             $dados['msg'] = "Cadastro Realizado com Sucesso.";
+            $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
             $this->loadTemplate('painel', $dados);
         } else {
             $dados['msg'] = "Preencha todos os campos.";
@@ -31,7 +32,7 @@ class usuarioscontroller extends controller {
         global $config;
         $dados = array();
         $u = new usuarios();
-        $dados['patente'] = $u->calcularPatente($_SESSION['multLogin'], $config['limit']);
+        $dados['patente'] = $u->patente();
         $this->loadTemplate('teste', $dados);
     }
    

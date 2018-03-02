@@ -12,11 +12,11 @@ class homecontroller extends controller {
         $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
         $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
         $this->loadTemplate('painel', $dados);
-        } else if(isset($_POST['email']) && !empty ($_POST['email'])) {
-            $email = addslashes($_POST['email']);
+        } else if(isset($_POST['name']) && !empty ($_POST['name'])) {
+            $name = addslashes($_POST['name']);
             $senha = addslashes($_POST['senha']);
-                if($u->verifyUser($email, $senha)) {
-                    $dados['user'] = $u->getUser($email, $senha);
+                if($u->verifyUser($name, $senha)) {
+                    $dados['user'] = $u->getUser($name, $senha);
                     $_SESSION['multLoginName'] = $dados['user']['name'];
                     $_SESSION['multLogin'] = $dados['user']['id'];
                     $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
