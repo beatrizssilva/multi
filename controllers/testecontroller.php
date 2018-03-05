@@ -7,7 +7,8 @@ class testecontroller extends controller {
         $id = $_SESSION['multLogin'];
         $dados = array();
         $a = new arvore();
-        $dados['arvore'] = $a->getList();
+//        $dados['arvore'] = $a->getList();
+        $dados['arvore'] = $a->filhosPatentes($id, $config['limit']);
         $this->loadTemplate('teste', $dados);
     }
 }

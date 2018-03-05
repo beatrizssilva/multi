@@ -26,7 +26,7 @@ class arvore extends model {
         $filho = true;
         //enquanto $filho for true ($filho = se existe subcategoria)
         while($filho) {
-            $sql = "SELECT * FROM categorias WHERE id = :id";
+            $sql = "SELECT * FROM categorias WHERE id = :id AND ativo = 1";
             $sql = $this->db->prepare($sql);
             $sql->bindValue(":id", $id);
             $sql->execute();
@@ -67,4 +67,42 @@ class arvore extends model {
      }
      return false;
     }
+    
+    public function filhosPatentes($id, $limite){
+        $array = array();
+        
+        $sql = "SELECT patent FROM user WHERE id = :id";
+        $sql= $this->db->prepare($sql);
+        $sql->bindValue("id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0){
+            $pat = $sql->fetch(PDO::FETCH_ASSOC);
+            $patent = intval($pat['patent']);
+        }
+        
+        $sql = "SELECT *, (select patent.name from patent where patent.id = user.patent)as patente FROM user WHERE id_dad = :id_dad AND ativo = 1 AND patent <= :patent";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue("id_dad", $id);
+        $sql->bindValue("patent", $patent);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $array['qtde'] = $sql->rowCount();
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+            
+            foreach($array as $chave => $usuario){
+                $array[$chave]['filhos'] = array();
+                 
+                if($limite > 0){
+                    
+                    $array[$chave]['filhos'] = $this->filhosPatentes($usuario['id'], $limite - 1);
+                    
+                }
+            }
+           
+        }
+        return $array;
+    }
+    
 }

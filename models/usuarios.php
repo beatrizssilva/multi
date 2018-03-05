@@ -88,11 +88,11 @@ class usuarios extends model {
 
         if($sql->rowCount() > 0) {
             $usuarios = $sql->fetchAll();
+            
             foreach($usuarios as $chave => $usuario) {
 		$usuarios[$chave]['filhos'] = $this->calcularPatente($usuario['id'], $config['limit']);
-                
             }
-
+           
         }
         $sql = "SELECT * FROM patent ORDER BY min DESC";
         $sql = $this->db->query($sql);
@@ -103,18 +103,30 @@ class usuarios extends model {
 
     foreach($usuarios as $usuario) {
 
-	foreach($patentes as $patente) {
-		if(intval($usuario['filhos']) >= intval($patente['min'])) {
-
-			$sql = "UPDATE user SET patent = :patente WHERE id = :id";
-			$sql = $this->db->prepare($sql);
-			$sql->bindValue(":patente", $patente['id']);
-			$sql->bindValue(":id", $usuario['id']);
-			$sql->execute();
-
-			break;
-		}
+//	foreach($patentes as $patente) {
+		if(intval($usuario['filhos']) >= 18) {
+                  $patent = 7;      
+				
+//		}
+            } else if(intval($usuario['filhos']) >= 15) {
+                $patent = 6;
+            } else if(intval($usuario['filhos']) >= 12) {
+                $patent = 5;
+            } else if(intval($usuario['filhos']) >= 9) {
+                $patent = 4;
+            } else if(intval($usuario['filhos']) >= 6) {
+                $patent = 3;
+            } else if(intval($usuario['filhos']) >= 3) {
+                $patent = 2;
+            } else {
+                $patent = 1;
             }
+                
+            $sql = "UPDATE user SET patent = :patente WHERE id = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":patente", $patent);
+            $sql->bindValue(":id", $usuario['id']);
+            $sql->execute();
     }
         return $usuarios;
     }
@@ -123,7 +135,7 @@ class usuarios extends model {
 	$lista = array();
 	
 
-	$sql = "SELECT * FROM user WHERE id_dad = :id";
+	$sql = "SELECT * FROM user WHERE id_dad = :id AND ativo = 1";
         $sql = $this->db->prepare($sql);
 	$sql->bindValue(":id", $id);
 	$sql->execute();
@@ -140,7 +152,7 @@ class usuarios extends model {
 			}
 		}
 	}
-
+        
 	return $filhos;
     }
 }

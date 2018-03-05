@@ -7,7 +7,7 @@ class atualizarcontroller extends controller {
         $dados = array();
         $u = new usuarios();
         $dados['patente'] = $u->patente();
-        
+        header("Location: ".BASE_URL);
     }
 }
 
