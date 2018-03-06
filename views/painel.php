@@ -1,5 +1,5 @@
 
-<h4>Olá <?php echo $dadosUser['name'].' ('.utf8_encode($dadosUser['patente']).')  você tem '.count($filhos).' cadastros diretos';?></h4>
+<h4>Olá <?php echo $dadosUser['name'].' (<strong>'.utf8_encode($dadosUser['patente']).'</strong>)  você tem '.count($filhos).' cadastros diretos';?></h4>
 <br/><br/>
 <h3>Cadastrar Novo Usuário</h3>
 
