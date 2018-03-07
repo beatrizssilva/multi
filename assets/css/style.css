@@ -6,3 +6,17 @@ header{
     text-align: center;
     margin-bottom: 50px;
 }
+.painel {
+    display: flex;
+    justify-content: center;
+    
+}
+.painel div{
+    padding-right: 100px;
+    padding-left: 100px;
+}
+.corpo {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 80px;
+}

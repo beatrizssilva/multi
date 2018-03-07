@@ -5,12 +5,16 @@ class homecontroller extends controller {
   
     
     public function index() {
+    global $config;
+    
     $dados = array();
     $u = new usuarios();
-    global $config;
+    $c = new comissao();
+    
     if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
         $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
         $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
+        $dados['comissao'] = $c->comissao_ativos($_SESSION['multLogin'], $config['limit']);
         $this->loadTemplate('painel', $dados);
         } else if(isset($_POST['name']) && !empty ($_POST['name'])) {
             $name = addslashes($_POST['name']);
@@ -21,7 +25,9 @@ class homecontroller extends controller {
                     $_SESSION['multLogin'] = $dados['user']['id'];
                     $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
                     $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
+                    $dados['comissao'] = $c->comissao_ativos($_SESSION['multLogin'], $config['limit']);
                     $this->loadTemplate('painel', $dados);
+                    
                   
                 } else {
                     $dados['msg'] = "E-mail ou Senha Incorretos. Tente Novamente.";

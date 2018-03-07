@@ -2,16 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/xampp/htdocs/multi/views/painel.php</file>
-            <file>file:/C:/xampp/htdocs/multi/models/patentes.php</file>
-            <file>file:/C:/xampp/htdocs/multi/controllers/homecontroller.php</file>
-            <file>file:/C:/xampp/htdocs/multi/views/filhos.php</file>
-            <file>file:/C:/xampp/htdocs/multi/controllers/atualizarcontroller.php</file>
-            <file>file:/C:/xampp/htdocs/multi/views/teste.php</file>
-            <file>file:/C:/xampp/htdocs/multi/models/arvore.php</file>
-            <file>file:/C:/xampp/htdocs/multi/models/usuarios.php</file>
-            <file>file:/C:/xampp/htdocs/multi/controllers/testecontroller.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
