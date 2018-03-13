@@ -59,12 +59,13 @@ echo ' (<strong>'.utf8_encode($dadosUser['patente']).'</strong>)  você tem '.co
         <?php endif; ?>
     </div>
     <div>
-        <?php if (isset($comissao['total']) && !empty($comissao['total'])):?>
-        <span>Total de Comissões por Ativação: <?php $total = intval($comissao['total'])*8;
-        echo 'R$ '.number_format($total, 2, ',', '.');?></span>
+        <?php if (isset($comissao) && !empty($comissao)):?>
+        <span>Total de Comissões por Ativação: <?php 
+        echo 'R$ '.number_format($comissao, 2, ',', '.');?></span><br/><br/>
+        <button><a href="<?php echo BASE_URL;?>teste/comissao_ativo">Atualizar Comissao</a></button><br/><br/>
         <?php else: ?>
         Comissao 
-        <button><a href="<?php echo BASE_URL;?>">Calcular Comissao</a></button><br/><br/>
+        <button><a href="<?php echo BASE_URL;?>teste/comissao_ativo">Calcular Comissao</a></button><br/><br/>
         <?php endif; ?>
     </div>
 </div>

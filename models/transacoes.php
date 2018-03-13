@@ -27,6 +27,44 @@ class transacoes extends model {
         $sql->bindValue(":id", $id);
         $sql->execute();
         
+        $sql = "SELECT id_dad FROM user WHERE id = :id";
+        $sql = $this->db->prepare($sql);        
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        $id_dad = 0;
+        
+        if($sql->rowCount() > 0) {
+            $id_dad = $sql->fetch(PDO::FETCH_ASSOC);
+            
+            $sql = "SELECT * FROM comissoes WHERE id_user = :id";
+            $sql = $this->db->prepare($sql);        
+            $sql->bindValue(":id", $id_dad['id_dad']);
+            $sql->execute();
+            
+            if($sql->rowCount() > 0) {
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+                $qtde += intval($array['qtde']);
+                $valor = $qtde*8;
+                $sql = "UPDATE comissoes SET qtde = :qtde, valor = :valor";
+                $sql = $this->db->prepare($sql);  
+                $sql->bindValue(":qtde", $qtde);
+                $sql->bindValue(":valor", floatval($valor));
+                $sql->execute();  
+            }else{
+           
+                $mes = date("m");
+                $valor = $qtde*8;
+                $sql = "INSERT INTO comissoes SET id_user = :id_dad, qtde = :qtde, mes  = :mes, valor = :valor";
+                $sql = $this->db->prepare($sql);        
+                $sql->bindValue(":id_dad", $id_dad['id_dad']);
+                $sql->bindValue(":qtde", $qtde);
+                $sql->bindValue(":mes", $mes);
+                $sql->bindValue(":valor", floatval($valor));
+                $sql->execute();
+            }
+        }
+        
         return $pedido;
     }
 }

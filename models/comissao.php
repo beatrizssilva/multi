@@ -1,32 +1,36 @@
 <?php
 class comissao extends model {
-    
-    public function comissao_ativos($id, $limite){
+  
+    public function calcularComissao($id, $limite){
         $array = array();
-
-        $sql = "SELECT *, (select sum(transacoes.qtde) from transacoes where transacoes.id_user = user.id)as qtde FROM user WHERE id_dad = :id_dad";
+        
+              
+        $sql = "SELECT *, (select sum(transacoes.qtde) from transacoes where transacoes.id_user = user.id) as compras FROM user WHERE id_dad = :id_dad AND ativo = 1 ORDER BY id DESC";
         $sql = $this->db->prepare($sql);
         $sql->bindValue("id_dad", $id);
         $sql->execute();
-        $total= 0;
+        $array['total'] = 0;
         if($sql->rowCount() > 0) {
+            $array['qtde'] = $sql->rowCount();
             $array = $sql->fetchAll(PDO::FETCH_ASSOC);
-           
-            
+            $total = 0;
+            foreach ($array as $user){
+                $total += $user['compras'];
+            }
             foreach($array as $chave => $usuario){
-                $total += $array[$chave]['qtde'];
                 $array[$chave]['filhos'] = array();
+                
                 if($limite > 0){
                     
-                    $array[$chave]['filhos'] = $this->comissao_ativos($usuario['id'], $limite - 1);
-                    $total += $array[$chave]['qtde'];
+                    $array[$chave]['filhos'] = $this->calcularComissao($usuario['id'], $limite - 1);
+                    
                 }
-                
             }
-          
+           
         }
-           $array['total'] = $total;
+               
         return $array;
-
     }
+
+    
 }

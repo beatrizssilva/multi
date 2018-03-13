@@ -14,13 +14,14 @@ class patentes extends model {
         
         $sql = "SELECT id, name FROM user ORDER BY id DESC";
         $sql = $this->db->query($sql);
+        
         $usuarios = array();
        
         if($sql->rowCount() > 0) {
             $usuarios = $sql->fetchAll();
             
             foreach($usuarios as $chave => $usuario) {
-		$usuarios[$chave]['consumidor'] = $this->calcularFilhosTotal($usuario['id'], $config['limit']);
+		$usuarios[$chave]['consumidores'] = $this->calcularFilhosTotal($usuario['id'], $config['limit']);
                 $usuarios[$chave]['consumidorJunior'] = $this->calcularFilhosJunior($usuario['id']);
                 $usuarios[$chave]['consumidorBronze'] = $this->calcularFilhosBronze($usuario['id']);
                 $usuarios[$chave]['consumidorPrata'] = $this->calcularFilhosPrata($usuario['id']);
@@ -29,28 +30,32 @@ class patentes extends model {
                 $usuarios[$chave]['consumidorDiamante'] = $this->calcularFilhosDiamante($usuario['id']);
                 $usuarios[$chave]['consumidorDuploDiamante'] = $this->calcularFilhosDuploDiamante($usuario['id']);
                 
-            if(intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorDiamante']) >= 3
-                 || intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorDuploDiamante']) >= 1){
+//                echo '<pre>';
+//                print_r($usuarios);
+//                exit();
+                
+            if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorDiamante']) >= 3
+                 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorDuploDiamante']) >= 1){
             
                 $patent = $patentes[6]['id'];//duplo-diamante  
                 
-            } else if(intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorRubi']) >= 3 || intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorDiamante']) >= 1){
+            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorRubi']) >= 3 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorDiamante']) >= 1){
             
                 $patent = $patentes[5]['id'];//diamante
                 
-            } else if(intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorOuro']) >= 3 || intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorRubi']) >= 1){
+            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorOuro']) >= 3 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorRubi']) >= 1){
             
                 $patent = $patentes[4]['id'];//rubi
                 
-            } else if(intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorPrata']) >= 3 || intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorOuro']) >= 1){
+            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorPrata']) >= 3 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorOuro']) >= 1){
                 
                 $patent = $patentes[3]['id'];//ouro
                 
-            } else if(intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorBronze']) >= 3 || intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorPrata']) >= 1){
+            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorBronze']) >= 3 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorPrata']) >= 1){
                 
                 $patent = $patentes[2]['id'];//prata
                 
-            } else if(intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorJunior']) >= 1 || intval($usuarios[$chave]['consumidor']) >= 3 && intval($usuarios[$chave]['consumidorBronze']) >= 1){
+            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorJunior']) >= 1 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorBronze']) >= 1){
                 
                 $patent = $patentes[1]['id'];//bronze
                 
@@ -67,46 +72,11 @@ class patentes extends model {
             $sql->execute();
     
             }
-//            echo '<pre>';
-//            print_r($usuarios);
-//            exit();
         }
-//        $sql = "SELECT * FROM patent ORDER BY min DESC";
-//        $sql = $this->db->query($sql);
-//        $patentes = array();
-//        if($sql->rowCount() > 0) {
-//                $patentes = $sql->fetchAll();
-//        }
 
-//    foreach($usuarios as $usuario) {
-
-//	foreach($patentes as $patente) {
-//		if(intval($usuario['consumidor']) >= 18 && intval($usuario['consumidorJunior']) >= 18) {
-//                  $patent = 7;      
-//				
-////		}
-//            } else if(intval($usuario['consumidor']) >= 15 && intval($usuario['consumidorJunior']) >= 18) {
-//                $patent = 6;
-//            } else if(intval($usuario['consumidor']) >= 12 && intval($usuario['consumidorJunior']) >= 18) {
-//                $patent = 5;
-//            } else if(intval($usuario['consumidor']) >= 9 && intval($usuario['consumidorJunior']) >= 18) {
-//                $patent = 4;
-//            } else if(intval($usuario['consumidor']) >= 3 && intval($usuario['consumidorBronze']) >= 3) {
-//                $patent = 3;
-//            } else if(intval($usuario['consumidor']) >= 3 && intval($usuario['consumidorJunior']) >= 1
-//                    || intval($usuario['consumidor']) >= 3 && intval($usuario['consumidorBronze']) >= 1){
-//                $patent = 2;
-//                
-//            } else {
-//                $patent = 1;
-//            }
-//                
-//            $sql = "UPDATE user SET patent = :patente WHERE id = :id";
-//            $sql = $this->db->prepare($sql);
-//            $sql->bindValue(":patente", $patent);
-//            $sql->bindValue(":id", $usuario['id']);
-//            $sql->execute();
-//    }
+        echo '<pre>';
+                print_r($usuarios);
+                exit();
         return $usuarios;
     }
 

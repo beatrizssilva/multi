@@ -17,8 +17,26 @@ class testecontroller extends controller {
         $id = $_SESSION['multLogin'];
         $dados = array();
         $c = new comissao();
-//        $dados['arvore'] = $a->getList();
-        $dados['comissao'] = $c->comissao_ativos($id, $config['limit']);
+        $dados['comissao'] = $c->calcularComissao($id, $config['limit']);
+        $total = 0;
+        
+        foreach ($dados['comissao'] as $usuario){ 
+             echo '<pre>';
+        echo $usuario['name'].': '.$usuario['compras'];
+        $total += $usuario['compras'];
+        echo '<br/>';
+             if(count($usuario['filhos']) > 0) {
+                 foreach ($usuario['filhos'] as $filho){ 
+                echo $filho['name'].': '.$filho['compras'];   
+                $total += $filho['compras'];
+                echo '<br/>';
+                 }
+            }        
+         }
+         $dados['totalVendas'] = $total;
+         echo '<pre>';
+        print_r($dados['totalVendas']);
+        exit();
         $this->loadTemplate('comissao', $dados);
     }
 }

@@ -8,7 +8,7 @@ class arvore extends model {
         $sql = $this->db->query($sql);
         
         if($sql->rowCount() > 0) {
-            foreach($sql->fetchAll() as $item) {//para criar um campo no array de nome subs e inclir os valores
+            foreach($sql->fetchAll() as $item) {//para criar um campo no array de nome subs e incluir os valores
                 $item['subs'] = array();
                 $array[$item['id']] = $item;
             }

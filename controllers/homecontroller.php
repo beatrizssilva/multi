@@ -14,7 +14,7 @@ class homecontroller extends controller {
     if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
         $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
         $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
-        $dados['comissao'] = $c->comissao_ativos($_SESSION['multLogin'], $config['limit']);
+//        $dados['comissao'] = $c->calcularComissao($_SESSION['multLogin'], $config['limit']);
         $this->loadTemplate('painel', $dados);
         } else if(isset($_POST['name']) && !empty ($_POST['name'])) {
             $name = addslashes($_POST['name']);
@@ -25,7 +25,7 @@ class homecontroller extends controller {
                     $_SESSION['multLogin'] = $dados['user']['id'];
                     $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
                     $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
-                    $dados['comissao'] = $c->comissao_ativos($_SESSION['multLogin'], $config['limit']);
+//                    $dados['comissao'] = $c->calcularComissao($_SESSION['multLogin'], $config['limit']);
                     $this->loadTemplate('painel', $dados);
                     
                   
