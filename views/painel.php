@@ -59,16 +59,23 @@ echo ' (<strong>'.utf8_encode($dadosUser['patente']).'</strong>)  você tem '.co
         <?php endif; ?>
     </div>
     <div>
-        <?php if (isset($comissao) && !empty($comissao)):?>
-        <span>Total de Comissões por Ativação: <?php 
-        echo 'R$ '.number_format($comissao, 2, ',', '.');?></span><br/><br/>
-        <button><a href="<?php echo BASE_URL;?>teste/comissao_ativo">Atualizar Comissao</a></button><br/><br/>
+        <?php if (isset($kits_vendidos) && !empty($kits_vendidos)):
+            $valor = $kits_vendidos['venda'] * 8;
+            $pontos = $kits_vendidos['venda'] * 220;
+            $comissao = ($pontos*3)/100;
+            ?>
+        <span><p>Foram vendidos <?php echo $kits_vendidos['venda'];?> Kits.</p> 
+            <p>Comissões por Venda: <?php echo 'R$ '.number_format($valor, 2, ',', '.');?></p>
+            <p>Pontos Acumulados no Mês: <?php echo $pontos; ?> Pontos.</p>
+            <p>Comissão: <?php echo 'R$ '.number_format($comissao, 2, ',', '.');?></p>
+        </span><br/><br/>
+        <button><a href="<?php echo BASE_URL;?>">Atualizar Comissao</a></button><br/><br/>
         <?php else: ?>
         Comissao 
-        <button><a href="<?php echo BASE_URL;?>teste/comissao_ativo">Calcular Comissao</a></button><br/><br/>
+        <button><a href="<?php echo BASE_URL;?>">Calcular Comissao</a></button><br/><br/>
         <?php endif; ?>
     </div>
 </div>
 <a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a><br/><br/>
 <a href="<?php echo BASE_URL;?>atualizar/patentes">Atualizar Patentes</a><br/>
-<a href="<?php echo BASE_URL;?>teste/arvore">Arvore</a>
+<a href="<?php echo BASE_URL;?>teste/arvore">Arvore</a><br/>

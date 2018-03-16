@@ -22,14 +22,35 @@ class testecontroller extends controller {
         
         foreach ($dados['comissao'] as $usuario){ 
              echo '<pre>';
-        echo $usuario['name'].': '.$usuario['compras'];
+        echo '-'.$usuario['name'].': '.$usuario['compras'];
         $total += $usuario['compras'];
         echo '<br/>';
              if(count($usuario['filhos']) > 0) {
                  foreach ($usuario['filhos'] as $filho){ 
-                echo $filho['name'].': '.$filho['compras'];   
-                $total += $filho['compras'];
+                echo '--'.$filho['name'].': '.$filho['compras'];   
+                    $total += $filho['compras'];
                 echo '<br/>';
+                    if(count($filho['filhos']) > 0) {
+                        foreach ($filho['filhos'] as $filho){ 
+                        echo '---'.$filho['name'].': '.$filho['compras'];   
+                            $total += $filho['compras'];
+                        echo '<br/>';
+                            if(count($filho['filhos']) > 0) {
+                                foreach ($filho['filhos'] as $filho){ 
+                                echo '----'.$filho['name'].': '.$filho['compras'];   
+                                    $total += $filho['compras'];
+                                echo '<br/>';
+                                    if(count($filho['filhos']) > 0) {
+                                        foreach ($filho['filhos'] as $filho){ 
+                                        echo '-----'.$filho['name'].': '.$filho['compras'];   
+                                            $total += $filho['compras'];
+                                        echo '<br/>';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                   }
                  }
             }        
          }
@@ -39,5 +60,7 @@ class testecontroller extends controller {
         exit();
         $this->loadTemplate('comissao', $dados);
     }
+  
+	
 }
 
