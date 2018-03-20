@@ -14,7 +14,8 @@ class homecontroller extends controller {
     if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
         $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
         $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
-        $dados['kits_vendidos'] = $this->comissao_ativo();
+        $dados['kits_vendidos'] = $this->comissaoAtivos();
+        $dados['total_pontos'] = $this->contagemPontosTotal();
         $this->loadTemplate('painel', $dados);
         } else if(isset($_POST['name']) && !empty ($_POST['name'])) {
             $name = addslashes($_POST['name']);
@@ -25,7 +26,8 @@ class homecontroller extends controller {
                     $_SESSION['multLogin'] = $dados['user']['id'];
                     $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
                     $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
-                    $dados['kits_vendidos'] = $this->comissao_ativo();
+                    $dados['kits_vendidos'] = $this->comissaoAtivos();
+                    $dados['total_pontos'] = $this->contagemPontosTotal();
                     $this->loadTemplate('painel', $dados);
                     
                   
@@ -39,51 +41,77 @@ class homecontroller extends controller {
             }
     }
     
-    public function comissao_ativo(){
+    public function comissaoAtivos(){
         global $config;
+        $id = $_SESSION['multLogin'];
         $dados = array();
         $c = new comissao();
-        $dados['comissao'] = $c->calcularComissao($_SESSION['multLogin'], $config['limit']);
-        $total = array();
-         $total['venda'] = 0;
+        $dados['comissao'] = $c->calcularComissao($id, $config['limit']);
+        $total = 0;
+        
         foreach ($dados['comissao'] as $usuario){ 
-//             echo '<pre>';
-//        echo '-'.$usuario['name'].': '.$usuario['compras'];
-        $total['venda'] += $usuario['compras'];
-//        echo '<br/>';
-             if(count($usuario['filhos']) > 0) {
-                 foreach ($usuario['filhos'] as $filho){ 
-//                echo '--'.$filho['name'].': '.$filho['compras'];   
-                    $total['venda'] += $filho['compras'];
-//                echo '<br/>';
-                    if(count($filho['filhos']) > 0) {
-                        foreach ($filho['filhos'] as $filho){ 
-//                        echo '---'.$filho['name'].': '.$filho['compras'];   
-                            $total['venda'] += $filho['compras'];
-//                        echo '<br/>';
-                            if(count($filho['filhos']) > 0) {
-                                foreach ($filho['filhos'] as $filho){ 
-//                                echo '----'.$filho['name'].': '.$filho['compras'];   
-                                    $total['venda'] += $filho['compras'];
-//                                echo '<br/>';
-                                    if(count($filho['filhos']) > 0) {
-                                        foreach ($filho['filhos'] as $filho){ 
-//                                        echo '-----'.$filho['name'].': '.$filho['compras'];   
-                                            $total['venda'] += $filho['compras'];
-//                                        echo '<br/>';
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                   }
-                 }
-            }        
-         }
+//            echo $usuario['name'].': '.$usuario['compras'].'<br/>';
+            $total += $usuario['compras'];
+
+            if(count($usuario['filhos']) > 0) {
+                foreach ($usuario['filhos'] as $filhos){
+//                    echo $filhos['name'].': '.$filhos['compras'].'<br/>';
+                    $total += $filhos['compras'];
+                    $dados['pontos'] = $this->calcularComprasFilhos($filhos, $total);
+                }
+            }
+                
+        }
          
          return $total;
         
     }
+    
+    public function contagemPontosTotal(){
+        $id = $_SESSION['multLogin'];
+        $dados = array();
+        $c = new comissao();
+        $array = $c->calcularPontosTotal($id);
+        $total = 0;
+        $total2 = 0;
+       
+        foreach ($array as $usuario){ 
+//            echo $usuario['name'].': '.$usuario['compras'].'<br/>';
+            $total += $usuario['compras'];
+
+            if(count($usuario['filhos']) > 0) {
+                foreach ($usuario['filhos'] as $filhos){
+//                    echo $filhos['name'].': '.$filhos['compras'].'<br/>';
+                    $total += $filhos['compras'];
+                    $total2 = $this->calcularComprasFilhos($filhos, $total);
+                }
+            }
+                
+        }
+        
+        
+        return $total2;
+    }
+    
+    function calcularComprasFilhos($array, &$total) {
+    $soma = 0;
+  
+        if(isset($array['filhos']) && count($array['filhos']) > 0) {
+         
+            foreach($array['filhos'] as $filho) {
+//               echo $filho['name'].': '.$filho['compras'].'<br/>';
+                                
+                $soma += $filho['compras'];
+                
+                $this->calcularComprasFilhos($filho, $total);
+            }
+             
+        }
+    
+ 
+    $total += $soma;
+    return $total;
+}
     
     
 }

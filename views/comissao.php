@@ -1,7 +1,7 @@
 <h1>Comissão</h1>
 <?php 
 echo '<pre>';
-        print_r($totalVendas);
+        print_r($totalPontos);
 ?>
 
 

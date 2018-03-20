@@ -12,7 +12,7 @@ class testecontroller extends controller {
         $this->loadTemplate('teste', $dados);
     }
     
-    public function comissao_ativo(){
+    public function comissaoAtivos(){
         global $config;
         $id = $_SESSION['multLogin'];
         $dados = array();
@@ -21,46 +21,68 @@ class testecontroller extends controller {
         $total = 0;
         
         foreach ($dados['comissao'] as $usuario){ 
-             echo '<pre>';
-        echo '-'.$usuario['name'].': '.$usuario['compras'];
-        $total += $usuario['compras'];
-        echo '<br/>';
-             if(count($usuario['filhos']) > 0) {
-                 foreach ($usuario['filhos'] as $filho){ 
-                echo '--'.$filho['name'].': '.$filho['compras'];   
-                    $total += $filho['compras'];
-                echo '<br/>';
-                    if(count($filho['filhos']) > 0) {
-                        foreach ($filho['filhos'] as $filho){ 
-                        echo '---'.$filho['name'].': '.$filho['compras'];   
-                            $total += $filho['compras'];
-                        echo '<br/>';
-                            if(count($filho['filhos']) > 0) {
-                                foreach ($filho['filhos'] as $filho){ 
-                                echo '----'.$filho['name'].': '.$filho['compras'];   
-                                    $total += $filho['compras'];
-                                echo '<br/>';
-                                    if(count($filho['filhos']) > 0) {
-                                        foreach ($filho['filhos'] as $filho){ 
-                                        echo '-----'.$filho['name'].': '.$filho['compras'];   
-                                            $total += $filho['compras'];
-                                        echo '<br/>';
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                   }
-                 }
-            }        
-         }
+//            echo $usuario['name'].': '.$usuario['compras'].'<br/>';
+            $total += $usuario['compras'];
+
+            if(count($usuario['filhos']) > 0) {
+                foreach ($usuario['filhos'] as $filhos){
+//                    echo $filhos['name'].': '.$filhos['compras'].'<br/>';
+                    $total += $filhos['compras'];
+                    $dados['pontos'] = $this->calcularComprasFilhos($filhos, $total);
+                }
+            }
+                
+        }
          $dados['totalVendas'] = $total;
-         echo '<pre>';
-        print_r($dados['totalVendas']);
-        exit();
         $this->loadTemplate('comissao', $dados);
     }
+    public function contagemPontosTotal(){
+        $id = $_SESSION['multLogin'];
+        $dados = array();
+        $c = new comissao();
+        $array = $c->calcularPontosTotal($id);
+        $total = 0;
+        $total2 = 0;
+       
+        foreach ($array as $usuario){ 
+//            echo $usuario['name'].': '.$usuario['compras'].'<br/>';
+            $total += $usuario['compras'];
+
+            if(count($usuario['filhos']) > 0) {
+                foreach ($usuario['filhos'] as $filhos){
+//                    echo $filhos['name'].': '.$filhos['compras'].'<br/>';
+                    $total += $filhos['compras'];
+                    $dados['pontos'] = $this->calcularComprasFilhos($filhos, $total);
+                }
+            }
+                
+        }
+        
+        $total2 += $dados['pontos'];
+        $dados['totalPontos'] = $total2;
+        
+        $this->loadTemplate('comissao', $dados);
+    }
+    
+    function calcularComprasFilhos($array, &$total) {
+    $soma = 0;
   
+        if(isset($array['filhos']) && count($array['filhos']) > 0) {
+         
+            foreach($array['filhos'] as $filho) {
+//               echo $filho['name'].': '.$filho['compras'].'<br/>';
+                                
+                $soma += $filho['compras'];
+                
+                $this->calcularComprasFilhos($filho, $total);
+            }
+             
+        }
+    
+ 
+    $total += $soma;
+    return $total;
+}
 	
 }
 
