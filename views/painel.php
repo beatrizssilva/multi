@@ -28,8 +28,7 @@ echo ' (<strong>'.utf8_encode($dadosUser['patente']).'</strong>)  você tem '.co
         <label>Quantidade:</label>
         <select name="qtde">
             <?php 
-            $q = 1;
-            for($q=$ano;$q<=10;$q++): ?>
+            for($q=1;$q<=10;$q++): ?>
             <option><?php echo $q;?></option>
             <?php endfor;?>
         </select><br/><br/>
@@ -59,33 +58,9 @@ echo ' (<strong>'.utf8_encode($dadosUser['patente']).'</strong>)  você tem '.co
         <?php endif; ?>
     </div>
     <div>
-        <?php 
-        
-        if (isset($kits_vendidos) && $kits_vendidos > 0):
-            
-            $valor = $kits_vendidos * 8;
-            $pontos = $kits_vendidos * 220;
-            $comissao = ($pontos*3)/100;
-            ?>
-        <span><p>Foram vendidos <?php echo $kits_vendidos;?> Kits em sua Cadeia Ativa.</p> 
-            <p>Comissões por Venda (Cadeia Ativa): <?php echo 'R$ '.number_format($valor, 2, ',', '.');?></p>
-            <p>Pontos Acumulados no Mês: <?php echo $pontos; ?> Pontos.</p>
-            <p>Comissão: <?php echo 'R$ '.number_format($comissao, 2, ',', '.');?></p>
-            <?php if(isset($total_pontos) && $total_pontos > 0): 
-                $total = $total_pontos * 220;
-                ?>
-            <p>Foram vendidos <?php echo $total_pontos;?> Kits em sua Cadeia Geral.</p> 
-            <p>Pontos Acumulados de Toda Cadeia: <?php echo $total; ?> Pontos.</p>
-            <?php endif; ?>
-        </span><br/><br/>
-        <button><a href="<?php echo BASE_URL;?>teste/comissaoAtivos">Atualizar Comissao</a></button><br/><br/>
-        <button><a href="<?php echo BASE_URL;?>teste/contagemPontosTotal">Pontos Total</a></button><br/><br/>
-        <?php else: ?>
-        Comissao 
-        <button><a href="<?php echo BASE_URL;?>">Calcular Comissao</a></button><br/><br/>
-        <?php endif; ?>
     </div>
 </div>
 <a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a><br/><br/>
-<a href="<?php echo BASE_URL;?>atualizar/patentes">Atualizar Patentes</a><br/>
+<a href="<?php echo BASE_URL;?>atualizar/atualizar">Atualizar Patentes</a><br/>
+<a href="<?php echo BASE_URL;?>atualizar/comissoes">Calcular Comissões</a><br/>
 <a href="<?php echo BASE_URL;?>teste/arvore">Arvore</a><br/>

@@ -49,13 +49,17 @@ class usuarios extends model {
     
     public function setNewUser($email, $nome) {
         $senha = 123;
+        $ativo = 0;
+        $data_ativacao = date("Y-m-d h:m:i");
         $id_dad = $_SESSION['multLogin'];
-        $sql = "INSERT INTO user (id_dad, name, email, pass) VALUES (:id_dad, :name, :email, :pass)";
+        $sql = "INSERT INTO user (id_dad, name, email, pass, ativo, data_ativacao) VALUES (:id_dad, :name, :email, :pass, :ativo, :data_ativacao)";
         $sql = $this->db->prepare($sql);
         $sql->bindValue("id_dad", $id_dad);
         $sql->bindValue("name", $nome);
         $sql->bindValue("email", $email);
         $sql->bindValue("pass", MD5($senha));
+        $sql->bindValue("ativo", $ativo);
+        $sql->bindValue("data_ativacao", $data_ativacao);        
         $sql->execute();
     }
     

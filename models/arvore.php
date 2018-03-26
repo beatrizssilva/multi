@@ -105,4 +105,31 @@ class arvore extends model {
         return $array;
     }
     
+     public function cadeiaCompleta($id){
+        $array = array();
+        
+             
+        $sql = "SELECT *, (select patent.name from patent where patent.id = user.patent)as patente FROM user WHERE id_dad = :id_dad";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue("id_dad", $id);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $array['qtde'] = $sql->rowCount();
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+            
+            foreach($array as $chave => $usuario){
+                $array[$chave]['filhos'] = array();
+                 
+                
+                    
+                    $array[$chave]['filhos'] = $this->cadeiaCompleta($usuario['id']);
+                    
+                
+            }
+           
+        }
+        return $array;
+    }
+    
 }

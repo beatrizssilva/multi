@@ -1,7 +1,7 @@
 <?php
 class patentes extends model {
     
-    public function patente() {
+    public function atualizarPatente() {
         global $config;
         
         $sql = "SELECT * FROM patent";
@@ -21,8 +21,9 @@ class patentes extends model {
             $usuarios = $sql->fetchAll();
             
             foreach($usuarios as $chave => $usuario) {
+                $usuarios[$chave]['pontuacao'] = $this->getPontos($usuario['id']);
 		$usuarios[$chave]['consumidores'] = $this->calcularFilhosTotal($usuario['id'], $config['limit']);
-                $usuarios[$chave]['consumidorJunior'] = $this->calcularFilhosJunior($usuario['id']);
+                $usuarios[$chave]['consumidorPre'] = $this->calcularFilhosPre($usuario['id']);
                 $usuarios[$chave]['consumidorBronze'] = $this->calcularFilhosBronze($usuario['id']);
                 $usuarios[$chave]['consumidorPrata'] = $this->calcularFilhosPrata($usuario['id']);
                 $usuarios[$chave]['consumidorOuro'] = $this->calcularFilhosOuro($usuario['id']);
@@ -34,34 +35,33 @@ class patentes extends model {
 //                print_r($usuarios);
 //                exit();
                 
-            if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorDiamante']) >= 3
-                 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorDuploDiamante']) >= 1){
+            if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorDiamante']) >= 3 && intval($usuarios[$chave]['pontuacao']) >= 540000 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorDuploDiamante']) >= 1 && intval($usuarios[$chave]['pontuacao']) >= 540000){
             
                 $patent = $patentes[6]['id'];//duplo-diamante  
                 
-            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorRubi']) >= 3 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorDiamante']) >= 1){
+            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorRubi']) >= 3 && intval($usuarios[$chave]['pontuacao']) >= 180000 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorDiamante']) >= 1 && intval($usuarios[$chave]['pontuacao']) >= 180000){
             
                 $patent = $patentes[5]['id'];//diamante
                 
-            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorOuro']) >= 3 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorRubi']) >= 1){
+            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorOuro']) >= 3 && intval($usuarios[$chave]['pontuacao']) >= 60000 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorRubi']) >= 1 && intval($usuarios[$chave]['pontuacao']) >= 60000){
             
                 $patent = $patentes[4]['id'];//rubi
                 
-            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorPrata']) >= 3 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorOuro']) >= 1){
+            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorPrata']) >= 3 && intval($usuarios[$chave]['pontuacao']) >= 18000 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorOuro']) >= 1 && intval($usuarios[$chave]['pontuacao']) >= 18000){
                 
                 $patent = $patentes[3]['id'];//ouro
                 
-            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorBronze']) >= 3 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorPrata']) >= 1){
+            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorBronze']) >= 1 && intval($usuarios[$chave]['consumidorPre']) >= 1 && intval($usuarios[$chave]['pontuacao']) >= 6000 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorPrata']) >= 1 && intval($usuarios[$chave]['pontuacao']) >= 6000){
                 
                 $patent = $patentes[2]['id'];//prata
                 
-            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorJunior']) >= 1 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorBronze']) >= 1){
+            } else if(intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorPre']) >= 1 && intval($usuarios[$chave]['pontuacao']) >= 2000 || intval($usuarios[$chave]['consumidores']) >= 3 && intval($usuarios[$chave]['consumidorBronze']) >= 1 && intval($usuarios[$chave]['pontuacao']) >= 2000){
                 
                 $patent = $patentes[1]['id'];//bronze
                 
             } else {
                 
-                $patent = $patentes[0]['id'];//junior
+                $patent = $patentes[0]['id'];//pre
                 
             }
                 
@@ -74,10 +74,23 @@ class patentes extends model {
             }
         }
 
-        echo '<pre>';
-                print_r($usuarios);
-                exit();
+//        echo '<pre>';
+//                print_r($usuarios);
+//                exit();
         return $usuarios;
+    }
+
+    public function getPontos($id){
+        $sql = "SELECT pontos FROM comissoes WHERE id_user = :id";
+        $sql = $this->db->prepare($sql);
+	$sql->bindValue(":id", $id);
+	$sql->execute();
+        $p = 0;
+        if($sql->rowCount() > 0) {
+            $p = $sql->fetch(PDO::FETCH_ASSOC);
+            
+        }
+        return $p['pontos'];
     }
 
     public function calcularFilhosTotal($id, $limite) {
@@ -105,7 +118,7 @@ class patentes extends model {
 	return $consumidor;
     }
     
-    public function calcularFIlhosJunior($id) {
+    public function calcularFIlhosPre($id) {
 	$lista = array();
 	
 

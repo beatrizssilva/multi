@@ -1,6 +1,6 @@
-<h1>Teste - Arvore Completa</h1>
+<h1>Teste Comissoes</h1>
 <?php echo '<pre>';
- print_r($arvore);
+ print_r($comissao);
  echo '</pre>';
 ?>
 
