@@ -3,12 +3,13 @@
 class testecontroller extends controller {
     
     public function patente(){
-    
+        global $config;
         $id = $_SESSION['multLogin'];
         $dados = array();
+        $consumidor = array();
         $a = new arvore();
 //        $dados['arvore'] = $a->getList();
-        $dados['arvore'] = $a->cadeiaPatente($id);
+        $dados['arvore'] = $a->cadeiaPatente($id, $config['limit']);
         $this->loadTemplate('teste', $dados);
     }
     

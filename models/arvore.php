@@ -129,7 +129,156 @@ class arvore extends model {
         return $array;
     }
     
- 
+    public function cadeiaPatente($id, $limite){
+        
+        $array = array();
+                             
+        $sql = "SELECT * FROM qualificados WHERE id_dad = :id_dad";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue("id_dad", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+//            $array['qtde'] = $sql->rowCount();  
+            
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+           
+            foreach($array as $chave => $usuario){
+                if($limite > 0){
+                    $array[$chave]['qualificados'] = array();                
+                    $array[$chave]['qualificados'] = $this->cadeiaPatente($usuario['id_user'], $limite - 1); 
+                    
+                }
+            }
+        }
+        return $array;
+    }
+    
+    public function patentesFilhos($id, $limite){
+        $array = array();
+        $sql = "SELECT * FROM user WHERE id_dad = :id_dad";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue("id_dad", $id);
+        $sql->execute();
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+            foreach($array as $chave => $usuario){
+                   if($limite > 0) {
+                $array[$chave]['qualificados'] = array();                
+                    $array[$chave]['qualificados'] = $this->cadeiaQualificadosFilhos($usuario['id'], $limite-1); 
+                   }  
+            }
+        }
+        return $array;
+    }
+
+     public function cadeiaQualificadosFilhos($id, $limite){
+        $array = array();
+        
+        $sql = "SELECT * FROM qualificados WHERE id_user = :id_user";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue("id_user", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+            
+        }
+        return $array;
+    }
+    
+    public function cadeiaPatenteFilhos($id, $limite){
+        $array = array();
+                     
+        $sql = "SELECT * FROM user WHERE id_dad = :id_dad";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue("id_dad", $id);
+        $sql->execute();
+        
+        $consumidor = array();
+        $consumidor['pre'] = 0;
+        $consumidor['bronze'] = 0;
+        $consumidor['prata'] = 0;
+        $consumidor['ouro'] = 0;
+        $consumidor['rubi'] = 0;
+        $consumidor['diamante'] = 0;
+        $consumidor['duploDiamante'] = 0;
+        if($sql->rowCount() > 0) {  
+            
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+           
+            foreach($array as $chave => $usuario){              
+                  switch ($usuario['patent']){
+                    case '1':
+                    $consumidor['pre'] += 1;
+                    break;
+                    case '2':
+                    $consumidor['bronze'] += 1;
+                    break;
+                    case '3':
+                    $consumidor['prata'] += 1;
+                    break;
+                    case '4':
+                    $consumidor['ouro'] += 1;
+                    break;
+                    case '5':
+                    $consumidor['rubi'] += 1;
+                    break;
+                    case '6':
+                    $consumidor['diamante'] += 1;
+                    break;
+                    case '7':
+                    $consumidor['duploDiamante'] += 1;
+                    break;                        
+                }            
+                if($limite > 0) {
+                    $array[$chave]['consumidor'] = array();                
+                    $array[$chave]['consumidor'] = $this->cadeiaPatenteFilhos($usuario['id'], $limite-1); 
+                }   
+            }
+
+        }
+        //Inserindo ou Atualizando Tabela de Qualificados
+            $mes = date('m');
+            $ano = date('Y');
+            $sql = "SELECT id FROM qualificados WHERE id_user = :id AND mes = :mes AND ano = :ano";
+            $sql = $this->db->prepare($sql);        
+            $sql->bindValue(":id", $id);
+            $sql->bindValue(":mes", $mes);
+            $sql->bindValue(":ano", $ano);
+            $sql->execute();
+
+            if($sql->rowCount() > 0) {  
+                $id_table = $sql->fetch(PDO::FETCH_ASSOC);
+
+                    $sql = "UPDATE qualificados SET pre = :pre, bronze = :bronze, prata = :prata, ouro = :ouro, rubi = :rubi, diamante = :diamante, duploDiamante = :duploDiamante WHERE id = :id";
+                    $sql = $this->db->prepare($sql);
+                    $sql->bindValue(":id", $id_table['id']);
+                    $sql->bindValue(":pre", $consumidor['pre']);
+                    $sql->bindValue(":bronze", $consumidor['bronze']);
+                    $sql->bindValue(":prata", $consumidor['prata']);
+                    $sql->bindValue(":ouro", $consumidor['ouro']);
+                    $sql->bindValue(":rubi", $consumidor['rubi']);
+                    $sql->bindValue(":diamante", $consumidor['diamante']);
+                    $sql->bindValue(":duploDiamante", $consumidor['duploDiamante']);
+                    $sql->execute();
+            } else {
+                $sql = "INSERT INTO qualificados (id_user, pre, bronze, prata, ouro, rubi, diamante, duploDiamante, mes, ano) VALUES (:id_user, :pre, :bronze, :prata, :ouro, :rubi, :diamante, :duploDiamante, :mes, :ano)";
+                    $sql = $this->db->prepare($sql);
+                    $sql->bindValue(":id_user", $id);
+                    $sql->bindValue(":pre", $consumidor['pre']);
+                    $sql->bindValue(":bronze", $consumidor['bronze']);
+                    $sql->bindValue(":prata", $consumidor['prata']);
+                    $sql->bindValue(":ouro", $consumidor['ouro']);
+                    $sql->bindValue(":rubi", $consumidor['rubi']);
+                    $sql->bindValue(":diamante", $consumidor['diamante']);
+                    $sql->bindValue(":duploDiamante", $consumidor['duploDiamante']);
+                    $sql->bindValue(":mes", $mes);
+                    $sql->bindValue(":ano", $ano);
+                    $sql->execute();
+            }
+        return $consumidor;
+    }
     
 
 }
