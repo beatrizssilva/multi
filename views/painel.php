@@ -64,3 +64,4 @@ echo ' (<strong>'.utf8_encode($dadosUser['patente']).'</strong>)  você tem '.co
 <a href="<?php echo BASE_URL;?>atualizar/atualizar">Atualizar Patentes</a><br/>
 <a href="<?php echo BASE_URL;?>atualizar/comissoes">Calcular Comissões</a><br/>
 <a href="<?php echo BASE_URL;?>teste/arvore">Arvore</a><br/>
+<a href="<?php echo BASE_URL;?>teste/patente">Calcular Patente da Mesma Linha</a><br/>

@@ -2,6 +2,16 @@
 
 class testecontroller extends controller {
     
+    public function patente(){
+    
+        $id = $_SESSION['multLogin'];
+        $dados = array();
+        $a = new arvore();
+//        $dados['arvore'] = $a->getList();
+        $dados['arvore'] = $a->cadeiaPatente($id);
+        $this->loadTemplate('teste', $dados);
+    }
+    
     public function arvore(){
     
         $id = $_SESSION['multLogin'];

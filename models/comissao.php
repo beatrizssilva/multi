@@ -75,7 +75,7 @@ class comissao extends model {
            
     }
     
-    public function getValoresBronze($id) {
+    public function getValores($id) {
 	$array = array();
         $sql = "SELECT patent FROM user WHERE id = :id";
         $sql = $this->db->prepare($sql);
@@ -85,6 +85,7 @@ class comissao extends model {
         if($sql->rowCount() > 0){
             $array = $sql->fetch();
             
+            //pegando a quantidade de kits da cadeia geral
             $sql = "SELECT *, (select comissoes.kits_geral from comissoes where comissoes.id_user = user.id)as kits_geral FROM user WHERE id_dad = :id_dad AND patent < :patent AND ativo = 1";
             $sql = $this->db->prepare($sql);
             $sql->bindValue("id_dad", $id);
@@ -100,6 +101,7 @@ class comissao extends model {
                 }
              }
              
+             // pegando a quantidade de kits do filho direto
              $sql = "SELECT *, (select sum(transacoes.qtde) from transacoes where transacoes.id_user = user.id) as compras FROM user WHERE id_dad = :id_dad AND patent < :patent AND ativo = 1";
             $sql = $this->db->prepare($sql);
             $sql->bindValue("patent", $array['patent']);

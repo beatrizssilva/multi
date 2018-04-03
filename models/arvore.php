@@ -113,23 +113,23 @@ class arvore extends model {
         $sql = $this->db->prepare($sql);
         $sql->bindValue("id_dad", $id);
         $sql->execute();
-
+        
         if($sql->rowCount() > 0) {
             $array['qtde'] = $sql->rowCount();
             $array = $sql->fetchAll(PDO::FETCH_ASSOC);
-            
+           
             foreach($array as $chave => $usuario){
-                $array[$chave]['filhos'] = array();
-                 
                 
+                $array[$chave]['filhos'] = array();                
+                    $array[$chave]['filhos'] = $this->cadeiaCompleta($usuario['id']); 
                     
-                    $array[$chave]['filhos'] = $this->cadeiaCompleta($usuario['id']);
-                    
-                
             }
            
         }
         return $array;
     }
     
+ 
+    
+
 }

@@ -12,7 +12,7 @@ class atualizarcontroller extends controller {
     public function comissoes(){
         $id = $_SESSION['multLogin'];
         $c = new comissao();
-        $dados['comissao'] = $c->getValoresBronze($id);
+        $dados['comissao'] = $c->getValores($id);
         $this->loadTemplate('testeComissoes', $dados);
     }
 }

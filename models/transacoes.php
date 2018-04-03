@@ -48,11 +48,13 @@ class transacoes extends model {
     
     public function insertKitsCadeia($id, $limite, $qt) {
         $mes = date('m');
+        $ano = date('Y');
         
-        $sql = "SELECT id FROM comissoes WHERE id_user = :id AND mes = :mes";
+        $sql = "SELECT id FROM comissoes WHERE id_user = :id AND mes = :mes AND ano = :ano";
         $sql = $this->db->prepare($sql);        
         $sql->bindValue(":id", $id);
         $sql->bindValue(":mes", $mes);
+        $sql->bindValue(":ano", $ano);
         $sql->execute();
         
         if($sql->rowCount() > 0) {
@@ -91,11 +93,13 @@ class transacoes extends model {
     
     public function insertKitsGeral($id, $qt) {
         $mes = date('m');
+        $ano = date('Y');
         
-        $sql = "SELECT id FROM comissoes WHERE id_user = :id AND mes = :mes";
+        $sql = "SELECT id FROM comissoes WHERE id_user = :id AND mes = :mes AND ano = :ano";
         $sql = $this->db->prepare($sql);        
         $sql->bindValue(":id", $id);
         $sql->bindValue(":mes", $mes);
+        $sql->bindValue(":ano", $ano);
         $sql->execute();
         
         if($sql->rowCount() > 0) {
@@ -163,12 +167,14 @@ class transacoes extends model {
     }
     public function insertPontosMes($id, $qt) {
         $mes = date('m');
+        $ano = date('Y');
         $ponto = intval($qt) * 200;
         
-        $sql = "SELECT id FROM comissoes WHERE id_user = :id AND mes = :mes";
+        $sql = "SELECT id FROM comissoes WHERE id_user = :id AND mes = :mes AND ano = :ano";
         $sql = $this->db->prepare($sql);        
         $sql->bindValue(":id", $id);
         $sql->bindValue(":mes", $mes);
+        $sql->bindValue(":ano", $ano);
         $sql->execute();
         
         if($sql->rowCount() > 0) {
@@ -205,11 +211,12 @@ class transacoes extends model {
             if($id <> 0){
                 $pontos = $ponto;
 
-                $sql = "INSERT INTO comissoes (id_user, pontos, mes) VALUES (:id_user, :pontos, :mes)";
+                $sql = "INSERT INTO comissoes (id_user, pontos, mes, ano) VALUES (:id_user, :pontos, :mes, :ano)";
                 $sql = $this->db->prepare($sql);
                 $sql->bindValue(":id_user", $id);
                 $sql->bindValue(":pontos", $pontos);
                 $sql->bindValue(":mes", $mes);
+                $sql->bindValue(":ano", $ano);
                 $sql->execute();
 
                 $sql = "SELECT id_dad FROM user WHERE id = :id";
