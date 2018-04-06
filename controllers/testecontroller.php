@@ -9,7 +9,7 @@ class testecontroller extends controller {
         $consumidor = array();
         $a = new arvore();
 //        $dados['arvore'] = $a->getList();
-        $dados['arvore'] = $a->cadeiaPatente($id, $config['limit']);
+        $dados['arvore'] = $a->cadeiaPatente($id);
         $this->loadTemplate('teste', $dados);
     }
     
@@ -20,7 +20,7 @@ class testecontroller extends controller {
         $a = new arvore();
 //        $dados['arvore'] = $a->getList();
         $dados['arvore'] = $a->cadeiaCompleta($id);
-        $this->loadTemplate('teste', $dados);
+        $this->loadTemplate('teste2', $dados);
     }
     
     public function comissaoAtivos(){

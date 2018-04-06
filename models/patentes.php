@@ -293,24 +293,39 @@ class patentes extends model {
     
     public function cadeiaPatenteFilhos($id){
         $array = array();
-                     
+        $consumidor = array();
+        $consumidor['patent'] = 0;
+        $consumidor['pre'] = 0;
+        $consumidor['bronze'] = 0;
+        $consumidor['prata'] = 0;
+        $consumidor['ouro'] = 0;
+        $consumidor['rubi'] = 0;
+        $consumidor['diamante'] = 0;
+        $consumidor['duploDiamante'] = 0;
+        
+        $sql = "SELECT patent FROM user WHERE id = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue("id", $id);
+        $sql->execute();
+        if($sql->rowCount() > 0) {  
+            
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+        }
+       
+        $consumidor['patent'] = $array['patent'];
+        
         $sql = "SELECT * FROM user WHERE id_dad = :id_dad";
         $sql = $this->db->prepare($sql);
         $sql->bindValue("id_dad", $id);
         $sql->execute();
-        $consumidor = array();
-            $consumidor['pre'] = 0;
-            $consumidor['bronze'] = 0;
-            $consumidor['prata'] = 0;
-            $consumidor['ouro'] = 0;
-            $consumidor['rubi'] = 0;
-            $consumidor['diamante'] = 0;
-            $consumidor['duploDiamante'] = 0;
+        
         if($sql->rowCount() > 0) {  
             
             $array = $sql->fetchAll(PDO::FETCH_ASSOC);
             
-            foreach($array as $chave => $usuario){              
+            foreach($array as $chave => $usuario){   
+                if($usuario['ativo'] == 1){
+                    
                   switch ($usuario['patent']){
                     case '1':
                     $consumidor['pre'] += 1;
@@ -333,7 +348,9 @@ class patentes extends model {
                     case '7':
                     $consumidor['duploDiamante'] += 1;
                     break;                        
-                }              
+                }
+                }
+                 
                 $array[$chave]['consumidor'] = array();                
                     $array[$chave]['consumidor'] = $this->cadeiaPatenteFilhos($usuario['id']); 
                     
@@ -354,9 +371,10 @@ class patentes extends model {
             if($sql->rowCount() > 0) {  
                 $id_table = $sql->fetch(PDO::FETCH_ASSOC);
                                     
-                    $sql = "UPDATE qualificados SET pre = :pre, bronze = :bronze, prata = :prata, ouro = :ouro, rubi = :rubi, diamante = :diamante, duploDiamante = :duploDiamante WHERE id = :id";
+                    $sql = "UPDATE qualificados SET patent = :patent, pre = :pre, bronze = :bronze, prata = :prata, ouro = :ouro, rubi = :rubi, diamante = :diamante, duploDiamante = :duploDiamante WHERE id = :id";
                     $sql = $this->db->prepare($sql);
                     $sql->bindValue(":id", $id_table['id']);
+                    $sql->bindValue(":patent", $consumidor['patent']);
                     $sql->bindValue(":pre", $consumidor['pre']);
                     $sql->bindValue(":bronze", $consumidor['bronze']);
                     $sql->bindValue(":prata", $consumidor['prata']);
@@ -374,10 +392,11 @@ class patentes extends model {
                     if($sql->rowCount() > 0) {  
                         $id_dad = $sql->fetch(PDO::FETCH_ASSOC);
                         
-                        $sql = "INSERT INTO qualificados (id_user, id_dad, pre, bronze, prata, ouro, rubi, diamante, duploDiamante, mes, ano) VALUES (:id_user, :id_dad, :pre, :bronze, :prata, :ouro, :rubi, :diamante, :duploDiamante, :mes, :ano)";
+                        $sql = "INSERT INTO qualificados (id_user, patent, id_dad, pre, bronze, prata, ouro, rubi, diamante, duploDiamante, mes, ano) VALUES (:id_user, :patent, :id_dad, :pre, :bronze, :prata, :ouro, :rubi, :diamante, :duploDiamante, :mes, :ano)";
                         $sql = $this->db->prepare($sql);
                         $sql->bindValue(":id_user", $id);
                         $sql->bindValue(":id_dad", $id_dad['id_dad']);
+                        $sql->bindValue(":patent", $consumidor['patent']);
                         $sql->bindValue(":pre", $consumidor['pre']);
                         $sql->bindValue(":bronze", $consumidor['bronze']);
                         $sql->bindValue(":prata", $consumidor['prata']);

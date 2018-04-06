@@ -129,31 +129,66 @@ class arvore extends model {
         return $array;
     }
     
-    public function cadeiaPatente($id, $limite){
+    public function cadeiaPatente($id){
         
         $array = array();
-                             
-        $sql = "SELECT * FROM qualificados WHERE id_dad = :id_dad";
+        
+         $sql = "SELECT COUNT(id) as ativos FROM user WHERE id_dad = :id_dad AND ativo = 1";
+        $sql = $this->db->prepare($sql);
+        $sql->bindvalue("id_dad", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) { 
+            $filhos = $sql->fetch(PDO::FETCH_ASSOC);           
+        }
+                       
+        $array = $this->cadeiaComplementar($id);
+        
+//        $sql = "SELECT *, (select user.name from user where user.id = qualificados.id_user) as nome, (select user.ativo from user where user.id = qualificados.id_user) as ativo FROM qualificados WHERE id_dad = :id_dad";
+//        $sql = $this->db->prepare($sql);
+//        $sql->bindValue("id_dad", $id);
+//        $sql->execute();
+//        
+//        if($sql->rowCount() > 0) { 
+//            
+//            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+//           
+//            foreach($array as $chave => $usuario){
+//                if($limite > 1){
+//                    $array[$chave]['qualificados'] = array();                
+//                    $array[$chave]['qualificados'] = $this->cadeiaPatente($usuario['id_user'], $limite - 1); 
+//                    
+//                }
+//            }
+//        }
+        $array['filhosAtivos'] = $filhos;//ativos da primeira camada
+        return $array;
+    }
+    
+    public function cadeiaComplementar($id){
+        $array = array();
+       
+        
+        $sql = "SELECT *, (select user.name from user where user.id = qualificados.id_user) as nome, (select user.ativo from user where user.id = qualificados.id_user) as ativo FROM qualificados WHERE id_dad = :id_dad";
         $sql = $this->db->prepare($sql);
         $sql->bindValue("id_dad", $id);
         $sql->execute();
         
-        if($sql->rowCount() > 0) {
-//            $array['qtde'] = $sql->rowCount();  
+        if($sql->rowCount() > 0) { 
             
             $array = $sql->fetchAll(PDO::FETCH_ASSOC);
            
             foreach($array as $chave => $usuario){
-                if($limite > 0){
-                    $array[$chave]['qualificados'] = array();                
-                    $array[$chave]['qualificados'] = $this->cadeiaPatente($usuario['id_user'], $limite - 1); 
-                    
-                }
+
+                $array[$chave]['qualificados'] = array();                
+                $array[$chave]['qualificados'] = $this->cadeiaComplementar($usuario['id_user']); 
+                
             }
         }
+        
         return $array;
     }
-    
+
     public function patentesFilhos($id, $limite){
         $array = array();
         $sql = "SELECT * FROM user WHERE id_dad = :id_dad";
