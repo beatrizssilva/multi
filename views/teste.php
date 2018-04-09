@@ -150,8 +150,51 @@ foreach ($arvore as $user){
      echo '<br/>Quantas linhas tem usuarios Rubi? '.$qtdeRubi;
      echo '<br/>Quantas linhas tem usuarios Diamante? '.$qtdeDiamante;
      echo '<br/>Quantas linhas tem usuarios Duplo Diamante? '.$qtdeDuploDiamante;
-   
-
+     $p = 1;
+     if($qtdePre >= 3){
+        $p = 2;
+     }
+     if($qtdeBronze >= 3){
+        $p = 3;
+     }
+     if($qtdePrata >= 3){
+        $p = 4;
+     }
+     if($qtdeOuro >= 3){
+        $p = 5;
+     }
+     if($qtdeRubi >= 3){
+        $p = 6;
+     }
+     if($qtdeDiamante >= 3){
+        $p = 7;
+     }
+     
+     echo '<hr>';
+     switch($p){
+         case '1':
+             $patent = "Consumidor Pré.";
+             break;
+         case '2':
+             $patent = "Consumidor Bronze.";
+             break;
+         case '3':
+             $patent = "Consumidor Prata.";
+             break;
+         case '4':
+             $patent = "Consumidor Ouro.";
+             break;
+         case '5':
+             $patent = "Consumidor Rubi.";
+             break;
+         case '6':
+             $patent = "Consumidor Diamante.";
+             break;
+         case '7':
+             $patent = "Consumidor Duplo Diamante.";
+             break;
+     }
+     echo 'Você é: '.$patent;
 ?>
 
 

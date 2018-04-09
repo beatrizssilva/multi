@@ -144,23 +144,6 @@ class arvore extends model {
                        
         $array = $this->cadeiaComplementar($id);
         
-//        $sql = "SELECT *, (select user.name from user where user.id = qualificados.id_user) as nome, (select user.ativo from user where user.id = qualificados.id_user) as ativo FROM qualificados WHERE id_dad = :id_dad";
-//        $sql = $this->db->prepare($sql);
-//        $sql->bindValue("id_dad", $id);
-//        $sql->execute();
-//        
-//        if($sql->rowCount() > 0) { 
-//            
-//            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
-//           
-//            foreach($array as $chave => $usuario){
-//                if($limite > 1){
-//                    $array[$chave]['qualificados'] = array();                
-//                    $array[$chave]['qualificados'] = $this->cadeiaPatente($usuario['id_user'], $limite - 1); 
-//                    
-//                }
-//            }
-//        }
         $array['filhosAtivos'] = $filhos;//ativos da primeira camada
         return $array;
     }
