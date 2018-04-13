@@ -194,9 +194,9 @@ class patentes extends model {
             }
         }
 
-        echo '<pre>';
-                print_r($usuarios);
-                exit();
+//        echo '<pre>';
+//                print_r($usuarios);
+//                exit();
         return $usuarios;
     }
 
@@ -212,179 +212,6 @@ class patentes extends model {
         }
         return $p['pontos'];
     }
-    
-//    public function calcularFilhosAtivos($id, $limite, &$ativos) {
-//	$lista = array();
-//	
-//
-//	$sql = "SELECT * FROM user WHERE id_dad = :id";
-//        $sql = $this->db->prepare($sql);
-//	$sql->bindValue(":id", $id);
-//	$sql->execute();        
-//	
-//	if($sql->rowCount() > 0) {
-//		$lista = $sql->fetchAll(PDO::FETCH_ASSOC);
-//
-//		foreach($lista as $chave => $usuario) {
-//                $ativos += intval($usuario['ativo']);
-//                    if($limite > 0) {
-//                        $this->calcularFilhosTotal($usuario['id'], $limite-1, $ativos);            
-//                    }
-//		}
-//	}
-//        
-//	return $ativos;
-//    }
-//    
-//        public function calcularFilhosTotal($id, $limite) {
-//	$lista = array();
-//	
-//
-//	$sql = "SELECT * FROM user WHERE id_dad = :id";
-//        $sql = $this->db->prepare($sql);
-//	$sql->bindValue(":id", $id);
-//	$sql->execute();
-//	$consumidor = 0;
-//	
-//	if($sql->rowCount() > 0) {
-//		$lista = $sql->fetchAll(PDO::FETCH_ASSOC);
-//
-//		$consumidor = $sql->rowCount();
-//
-//		foreach($lista as $chave => $usuario) {
-//			if($limite > 0) {
-//				$consumidor += $this->calcularFilhosTotal($usuario['id'], $limite-1);
-//			}
-//		}
-//	}
-//        
-//	return $consumidor;
-//    }
-//    public function calcularFIlhosPre($id) {
-//	$lista = array();
-//	
-//
-//	$sql = "SELECT * FROM user WHERE id_dad = :id AND ativo = 1 AND patent = 1";
-//        $sql = $this->db->prepare($sql);
-//	$sql->bindValue(":id", $id);
-//	$sql->execute();
-//	$consumidor = 0;
-//	
-//	if($sql->rowCount() > 0) {
-//		$lista = $sql->fetchAll(PDO::FETCH_ASSOC);
-//		$consumidor = $sql->rowCount();
-//	}
-//        
-//	return $consumidor;
-//    }
-//    
-//     public function calcularFilhosBronze($id) {
-//	$lista = array();
-//	
-//
-//	$sql = "SELECT * FROM user WHERE id_dad = :id AND ativo = 1 AND patent = 2";
-//        $sql = $this->db->prepare($sql);
-//	$sql->bindValue(":id", $id);
-//	$sql->execute();
-//	$consumidor = 0;
-//	
-//	if($sql->rowCount() > 0) {
-//		$lista = $sql->fetchAll(PDO::FETCH_ASSOC);
-//		$consumidor = $sql->rowCount();
-//	}
-//        
-//	return $consumidor;
-//    }
-//    
-//    public function calcularFilhosPrata($id) {
-//	$lista = array();
-//	
-//
-//	$sql = "SELECT * FROM user WHERE id_dad = :id AND ativo = 1 AND patent = 3";
-//        $sql = $this->db->prepare($sql);
-//	$sql->bindValue(":id", $id);
-//	$sql->execute();
-//	$consumidor = 0;
-//	
-//	if($sql->rowCount() > 0) {
-//		$lista = $sql->fetchAll(PDO::FETCH_ASSOC);
-//		$consumidor = $sql->rowCount();
-//	}
-//        
-//	return $consumidor;
-//    }
-//    
-//    public function calcularFilhosOuro($id) {
-//	$lista = array();
-//	
-//
-//	$sql = "SELECT * FROM user WHERE id_dad = :id AND ativo = 1 AND patent = 4";
-//        $sql = $this->db->prepare($sql);
-//	$sql->bindValue(":id", $id);
-//	$sql->execute();
-//	$consumidor = 0;
-//	
-//	if($sql->rowCount() > 0) {
-//		$lista = $sql->fetchAll(PDO::FETCH_ASSOC);
-//		$consumidor = $sql->rowCount();
-//	}
-//        
-//	return $consumidor;
-//    }
-//    
-//    public function calcularFilhosRubi($id) {
-//	$lista = array();
-//	
-//
-//	$sql = "SELECT * FROM user WHERE id_dad = :id AND ativo = 1 AND patent = 5";
-//        $sql = $this->db->prepare($sql);
-//	$sql->bindValue(":id", $id);
-//	$sql->execute();
-//	$consumidor = 0;
-//	
-//	if($sql->rowCount() > 0) {
-//		$lista = $sql->fetchAll(PDO::FETCH_ASSOC);
-//		$consumidor = $sql->rowCount();
-//	}
-//        
-//	return $consumidor;
-//    }
-//    
-//    public function calcularFilhosDiamante($id) {
-//	$lista = array();
-//	
-//
-//	$sql = "SELECT * FROM user WHERE id_dad = :id AND ativo = 1 AND patent = 6";
-//        $sql = $this->db->prepare($sql);
-//	$sql->bindValue(":id", $id);
-//	$sql->execute();
-//	$consumidor = 0;
-//	
-//	if($sql->rowCount() > 0) {
-//		$lista = $sql->fetchAll(PDO::FETCH_ASSOC);
-//		$consumidor = $sql->rowCount();
-//	}
-//        
-//	return $consumidor;
-//    }
-//    
-//    public function calcularFilhosDuploDiamante($id) {
-//	$lista = array();
-//	
-//
-//	$sql = "SELECT * FROM user WHERE id_dad = :id AND ativo = 1 AND patent = 7";
-//        $sql = $this->db->prepare($sql);
-//	$sql->bindValue(":id", $id);
-//	$sql->execute();
-//	$consumidor = 0;
-//	
-//	if($sql->rowCount() > 0) {
-//		$lista = $sql->fetchAll(PDO::FETCH_ASSOC);
-//		$consumidor = $sql->rowCount();
-//	}
-//        
-//	return $consumidor;
-//    }
     
     public function qualificados(){
         $array = array();
@@ -420,7 +247,7 @@ class patentes extends model {
         
         $sql = "SELECT patent FROM user WHERE id = :id";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("id", $id);
+        $sql->bindValue(":id", $id);
         $sql->execute();
         if($sql->rowCount() > 0) {  
             
@@ -533,7 +360,7 @@ class patentes extends model {
         
          $sql = "SELECT COUNT(id) as ativos FROM user WHERE id_dad = :id_dad AND ativo = 1";
         $sql = $this->db->prepare($sql);
-        $sql->bindvalue("id_dad", $id);
+        $sql->bindvalue(":id_dad", $id);
         $sql->execute();
         
         if($sql->rowCount() > 0) { 
@@ -552,7 +379,7 @@ class patentes extends model {
         
         $sql = "SELECT *, (select user.ativo from user where user.id = qualificados.id_user) as ativo FROM qualificados WHERE id_dad = :id_dad";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("id_dad", $id);
+        $sql->bindValue(":id_dad", $id);
         $sql->execute();
         
         if($sql->rowCount() > 0) { 

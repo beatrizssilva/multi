@@ -10,12 +10,17 @@ class homecontroller extends controller {
     $dados = array();
     $u = new usuarios();
     $c = new comissao();
+    $a = new arvore();
     
     if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
         $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
         $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
         $dados['comissao'] = $c->getValores($_SESSION['multLogin']);
+        $dados['ativacao'] = $a->pagamentoAtivacao($_SESSION['multLogin'], $config['limit']);
+        $dados['indicacao'] = $a->pagamentoIndicados($_SESSION['multLogin'], $config['limit']);
+        $dados['comissao'] = $a->comissao($_SESSION['multLogin']);
         $this->loadTemplate('painel', $dados);
+        
         } else if(isset($_POST['name']) && !empty ($_POST['name'])) {
             $name = addslashes($_POST['name']);
             $senha = addslashes($_POST['senha']);
@@ -26,6 +31,9 @@ class homecontroller extends controller {
                     $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
                     $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
                     $dados['comissao'] = $c->getValores($_SESSION['multLogin']);
+                    $dados['ativacao'] = $a->pagamentoAtivacao($_SESSION['multLogin'], $config['limit']);
+                    $dados['indicacao'] = $a->pagamentoIndicados($_SESSION['multLogin'], $config['limit']);
+                    $dados['comissao'] = $a->comissao($_SESSION['multLogin']);
                     $this->loadTemplate('painel', $dados);
                     
                   

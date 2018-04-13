@@ -76,46 +76,37 @@ class comissao extends model {
     }
     
     public function getValores($id) {
-	$array = array();
-        $sql = "SELECT patent FROM user WHERE id = :id";
+	$array = array();        
+            
+        //pegando a quantidade de kits da cadeia geral
+        $sql = "SELECT *, (select comissoes.kits_geral from comissoes where comissoes.id_user = user.id)as kits_geral FROM user WHERE id_dad = :id_dad AND ativo = 1";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("id", $id);
+        $sql->bindValue("id_dad", $id);
         $sql->execute();
-        
+
         if($sql->rowCount() > 0){
-            $array = $sql->fetch();
-            
-            //pegando a quantidade de kits da cadeia geral
-            $sql = "SELECT *, (select comissoes.kits_geral from comissoes where comissoes.id_user = user.id)as kits_geral FROM user WHERE id_dad = :id_dad AND patent < :patent AND ativo = 1";
-            $sql = $this->db->prepare($sql);
-            $sql->bindValue("id_dad", $id);
-            $sql->bindValue("patent", $array['patent']);
-            $sql->execute();
-            
-            if($sql->rowCount() > 0){
-                $array['qtde'] = $sql->rowCount();
-                $array['kits'] = 0;
-                $user = $sql->fetchAll(PDO::FETCH_ASSOC);
-                foreach($user as $usuario){
-                    $array['kits'] += $usuario['kits_geral'];
-                }
-             }
-             
-             // pegando a quantidade de kits do filho direto
-             $sql = "SELECT *, (select sum(transacoes.qtde) from transacoes where transacoes.id_user = user.id) as compras FROM user WHERE id_dad = :id_dad AND patent < :patent AND ativo = 1";
-            $sql = $this->db->prepare($sql);
-            $sql->bindValue("patent", $array['patent']);
-            $sql->bindValue("id_dad", $id);
-            $sql->execute();
-            
-            if($sql->rowCount() > 0){
-                $kits = $sql->fetchAll(PDO::FETCH_ASSOC);
-                
-                foreach ($kits as $kit) {
-                    $array['kits'] += $kit['compras'];
-                }
+            $array['qtde'] = $sql->rowCount();
+            $array['kits'] = 0;
+            $user = $sql->fetchAll(PDO::FETCH_ASSOC);
+            foreach($user as $usuario){
+                $array['kits'] += $usuario['kits_geral'];
+            }
+         }
+        
+         // pegando a quantidade de kits do filho direto
+         $sql = "SELECT *, (select sum(transacoes.qtde) from transacoes where transacoes.id_user = user.id) as compras FROM user WHERE id_dad = :id_dad AND ativo = 1";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue("id_dad", $id);
+        $sql->execute();
+
+        if($sql->rowCount() > 0){
+            $kits = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($kits as $kit) {
+                $array['kits'] += $kit['compras'];
             }
         }
+       
         return $array;
     }
 }

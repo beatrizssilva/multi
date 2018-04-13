@@ -13,6 +13,19 @@ class testecontroller extends controller {
         $this->loadTemplate('teste', $dados);
     }
     
+      public function ativacao(){
+        global $config;
+        $id = $_SESSION['multLogin'];
+        $dados = array();
+        $a = new arvore();
+        $dados['ativacao'] = $a->cadeiaPagamentoAtivacao($id ,$config['limit']);
+        $this->loadTemplate('teste', $dados);
+    }
+    
+    
+    
+    
+
     public function arvore(){
     
         $id = $_SESSION['multLogin'];

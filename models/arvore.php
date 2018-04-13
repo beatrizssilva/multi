@@ -1,79 +1,12 @@
 <?php
-class arvore extends model {
-
-    public function getList() {
-        $array = array();
-        
-        $sql = "SELECT * FROM user ORDER BY id_dad DESC";
-        $sql = $this->db->query($sql);
-        
-        if($sql->rowCount() > 0) {
-            foreach($sql->fetchAll() as $item) {//para criar um campo no array de nome subs e incluir os valores
-                $item['subs'] = array();
-                $array[$item['id']] = $item;
-            }
-            while($this->aindaPrecisa($array)) {//enquanto retorna true 
-                $this->organizarDependentes($array);
-            }
-        }
-   
-        return $array;
-    }
-    
-        public function getUsuariosArvore($id) {
-        $array = array();
-        
-        $filho = true;
-        //enquanto $filho for true ($filho = se existe subcategoria)
-        while($filho) {
-            $sql = "SELECT * FROM categorias WHERE id = :id AND ativo = 1";
-            $sql = $this->db->prepare($sql);
-            $sql->bindValue(":id", $id);
-            $sql->execute();
-            //se houve resultado, adiciona o resultado no array
-            if($sql->rowCount() > 0) {
-                $sql = $sql->fetch();
-                $array[] = $sql;
-                //verificar se ainda existe subcategorias
-                if(!empty($sql['sub'])) {
-                    //se existe pega o valor da sub e coloca no id para a nova verificaçã do while
-                    $id = $sql['sub'];
-                }else {
-                    $filho = false;
-                }
-            }
-        }
-        $array = array_reverse($array);
-        return $array;
-    }
-
-
-    private function organizarDependentes(&$array){ //simbolo &= se a variavel for alterada, altera também a variavel de origem
-        foreach ($array as $id => $item){
-            if(isset($array[$item['id_dad']])) {//se existe sub
-                $array[$item['id_dad']]['subs'][$item['id']] = $item;//pega o item e coloca dentro do array sub
-                unset($array[$id]);//deleta o item para ficar somente dentro do sub
-                break;// para e volta na verificação se aindaPrecisa
-            }
-        }
-    }
-
-
-    private function aindaPrecisa($array) { //metodo para verificar se há algum sub em branco, retorno true ou false
-     foreach($array as $item) {
-         if(!empty($item['id_dad'])) {
-             return true;
-         }
-     }
-     return false;
-    }
+class arvore extends model {    
     
     public function filhosPatentes($id, $limite){
         $array = array();
         
         $sql = "SELECT patent FROM user WHERE id = :id";
         $sql= $this->db->prepare($sql);
-        $sql->bindValue("id", $id);
+        $sql->bindValue(":id", $id);
         $sql->execute();
         
         if($sql->rowCount() > 0){
@@ -83,8 +16,8 @@ class arvore extends model {
         
         $sql = "SELECT *, (select patent.name from patent where patent.id = user.patent)as patente FROM user WHERE id_dad = :id_dad AND ativo = 1 AND patent <= :patent";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("id_dad", $id);
-        $sql->bindValue("patent", $patent);
+        $sql->bindValue(":id_dad", $id);
+        $sql->bindValue(":patent", $patent);
         $sql->execute();
 
         if($sql->rowCount() > 0) {
@@ -105,13 +38,194 @@ class arvore extends model {
         return $array;
     }
     
+    public function pagamentoAtivacao($id, $limite) {
+        $array = array();
+        
+        $array['ativados'] = $this->cadeiaPagamentoAtivacao($id, $limite);
+        
+        $qtde = 0;
+        foreach ($array['ativados'] as $ativos){
+        if($ativos['ativo'] == 1){
+            $qtde += 1;
+        }
+        $qtde += $ativos['filhosAtivos']['c'];
+        if(isset($ativos['filhos']) && !empty($ativos['filhos'])){
+            foreach ($ativos['filhos'] as $ativos){
+                $qtde += $ativos['filhosAtivos']['c']; 
+                if(isset($ativos['filhos']) && !empty($ativos['filhos'])){
+                    foreach ($ativos['filhos'] as $ativos){
+                        $qtde += $ativos['filhosAtivos']['c']; 
+                        if(isset($ativos['filhos']) && !empty($ativos['filhos'])){
+                            foreach ($ativos['filhos'] as $ativos){
+                                $qtde += $ativos['filhosAtivos']['c'];
+                                if(isset($ativos['filhos']) && !empty($ativos['filhos'])){
+                                    foreach ($ativos['filhos'] as $ativos){
+                                        $qtde += $ativos['filhosAtivos']['c'];
+                                        if(isset($ativos['filhos']) && !empty($ativos['filhos'])){
+                                            foreach ($ativos['filhos'] as $ativos){
+                                                $qtde += $ativos['filhosAtivos']['c']; 
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    $sql = "SELECT COUNT(id) as c FROM user WHERE ativo = 1 AND id_dad = :id";
+    $sql = $this->db->prepare($sql);
+    $sql->bindValue("id", $id);
+    $sql->execute();
+    
+    if($sql->rowCount() > 0) {
+        $ativos = $sql->fetch(PDO::FETCH_ASSOC);
+        $qtde += $ativos['c'];
+    }
+   
+    return $qtde;
+    
+    }
+    public function cadeiaPagamentoAtivacao($id , $limite){
+        $array = array();
+      
+             
+        $sql = "SELECT * FROM user WHERE id_dad = :id_dad";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id_dad", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+            
+            foreach($array as $chave => $usuario){
+            
+            $sql = "SELECT COUNT(id) as c FROM user WHERE ativo = 1 AND id_dad = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue("id", $usuario['id']);
+            $sql->execute();
+            if($sql->rowCount() > 0) {
+                $array[$chave]['filhosAtivos'] = $sql->fetch(PDO::FETCH_ASSOC);
+            }
+              $array[$chave]['filhos'] = array();
+              if ($usuario['ativo'] == 0) {
+                  $limite = $limite+1;
+              }
+              
+                   if($limite > 0){                    
+                                   
+                    $array[$chave]['filhos'] = $this->cadeiaPagamentoAtivacao($usuario['id'], $limite - 1); 
+                }   
+            }
+           
+        }
+  
+        return $array;
+    }
+    public function pagamentoIndicados($id, $limite) {
+        $array = array();
+        
+        $array['indicados'] = $this->cadeiaPagamentoIndicacao($id, $limite);
+        
+        $qtde = 0;
+        foreach ($array['indicados'] as $ativos){
+        $data = explode("-", $ativos['data_ativacao']);
+        $mes = date('m');
+        if($ativos['ativo'] == 1 && $data[1] == $mes){
+            $qtde += 1;
+        }
+        $qtde += $ativos['filhosIndicados']['c'];
+        if(isset($ativos['filhos']) && !empty($ativos['filhos'])){
+            foreach ($ativos['filhos'] as $ativos){
+                $qtde += $ativos['filhosIndicados']['c']; 
+                if(isset($ativos['filhos']) && !empty($ativos['filhos'])){
+                    foreach ($ativos['filhos'] as $ativos){
+                        $qtde += $ativos['filhosIndicados']['c']; 
+                        if(isset($ativos['filhos']) && !empty($ativos['filhos'])){
+                            foreach ($ativos['filhos'] as $ativos){
+                                $qtde += $ativos['filhosIndicados']['c'];
+                                if(isset($ativos['filhos']) && !empty($ativos['filhos'])){
+                                    foreach ($ativos['filhos'] as $ativos){
+                                        $qtde += $ativos['filhosIndicados']['c'];
+                                        if(isset($ativos['filhos']) && !empty($ativos['filhos'])){
+                                            foreach ($ativos['filhos'] as $ativos){
+                                                $qtde += $ativos['filhosIndicados']['c']; 
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+   }
+        $sql = "SELECT COUNT(id) as c FROM user WHERE MONTH(data_ativacao) = :mes AND ativo = 1 AND id_dad = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->bindValue(":mes", $mes);
+        $sql->execute();
+        if($sql->rowCount() > 0) {
+            $indicados = $sql->fetch(PDO::FETCH_ASSOC);
+            $qtde += $indicados['c'];            
+        }
+        
+        return $qtde;
+    }
+
+    public function cadeiaPagamentoIndicacao($id , $limite){
+        $array = array();
+      
+             
+        $sql = "SELECT * FROM user WHERE id_dad = :id_dad";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id_dad", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+                        
+            $mes = date('m');
+            foreach($array as $chave => $usuario){
+            
+            $sql = "SELECT COUNT(id) as c FROM user WHERE MONTH(data_ativacao) = :mes AND ativo = 1 AND id_dad = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $usuario['id']);
+            $sql->bindValue(":mes", $mes);
+            $sql->execute();
+            if($sql->rowCount() > 0) {
+                $array[$chave]['filhosIndicados'] = $sql->fetch(PDO::FETCH_ASSOC);
+            }
+              $array[$chave]['filhos'] = array();
+              if ($usuario['ativo'] == 0) {
+                  $limite = $limite+1;
+              }
+              
+                   if($limite > 0){                    
+                                   
+                    $array[$chave]['filhos'] = $this->cadeiaPagamentoIndicacao($usuario['id'], $limite - 1); 
+                }   
+            }
+           
+        }
+  
+        return $array;
+    }
+    
+    //Pega a cadeia de filhos completa do ID Logado
      public function cadeiaCompleta($id){
         $array = array();
         
              
         $sql = "SELECT *, (select patent.name from patent where patent.id = user.patent)as patente FROM user WHERE id_dad = :id_dad";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("id_dad", $id);
+        $sql->bindValue(":id_dad", $id);
         $sql->execute();
         
         if($sql->rowCount() > 0) {
@@ -129,54 +243,11 @@ class arvore extends model {
         return $array;
     }
     
-    public function cadeiaPatente($id){
-        
-        $array = array();
-        
-         $sql = "SELECT COUNT(id) as ativos FROM user WHERE id_dad = :id_dad AND ativo = 1";
-        $sql = $this->db->prepare($sql);
-        $sql->bindvalue("id_dad", $id);
-        $sql->execute();
-        
-        if($sql->rowCount() > 0) { 
-            $filhos = $sql->fetch(PDO::FETCH_ASSOC);           
-        }
-                       
-        $array = $this->cadeiaComplementar($id);
-        
-        $array['filhosAtivos'] = $filhos;//ativos da primeira camada
-        return $array;
-    }
-    
-    public function cadeiaComplementar($id){
-        $array = array();
-       
-        
-        $sql = "SELECT *, (select user.name from user where user.id = qualificados.id_user) as nome, (select user.ativo from user where user.id = qualificados.id_user) as ativo FROM qualificados WHERE id_dad = :id_dad";
-        $sql = $this->db->prepare($sql);
-        $sql->bindValue("id_dad", $id);
-        $sql->execute();
-        
-        if($sql->rowCount() > 0) { 
-            
-            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
-           
-            foreach($array as $chave => $usuario){
-
-                $array[$chave]['qualificados'] = array();                
-                $array[$chave]['qualificados'] = $this->cadeiaComplementar($usuario['id_user']); 
-                
-            }
-        }
-        
-        return $array;
-    }
-
     public function patentesFilhos($id, $limite){
         $array = array();
         $sql = "SELECT * FROM user WHERE id_dad = :id_dad";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("id_dad", $id);
+        $sql->bindValue(":id_dad", $id);
         $sql->execute();
         if($sql->rowCount() > 0) {
             $array = $sql->fetchAll(PDO::FETCH_ASSOC);
@@ -195,7 +266,7 @@ class arvore extends model {
         
         $sql = "SELECT * FROM qualificados WHERE id_user = :id_user";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("id_user", $id);
+        $sql->bindValue(":id_user", $id);
         $sql->execute();
         
         if($sql->rowCount() > 0) {
@@ -205,12 +276,13 @@ class arvore extends model {
         return $array;
     }
     
+    // O que ela faz????
     public function cadeiaPatenteFilhos($id, $limite){
         $array = array();
                      
         $sql = "SELECT * FROM user WHERE id_dad = :id_dad";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("id_dad", $id);
+        $sql->bindValue(":id_dad", $id);
         $sql->execute();
         
         $consumidor = array();
@@ -298,5 +370,145 @@ class arvore extends model {
         return $consumidor;
     }
     
+    
+    public function arvoreCompleta($id){
+        $array = array();       
+             
+        $sql = "SELECT *, (select patent.name from patent where patent.id = user.patent)as patente FROM user WHERE id_dad = :id_dad";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id_dad", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $array['qtde'] = $sql->rowCount();
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+           
+            foreach($array as $chave => $usuario){
+                $array[$chave]['comprasMes'] = $this->comprasMes($usuario['id']);
+                $array[$chave]['filhos'] = array();                
+                    $array[$chave]['filhos'] = $this->arvoreCompleta($usuario['id']); 
+                    
+            }
+           
+        }
+        return $array;
+    }
+    
+    public function comprasMes($id){
+        $mes = date('m');
+        
+        $sql = "SELECT COUNT(qtde) as qtde FROM transacoes WHERE id_user = :id AND MONTH(data) = :mes";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":mes", $mes);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $qtde = $sql->fetch(PDO::FETCH_ASSOC);
+            return $qtde['qtde'];            
+        } else {
+            return 0;
+        }
+    }
 
+    public function comissao($id){
+       
+        $dados = array();
+        $arvore = $this->arvoreCompleta($id);     
+        $filhos = array();
+        $id = $_SESSION['multLogin'];
+        $patent = $this->minhaPatente($id);
+        $qtde = $this->calculoComissao($arvore, $filhos, $patent);       
+        
+        return $qtde;
+    }
+    
+    public function minhaPatente($id) {
+        $sql = "SELECT patent FROM user WHERE id = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $patent = $sql->fetch(PDO::FETCH_ASSOC);
+            
+            return $patent['patent'];            
+        }
+    }
+
+    public function calculoComissao($arvore, &$filhos, $patent){
+        
+        $qt = count($arvore);
+        
+        
+        for($q = 0; $q < $qt ;$q++){    
+            if($patent-$arvore[$q]['patent'] == 0){
+                $filhos['0%'] += 1;
+                if(count($arvore[$q]['filhos']) > 0) {
+//                    $patent = 1;
+                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
+                }
+            } else if($patent-$arvore[$q]['patent'] == 1){
+                $filhos['3%'] += 1;
+                if(count($arvore[$q]['filhos']) > 0) {
+                    $id = $_SESSION['multLogin'];
+                    $patent = $this->minhaPatente($id);
+                    $patent = $patent - $arvore[$q]['patent']+1;
+                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
+                }
+            } else if($patent-$arvore[$q]['patent'] == 2){
+                $filhos['6%'] += 1;
+                if(count($arvore[$q]['filhos']) > 0) {
+                    $id = $_SESSION['multLogin'];
+                    $patent = $this->minhaPatente($id);
+                    $patent = $patent - $arvore[$q]['patent']+1;
+                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
+                }
+            } else if($patent-$arvore[$q]['patent'] == 3){
+                $filhos['9%'] += 1;
+                if(count($arvore[$q]['filhos']) > 0) {
+                    $id = $_SESSION['multLogin'];
+                    $patent = $this->minhaPatente($id);
+                    $patent = $patent - $arvore[$q]['patent']+1;
+                    //puxar um retorno aqui 
+                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
+                }
+            } else if($patent-$arvore[$q]['patent'] == 4){
+                $filhos['12%'] += 1;
+                if(count($arvore[$q]['filhos']) > 0) {
+                    $id = $_SESSION['multLogin'];
+                    $patent = $this->minhaPatente($id);
+                    $patent = $patent - $arvore[$q]['patent']+1;
+                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
+                }
+            }
+            else if($patent-$arvore[$q]['patent'] == 5){
+                $filhos['15%'] += 1;
+                if(count($arvore[$q]['filhos']) > 0) {
+                    $id = $_SESSION['multLogin'];
+                    $patent = $this->minhaPatente($id);
+                    $patent = $patent - $arvore[$q]['patent']+1;
+                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
+                }
+            }
+            else if($patent-$arvore[$q]['patent'] == 6){
+                $filhos['18%'] += 1;
+                if(count($arvore[$q]['filhos']) > 0) {
+                    $id = $_SESSION['multLogin'];
+                    $patent = $this->minhaPatente($id);
+                    $patent = $patent - $arvore[$q]['patent']+1;
+                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
+                }
+            }
+            
+
+            
+        }
+//        echo '<pre>';
+//        echo $total;
+//        exit();
+        return $filhos;
+    }
+    
+  
 }

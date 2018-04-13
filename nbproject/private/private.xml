@@ -5,8 +5,10 @@
         <group>
             <file>file:/C:/xampp/htdocs/multi/views/painel.php</file>
             <file>file:/C:/xampp/htdocs/multi/models/patentes.php</file>
+            <file>file:/C:/xampp/htdocs/multi/controllers/homecontroller.php</file>
             <file>file:/C:/xampp/htdocs/multi/models/arvore.php</file>
             <file>file:/C:/xampp/htdocs/multi/views/teste.php</file>
+            <file>file:/C:/xampp/htdocs/multi/views/teste3.php</file>
             <file>file:/C:/xampp/htdocs/multi/controllers/testecontroller.php</file>
         </group>
     </open-files>
