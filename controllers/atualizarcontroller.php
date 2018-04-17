@@ -5,7 +5,9 @@ class atualizarcontroller extends controller {
     public function atualizar(){
         $dados = array();
         $p = new patentes();
-        $dados['patente'] = $p->atualizarPatente();
+        $p->atualizarPatente();
+        $p->setComissao();
+        $p->getComissao();
         header("Location: ".BASE_URL);
     }
     

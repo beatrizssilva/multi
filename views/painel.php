@@ -67,8 +67,11 @@ echo ' (<strong>'.utf8_encode($dadosUser['patente']).'</strong>)  você tem '.co
         <p>Prêmio por Indidcação <?php echo $indicacao;?> x R$ 8,00: <strong>R$ <?php $n = $indicacao * 8; echo number_format($n, 2, ',', '.');?></strong></p>
         <p>Ativados durante o mês: <strong><?php echo $ativacao;?></strong></p>
         <p>Prêmio por Ativação <?php echo $ativacao;?> x R$ 8,00: <strong>R$ <?php $n1 = $ativacao * 8; echo number_format($n1, 2, ',', '.');?></strong></p>
+        <p>Prêmio de Liderança: <strong><?php?></strong></p>
+        <p><strong><?php echo utf8_encode($dadosUser['patente']);?>:</strong><?php echo $ativacao;?> x R$ 8,00: <strong>R$ <?php $n1 = $ativacao * 8; echo number_format($n1, 2, ',', '.');?></strong></p>
         <h2><strong>Total: <?php $total = $n+$n1; echo number_format($total, 2, ',', '.');?></strong></h2><br/>
         <p><?php echo '<pre>';print_r($comissao);?></p>
+        
     </div>
 </div>
 <a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a><br/><br/>

@@ -9,7 +9,7 @@ class testecontroller extends controller {
         $consumidor = array();
         $a = new arvore();
         $dados['comissao'] = $a->setComissao();
-        $dados['getComissao'] = $a->getComissao($id);
+        $dados['getComissao'] = $a->getComissao();
         $this->loadTemplate('testeComissoes', $dados);
     }
 
