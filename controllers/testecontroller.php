@@ -2,6 +2,18 @@
 
 class testecontroller extends controller {
     
+    public function comissao() {
+        global $config;
+        $id = $_SESSION['multLogin'];
+        $dados = array();
+        $consumidor = array();
+        $a = new arvore();
+        $dados['comissao'] = $a->setComissao();
+        $dados['getComissao'] = $a->getComissao($id);
+        $this->loadTemplate('testeComissoes', $dados);
+    }
+
+
     public function patente(){
         global $config;
         $id = $_SESSION['multLogin'];

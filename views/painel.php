@@ -22,7 +22,7 @@ echo ' (<strong>'.utf8_encode($dadosUser['patente']).'</strong>)  você tem '.co
         <label>Email:</label>
         <input type="email" name="email" /><br/><br/>
 
-        <input type="submit" value="Cadastrar" />
+        <input type="submit" value="Cadastrar"  />
 
     </form>
 </div>
@@ -36,7 +36,7 @@ echo ' (<strong>'.utf8_encode($dadosUser['patente']).'</strong>)  você tem '.co
             <option><?php echo $q;?></option>
             <?php endfor;?>
         </select><br/><br/>
-
+     
         <input type="submit" value="Comprar" />
 
     </form>

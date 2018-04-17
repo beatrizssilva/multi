@@ -136,7 +136,7 @@ class transacoes extends model {
     
     public function insertPontosTotal($id, $qt) {
         
-        $ponto = intval($qt) * 200;
+        $ponto = intval($qt) * 220;
        
         $sql = "SELECT pontos FROM user WHERE id = :id";
         $sql = $this->db->prepare($sql);        
@@ -168,7 +168,7 @@ class transacoes extends model {
     public function insertPontosMes($id, $qt) {
         $mes = date('m');
         $ano = date('Y');
-        $ponto = intval($qt) * 200;
+        $ponto = intval($qt) * 220;
         
         $sql = "SELECT id FROM comissoes WHERE id_user = :id AND mes = :mes AND ano = :ano";
         $sql = $this->db->prepare($sql);        

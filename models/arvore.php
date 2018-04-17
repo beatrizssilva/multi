@@ -166,6 +166,7 @@ class arvore extends model {
         }
         
    }
+        $mes = date('m');
         $sql = "SELECT COUNT(id) as c FROM user WHERE MONTH(data_ativacao) = :mes AND ativo = 1 AND id_dad = :id";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id", $id);
@@ -384,7 +385,7 @@ class arvore extends model {
             $array = $sql->fetchAll(PDO::FETCH_ASSOC);
            
             foreach($array as $chave => $usuario){
-                $array[$chave]['comprasMes'] = $this->comprasMes($usuario['id']);
+                
                 $array[$chave]['filhos'] = array();                
                     $array[$chave]['filhos'] = $this->arvoreCompleta($usuario['id']); 
                     
@@ -410,17 +411,27 @@ class arvore extends model {
             return 0;
         }
     }
+    
+    public function comprasMesFilhos($id){
+        $mes = date('m');
+        
+        $sql = "SELECT COUNT(qtde) as qtde FROM transacoes WHERE id_user = :id AND MONTH(data) = :mes";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":mes", $mes);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $qtde = $sql->fetch(PDO::FETCH_ASSOC);
+            
+            return $qtde['qtde'];            
+        } else {
+            return 0;
+        }
+    }
 
     public function comissao($id){
        
-        $dados = array();
-        $arvore = $this->arvoreCompleta($id);     
-        $filhos = array();
-        $id = $_SESSION['multLogin'];
-        $patent = $this->minhaPatente($id);
-        $qtde = $this->calculoComissao($arvore, $filhos, $patent);       
-        
-        return $qtde;
     }
     
     public function minhaPatente($id) {
@@ -436,79 +447,128 @@ class arvore extends model {
         }
     }
 
-    public function calculoComissao($arvore, &$filhos, $patent){
-        
-        $qt = count($arvore);
-        
-        
-        for($q = 0; $q < $qt ;$q++){    
-            if($patent-$arvore[$q]['patent'] == 0){
-                $filhos['0%'] += 1;
-                if(count($arvore[$q]['filhos']) > 0) {
-//                    $patent = 1;
-                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
-                }
-            } else if($patent-$arvore[$q]['patent'] == 1){
-                $filhos['3%'] += 1;
-                if(count($arvore[$q]['filhos']) > 0) {
-                    $id = $_SESSION['multLogin'];
-                    $patent = $this->minhaPatente($id);
-                    $patent = $patent - $arvore[$q]['patent']+1;
-                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
-                }
-            } else if($patent-$arvore[$q]['patent'] == 2){
-                $filhos['6%'] += 1;
-                if(count($arvore[$q]['filhos']) > 0) {
-                    $id = $_SESSION['multLogin'];
-                    $patent = $this->minhaPatente($id);
-                    $patent = $patent - $arvore[$q]['patent']+1;
-                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
-                }
-            } else if($patent-$arvore[$q]['patent'] == 3){
-                $filhos['9%'] += 1;
-                if(count($arvore[$q]['filhos']) > 0) {
-                    $id = $_SESSION['multLogin'];
-                    $patent = $this->minhaPatente($id);
-                    $patent = $patent - $arvore[$q]['patent']+1;
-                    //puxar um retorno aqui 
-                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
-                }
-            } else if($patent-$arvore[$q]['patent'] == 4){
-                $filhos['12%'] += 1;
-                if(count($arvore[$q]['filhos']) > 0) {
-                    $id = $_SESSION['multLogin'];
-                    $patent = $this->minhaPatente($id);
-                    $patent = $patent - $arvore[$q]['patent']+1;
-                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
-                }
-            }
-            else if($patent-$arvore[$q]['patent'] == 5){
-                $filhos['15%'] += 1;
-                if(count($arvore[$q]['filhos']) > 0) {
-                    $id = $_SESSION['multLogin'];
-                    $patent = $this->minhaPatente($id);
-                    $patent = $patent - $arvore[$q]['patent']+1;
-                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
-                }
-            }
-            else if($patent-$arvore[$q]['patent'] == 6){
-                $filhos['18%'] += 1;
-                if(count($arvore[$q]['filhos']) > 0) {
-                    $id = $_SESSION['multLogin'];
-                    $patent = $this->minhaPatente($id);
-                    $patent = $patent - $arvore[$q]['patent']+1;
-                    $this->calculoComissao($arvore[$q]['filhos'], $filhos, $patent);                    
-                }
-            }
-            
+    public function getComissao($id){
+        $sql = "SELECT * FROM user WHERE id_dad = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
 
-            
+        if($sql->rowCount() > 0) {
+            $ids = $sql->fetchAll();
         }
-//        echo '<pre>';
-//        echo $total;
-//        exit();
-        return $filhos;
+        $comissao = 0;
+        foreach ($ids as $filho){
+            $sql = "SELECT * FROM comissao WHERE id_user = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->execute();
+            
+            if($sql->rowCount() > 0) {
+                $percentual = $sql->fetch();                
+            }
+            $sql = "SELECT * FROM comissao WHERE id_user = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $filho['id']);
+            $sql->execute();
+            if($sql->rowCount() > 0) {
+                $res = $sql->fetch();
+                $x = $percentual['percentual'] - $res['percentual'];
+                $comissao += floatval($res['valor_cadeia'] * $x)/100;                
+            }
+        }
+        if($comissao > 0){
+            $mes = date('m');
+            $ano = date('Y');
+            $sql = "UPDATE comissao SET comissao = :comissao WHERE id = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $percentual['id']);
+            $sql->bindValue(":comissao", $comissao);
+            $sql->execute();
+        }
+        return $comissao;
     }
     
-  
+    public function setComissao(){
+        $sql = "SELECT id, patent FROM user ORDER BY id DESC";
+        $sql = $this->db->query($sql);
+        
+        if($sql->rowCount() > 0) {
+            $usuarios = $sql->fetchAll();             
+        }
+        foreach ($usuarios as $user){          
+            switch ($user['patent']){
+                case '1':
+                    $percentual = 0;
+                    break;
+                case '2':
+                    $percentual = 3;
+                    break;
+                case '3':
+                    $percentual = 6;
+                    break;
+                case '4':
+                    $percentual = 9;
+                    break;
+                case '5':
+                    $percentual = 12;
+                    break;
+                case '6':
+                    $percentual = 15;
+                    break;
+                case '7':
+                    $percentual = 18;
+                    break;
+            }
+            $mes = date('m');
+            $ano = date('Y');
+            $sql = "SELECT pontos FROM comissoes WHERE id_user = :id_user AND mes = :mes AND ano = :ano";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id_user", $user['id']);
+            $sql->bindValue(":mes", $mes);
+            $sql->bindValue(":ano", $ano);
+            $sql->execute();
+            
+            if($sql->rowCount() > 0) {
+                $pontos = $sql->fetch();
+            } else {
+                $pontos['pontos'] = 0;
+            }
+            $mes = date('m');
+            $ano = date('Y');
+            $sql = "SELECT id FROM comissao WHERE id_user = :id_user AND mes = :mes AND ano = :ano";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id_user", $user['id']);
+            $sql->bindValue(":mes", $mes);
+            $sql->bindValue(":ano", $ano);
+            $sql->execute();
+
+            if($sql->rowCount() > 0) {
+                $resultado = $sql->fetch();
+                
+                $mes = date('m');
+                $ano = date('Y');
+                $sql = "UPDATE comissao SET  valor_cadeia = :valor, percentual = :percentual WHERE id = :id";
+                $sql = $this->db->prepare($sql);
+                $sql->bindValue(":id", $resultado['id']);
+                $sql->bindValue(":valor", $pontos['pontos']);
+                $sql->bindValue(":percentual", $percentual);
+                $sql->execute();
+
+            } else {
+
+                $mes = date('m');
+                $ano = date('Y');
+                $sql = "INSERT INTO comissao (id_user, valor_cadeia, percentual, mes, ano) VALUES (:id_user, :valor :percentual, :mes, :ano)";
+                $sql = $this->db->prepare($sql);
+                $sql->bindValue(":id_user", $user['id']);
+                $sql->bindValue(":valor", $pontos['pontos']);
+                $sql->bindValue(":percentual", $percentual);
+                $sql->bindValue(":mes", $mes);
+                $sql->bindValue(":ano", $ano);
+                $sql->execute();
+            }
+        }
+       
+    }
+   
 }

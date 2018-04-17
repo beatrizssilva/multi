@@ -25,7 +25,7 @@ class patentes extends model {
             $this->qualificados();
             foreach($usuarios as $chave => $usuario) {
                 $usuarios[$chave]['pontuacao'] = $this->getPontos($usuario['id']);
-                $usuarios[$chave]['resultado'] = $this->cadeiaPatente($usuario['id']);
+                $usuarios[$chave]['resultado'] = $this->cadeiaAtivos($usuario['id']);
                 
                 
                 $l = 1;
@@ -42,14 +42,28 @@ class patentes extends model {
             $linha[$l]['rubi'] = 0;
             $linha[$l]['diamante'] = 0;
             $linha[$l]['DuploDiamante'] = 0;
-
-            $linha[$l]['pre'] += $user['pre'];
-            $linha[$l]['bronze'] += intval($user['bronze']);
-            $linha[$l]['prata'] += $user['prata'];
-            $linha[$l]['ouro'] += $user['ouro'];
-            $linha[$l]['rubi'] += $user['rubi'];
-            $linha[$l]['diamante'] += $user['diamante'];
-            $linha[$l]['DuploDiamante'] += $user['duploDiamante']; 
+            
+            if(isset($user['pre']) && $user['pre'] > 0){
+                $linha[$l]['pre'] += $user['pre'];
+            }
+            if(isset($user['bronze']) && $user['bronze'] > 0){
+                $linha[$l]['bronze'] += $user['bronze'];
+            }
+            if(isset($user['prata']) && $user['prata'] > 0){
+                $linha[$l]['prata'] += $user['prata'];
+            }
+            if(isset($user['ouro']) && $user['ouro'] > 0){
+                $linha[$l]['ouro'] += $user['ouro'];
+            }
+            if(isset($user['rubi']) && $user['rubi'] > 0){
+                $linha[$l]['rubi'] += $user['rubi'];
+            }
+            if(isset($user['pdiamantere']) && $user['diamante'] > 0){
+                $linha[$l]['diamante'] += $user['diamante'];
+            }
+            if(isset($user['pduploDiamantere']) && $user['duploDiamante'] > 0){
+                $linha[$l]['DuploDiamante'] += $user['duploDiamante']; 
+            }
             switch ($user['patent']){
                 case '1':
                 $linha[$l]['pre'] += 1;
@@ -194,9 +208,6 @@ class patentes extends model {
             }
         }
 
-//        echo '<pre>';
-//                print_r($usuarios);
-//                exit();
         return $usuarios;
     }
 
@@ -354,7 +365,8 @@ class patentes extends model {
         return $consumidor;
     }
     
-     public function cadeiaPatente($id){
+    //Calcula a quantidade de filhos Ativos - cadeiaComplementar: Calcula os filhos dos filhos ativos
+     public function cadeiaAtivos($id){
         
         $array = array();
         

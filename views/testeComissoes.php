@@ -1,6 +1,6 @@
 <h1>Teste Comissoes</h1>
 <?php echo '<pre>';
- print_r($comissao);
+ print_r($getComissao);
  echo '</pre>';
 ?>
 
