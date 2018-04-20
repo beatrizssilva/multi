@@ -5,6 +5,7 @@ class transacoes extends model {
         global $config;
         
         $date = date("Y-m-d");
+        //insere na tabela transacoes a nova transacao
         $sql = "INSERT INTO transacoes (id_user, data, qtde) VALUES (:id_user, :data, :qtde)";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id_user", $id);
@@ -12,132 +13,53 @@ class transacoes extends model {
         $sql->bindValue(":qtde", $qtde);
         $sql->execute();
         
+        //pega o ultimo ID
         $id_venda = $this->db->lastInsertId();
+        
+        //gera o codigo do pedido
         $n = intval(100000+$id_venda);        
         $data = intval(date("Y").date("m").date("d"));
         $pedido = $data.'345'.$n;
         
+        //atualiza o campo da tabela com o numero do protocolo
         $sql = "UPDATE transacoes SET protocolo = :protocolo WHERE id =:id";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":protocolo", $pedido);
         $sql->bindValue(":id", $id_venda);
         $sql->execute();
         
+        //atualiza o cadastro do usuario 
         $sql = "UPDATE user SET ativo = 1 WHERE id = :id";
         $sql = $this->db->prepare($sql);        
         $sql->bindValue(":id", $id);
         $sql->execute();
         
+        //seleciona o id_dad do usuario para adicao dos pontos
         $sql = "SELECT id_dad FROM user WHERE id = :id";
         $sql = $this->db->prepare($sql);        
         $sql->bindValue(":id", $id);
         $sql->execute();
             
         if($sql->rowCount() > 0) {
-            $id = $sql->fetch(PDO::FETCH_ASSOC);
-           
+            $id = $sql->fetch(PDO::FETCH_ASSOC);           
             
+            //Inserir pontos total no cadastro do usuario
             $this->insertPontosTotal($id['id_dad'], $qtde);
+            //Insere quantidade de pontos na tabela comissoes
             $this->insertPontosMes($id['id_dad'], $qtde);
-            $this->insertKitsGeral($id['id_dad'], $qtde);//Inserindo Qtde de kits vendidos de toda a cadeia
-            $this->insertKitsCadeia($id['id_dad'], $config['limit'], $qtde);//Inserindo Qtde Kits vendidos até 5ª Geração
+           
         }
         
         return $pedido;
     }
     
-    public function insertKitsCadeia($id, $limite, $qt) {
-        $mes = date('m');
-        $ano = date('Y');
-        
-        $sql = "SELECT id FROM comissoes WHERE id_user = :id AND mes = :mes AND ano = :ano";
-        $sql = $this->db->prepare($sql);        
-        $sql->bindValue(":id", $id);
-        $sql->bindValue(":mes", $mes);
-        $sql->bindValue(":ano", $ano);
-        $sql->execute();
-        
-        if($sql->rowCount() > 0) {
-            $comissao = $sql->fetch(PDO::FETCH_ASSOC);
-            
-                    
-            $sql = "SELECT kits_cadeia FROM comissoes WHERE id = :id";
-            $sql = $this->db->prepare($sql);        
-            $sql->bindValue(":id", $comissao['id']);            
-            $sql->execute();
-            
-            if($sql->rowCount() > 0) {
-                $k = $sql->fetch(PDO::FETCH_ASSOC);
-                $kits = $k['kits_cadeia'] + $qt;
-                $sql = "UPDATE comissoes SET kits_cadeia = :kits WHERE id = :id";
-                $sql = $this->db->prepare($sql);
-                $sql->bindValue(":kits", $kits);           
-                $sql->bindValue(":id", $comissao['id']);
-                $sql->execute();
-            }
-            if($limite > 0) {
-                $sql = "SELECT id_dad FROM user WHERE id = :id";
-                $sql = $this->db->prepare($sql);        
-                $sql->bindValue(":id", $id);
-                $sql->execute();
-
-                    if($sql->rowCount() > 0) {
-                        $id = $sql->fetch(PDO::FETCH_ASSOC);
-                        if($id['id_dad'] <> 0){
-                            $this->insertKitsCadeia($id['id_dad'], $limite-1, $qt);
-                        }
-                    }
-            }
-        } 
-    }
-    
-    public function insertKitsGeral($id, $qt) {
-        $mes = date('m');
-        $ano = date('Y');
-        
-        $sql = "SELECT id FROM comissoes WHERE id_user = :id AND mes = :mes AND ano = :ano";
-        $sql = $this->db->prepare($sql);        
-        $sql->bindValue(":id", $id);
-        $sql->bindValue(":mes", $mes);
-        $sql->bindValue(":ano", $ano);
-        $sql->execute();
-        
-        if($sql->rowCount() > 0) {
-            $comissao = $sql->fetch(PDO::FETCH_ASSOC);
-            
-                    
-            $sql = "SELECT kits_geral FROM comissoes WHERE id = :id";
-            $sql = $this->db->prepare($sql);        
-            $sql->bindValue(":id", $comissao['id']);            
-            $sql->execute();
-            
-            if($sql->rowCount() > 0) {
-                $k = $sql->fetch(PDO::FETCH_ASSOC);
-                $kits = $k['kits_geral'] + $qt;
-                $sql = "UPDATE comissoes SET kits_geral = :kits WHERE id = :id";
-                $sql = $this->db->prepare($sql);
-                $sql->bindValue(":kits", $kits);           
-                $sql->bindValue(":id", $comissao['id']);
-                $sql->execute();
-            }
-        $sql = "SELECT id_dad FROM user WHERE id = :id";
-        $sql = $this->db->prepare($sql);        
-        $sql->bindValue(":id", $id);
-        $sql->execute();
-            
-            if($sql->rowCount() > 0) {
-                $id = $sql->fetch(PDO::FETCH_ASSOC);
-                if($id['id_dad'] <> 0){
-                    $this->insertKitsGeral($id['id_dad'], $qt);
-                }
-            }
-        } 
-    }
-    
+      
+    //Inserir pontos total no cadastro do usuario
     public function insertPontosTotal($id, $qt) {
         
         $ponto = intval($qt) * 220;
        
+        //seleciona a quantidade de pontos atual
         $sql = "SELECT pontos FROM user WHERE id = :id";
         $sql = $this->db->prepare($sql);        
         $sql->bindValue(":id", $id);
@@ -146,12 +68,14 @@ class transacoes extends model {
             $p = $sql->fetch(PDO::FETCH_ASSOC);
             $pontos = $p['pontos'] + $ponto;
            
+        //atualiza a quantidade de pontos
         $sql = "UPDATE user SET pontos = :pontos WHERE id = :id";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":pontos", $pontos);
         $sql->bindValue(":id", $id);
         $sql->execute();
         
+        //seelciona o pai deste usuario, se existe repete a função insertPontosTotal
         $sql = "SELECT id_dad FROM user WHERE id = :id";
         $sql = $this->db->prepare($sql);        
         $sql->bindValue(":id", $id);
@@ -165,6 +89,8 @@ class transacoes extends model {
             }
         }
     }
+    
+    //insere quantidade de pontos na tabela comissoes
     public function insertPontosMes($id, $qt) {
         $mes = date('m');
         $ano = date('Y');
@@ -231,7 +157,6 @@ class transacoes extends model {
                     }
                 }
             }
-        }
-        
+        }        
     }
 }

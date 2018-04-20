@@ -1,6 +1,7 @@
 <?php
 class usuarios extends model {
 
+    //verifica o login do usuario
     public function verifyUser($name, $senha){
        
         $sql = "SELECT * FROM user WHERE name = :name AND pass = :pass";
@@ -16,22 +17,22 @@ class usuarios extends model {
         }
     }
     
+    //seleciona as informações do usuario
     public function getDadosUser ($id){
         $array = array();
         
-        $sql = "SELECT *, (select patent.name from patent where patent.id = user.patent)as patente FROM user WHERE id = :id";
+        $sql = "SELECT *, (select patent.name from patent where patent.id = user.patent)as cargo FROM user WHERE id = :id";
         $sql = $this->db->prepare($sql);
         $sql->bindValue("id", $id);
         $sql->execute();
         
         if($sql->rowCount() > 0) {
             $array = $sql->fetch(PDO::FETCH_ASSOC);
-        }
-        
+        }        
         return $array;
     }
 
-
+    //Seleciona os dados do usuario após o login 
     public function getUser($name, $senha){
         $array = array();
 
@@ -47,6 +48,7 @@ class usuarios extends model {
         return $array;
     }
     
+    //cadastrar novo usuario
     public function setNewUser($email, $nome) {
         $senha = 123;
         $ativo = 0;
@@ -63,6 +65,7 @@ class usuarios extends model {
         $sql->execute();
     }
     
+    //seleciona a arvore até a 5ª geração definida na global $config
     public function getFilhos($id, $limite) {
         $array = array();
 

@@ -7,7 +7,7 @@
 if ($dadosUser['ativo'] == 0){
     echo '<strong style="color:red"> - VOCÊ ESTÁ INATIVO </strong>';
 }else{
-echo ' (<strong>'.utf8_encode($dadosUser['patente']).'</strong>)  você tem '.count($filhos).' cadastros diretos<strong style="color:blue"> - ATIVO </strong>';
+echo ' (<strong>'.utf8_encode($dadosUser['cargo']).'</strong>)  você tem '.count($filhos).' cadastros diretos<strong style="color:blue"> - ATIVO </strong>';
 }?>
 </h4>
 <br/><br/>
@@ -62,21 +62,23 @@ echo ' (<strong>'.utf8_encode($dadosUser['patente']).'</strong>)  você tem '.co
         <?php endif; ?>
     </div>
     <div>
-        <h3>Premiação:</h3>
-        <p>Indicados durante o mês: <strong><?php echo $indicacao;?></strong></p>
-        <p>Prêmio por Indidcação <?php echo $indicacao;?> x R$ 8,00: <strong>R$ <?php $n = $indicacao * 8; echo number_format($n, 2, ',', '.');?></strong></p>
-        <p>Ativados durante o mês: <strong><?php echo $ativacao;?></strong></p>
-        <p>Prêmio por Ativação <?php echo $ativacao;?> x R$ 8,00: <strong>R$ <?php $n1 = $ativacao * 8; echo number_format($n1, 2, ',', '.');?></strong></p>
+        <h3>Premiação do Mês Atual:</h3>
+        <p>Quantidade de Pontos: <strong><?php echo $premios['pontos'];?></strong></p>
+        <p>Indicados durante o mês: <strong><?php echo $premios['indicados'];?></strong></p>
+        <p>Prêmio por Indidcação <?php echo $premios['indicados'];?> x R$ 8,00: <strong>R$ <?php $n = $premios['indicados'] * 8; echo number_format($n, 2, ',', '.');?></strong></p>
+        <p>Ativados durante o mês: <strong><?php echo $premios['ativos'];?></strong></p>
+        <p>Prêmio por Ativação <?php echo $premios['ativos'];?> x R$ 8,00: <strong>R$ <?php $n1 = $premios['ativos'] * 8; echo number_format($n1, 2, ',', '.');?></strong></p>
         <p>Prêmio de Liderança: <strong><?php?></strong></p>
-        <p><strong><?php echo utf8_encode($dadosUser['patente']);?>:</strong><?php echo $ativacao;?> x R$ 8,00: <strong>R$ <?php $n1 = $ativacao * 8; echo number_format($n1, 2, ',', '.');?></strong></p>
+        <?php if ($dadosUser['patent'] > 1): ?>
+        <p><?php echo utf8_encode($dadosUser['cargo']).' (%)';?>:<strong> <?php echo ' R$ '.number_format($premios['com_lider'], 2, ',', '.');?></strong></p>
+        <h2><strong>Total: <?php echo number_format($premios['valor_total'], 2, ',', '.');?></strong></h2><br/>
+        <?php else: ?>
+        <p>Sem Cargo de Liderança.</p>
+        
         <h2><strong>Total: <?php $total = $n+$n1; echo number_format($total, 2, ',', '.');?></strong></h2><br/>
-        <p><?php echo '<pre>';print_r($comissao);?></p>
+        <?php endif; ?>
         
     </div>
 </div>
 <a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a><br/><br/>
 <a href="<?php echo BASE_URL;?>atualizar/atualizar">Atualizar Patentes</a><br/>
-<a href="<?php echo BASE_URL;?>teste/comissao">Calcular Comissões</a><br/>
-<a href="<?php echo BASE_URL;?>teste/arvore">Arvore</a><br/>
-<a href="<?php echo BASE_URL;?>teste/ativacao">Calcular Comissão Ativação</a><br/>
-<a href="<?php echo BASE_URL;?>teste/indicacao">Calcular Comissão Indicação</a><br/>

@@ -3,7 +3,7 @@
 class transacoescontroller extends controller {
     
     public function comprar(){
-//        global $config;
+
         $dados = array();
         
         $t = new transacoes();

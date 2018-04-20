@@ -25,8 +25,7 @@ class patentes extends model {
             $this->qualificados();
             foreach($usuarios as $chave => $usuario) {
                 $usuarios[$chave]['pontuacao'] = $this->getPontos($usuario['id']);
-                $usuarios[$chave]['resultado'] = $this->cadeiaAtivos($usuario['id']);
-                
+                $usuarios[$chave]['resultado'] = $this->cadeiaAtivos($usuario['id']);                
                 
                 $l = 1;
                 $linha = array();
@@ -211,6 +210,7 @@ class patentes extends model {
         return $usuarios;
     }
     
+    //atualiza as comissoes do usuario na tabela comissao
     public function getComissao(){
         $sql = "SELECT id FROM user ORDER BY id ASC";
         $sql = $this->db->query($sql);
@@ -261,6 +261,7 @@ class patentes extends model {
         }
     }
     
+    //atualiza o valor da comissao na tabela comissao
     public function setComissao(){
         $sql = "SELECT id, patent FROM user ORDER BY id DESC";
         $sql = $this->db->query($sql);
@@ -346,6 +347,7 @@ class patentes extends model {
        
     }
 
+    //pega a quantidade de pontos do usuario
     public function getPontos($id){
         $sql = "SELECT pontos FROM comissoes WHERE id_user = :id";
         $sql = $this->db->prepare($sql);
@@ -359,6 +361,7 @@ class patentes extends model {
         return $p['pontos'];
     }
     
+    //atualiza a tabela qualificados para calulcar a quantidade filhos por graduação ativos por linha
     public function qualificados(){
         $array = array();
                      
@@ -379,6 +382,7 @@ class patentes extends model {
         return $array;
     }
     
+    //função complementar da função qualificados
     public function cadeiaPatenteFilhos($id){
         $array = array();
         $consumidor = array();
@@ -519,7 +523,7 @@ class patentes extends model {
         $array['filhosAtivos'] = $filhos;//ativos da primeira camada
         return $array;
     }
-    
+    //função complementar da função cadeiaAtivos
     public function cadeiaComplementar($id){
         $array = array();
        
