@@ -54,8 +54,9 @@ echo ' (<strong>'.utf8_encode($dadosUser['cargo']).'</strong>)  você tem '.coun
             <div class="filhos">
                 <div class="dados">
 
-                </div>
-                    <?php $this->loadView('filhos',array('filho' =>$filhos));?>
+                </div>                
+                    <?php $this->loadView('filhos',array('filho' =>$filhos, 'c' => 0, 'g' => 1));?>
+                
             </div>
         <?php  else: ?>
             <h4>Não há Usuários Cadastrados</h4>

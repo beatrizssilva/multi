@@ -78,10 +78,10 @@ class usuarios extends model {
             $array = $sql->fetchAll(PDO::FETCH_ASSOC);
             foreach($array as $chave => $usuario){
                 $array[$chave]['filhos'] = array();
-                if($limite > 0){
+//                if($limite > 0){
                     
                     $array[$chave]['filhos'] = $this->getFilhos($usuario['id'], $limite - 1);
-                }
+//                }
             }
         }
         return $array;

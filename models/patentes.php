@@ -22,6 +22,7 @@ class patentes extends model {
             $total = 0;
             $ativos =0;
             $consumidor = array();
+            //atualiza a tabela de qualificados
             $this->qualificados();
             foreach($usuarios as $chave => $usuario) {
                 $usuarios[$chave]['pontuacao'] = $this->getPontos($usuario['id']);
@@ -30,6 +31,7 @@ class patentes extends model {
                 $l = 1;
                 $linha = array();
     
+    //['filhosAtivos']['ativos'] -> quantidade de filhos ativos na primeira camada
      if($usuarios[$chave]['resultado']['filhosAtivos']['ativos'] >= 1){
                
         foreach ($usuarios[$chave]['resultado'] as $user){    
@@ -63,30 +65,33 @@ class patentes extends model {
             if(isset($user['pduploDiamantere']) && $user['duploDiamante'] > 0){
                 $linha[$l]['DuploDiamante'] += $user['duploDiamante']; 
             }
-            switch ($user['patent']){
-                case '1':
-                $linha[$l]['pre'] += 1;
-                break;
-                case '2':
-                $linha[$l]['bronze'] += 1;
-                break;
-                case '3':
-                $linha[$l]['prata'] += 1;
-                break;
-                case '4':
-                $linha[$l]['ouro'] += 1;
-                break;
-                case '5':
-                $linha[$l]['rubi'] += 1;
-                break;
-                case '6':
-                $linha[$l]['diamante'] += 1;
-                break;
-                case '7':
-                $linha[$l]['DuploDiamante'] += 1;
-                break;    
+            
+            if($user['ativo'] > 0){
+                switch ($user['patent']){
+                    case '1':
+                    $linha[$l]['pre'] += 1;
+                    break;
+                    case '2':
+                    $linha[$l]['bronze'] += 1;
+                    break;
+                    case '3':
+                    $linha[$l]['prata'] += 1;
+                    break;
+                    case '4':
+                    $linha[$l]['ouro'] += 1;
+                    break;
+                    case '5':
+                    $linha[$l]['rubi'] += 1;
+                    break;
+                    case '6':
+                    $linha[$l]['diamante'] += 1;
+                    break;
+                    case '7':
+                    $linha[$l]['DuploDiamante'] += 1;
+                    break;    
+                }
             }
-
+            //qualificados -> função complementar para puxar os filhos dos filhos ativos
             if(isset($user['qualificados']) && $user['qualificados'] > 0){
                 foreach ($user['qualificados'] as $user){
                     $linha[$l]['pre'] += $user['pre'];
@@ -135,6 +140,7 @@ class patentes extends model {
                     }                    
                 }    
             }
+            
                 $l++;
         }
     } 
@@ -236,16 +242,19 @@ class patentes extends model {
                     $sql->execute();
 
                     if($sql->rowCount() > 0) {
-                        $percentual = $sql->fetch();                
+                        $valores = $sql->fetch();    
+                        
                     }
                     $sql = "SELECT * FROM comissao WHERE id_user = :id";
                     $sql = $this->db->prepare($sql);
                     $sql->bindValue(":id", $filho['id']);
                     $sql->execute();
                     if($sql->rowCount() > 0) {
-                        $res = $sql->fetch();
-                        $x = $percentual['percentual'] - $res['percentual'];
-                        $comissao += floatval($res['valor_cadeia'] * $x)/100;                
+                        $f = $sql->fetch();
+                        $x = $valores['percentual'] - $f['percentual'];
+                        
+                        $comissao += floatval($f['valor_cadeia'] * $x)/100;   
+                       
                     }
                 }
                 if($comissao > 0){
@@ -253,7 +262,7 @@ class patentes extends model {
                     $ano = date('Y');
                     $sql = "UPDATE comissao SET comissao = :comissao WHERE id = :id";
                     $sql = $this->db->prepare($sql);
-                    $sql->bindValue(":id", $percentual['id']);
+                    $sql->bindValue(":id", $valores['id']);
                     $sql->bindValue(":comissao", $comissao);
                     $sql->execute();
                 }
@@ -307,6 +316,21 @@ class patentes extends model {
             } else {
                 $pontos['pontos'] = 0;
             }
+            
+            $sql = "SELECT SUM(qtde) as qtde FROM transacoes WHERE id_user = :id_user AND MONTH(data) = :mes";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id_user", $user['id']);
+            $sql->bindValue(":mes", $mes);
+            $sql->execute();
+            
+            if($sql->rowCount() > 0) {
+                $transacoes = $sql->fetch();
+                $qtde = $transacoes['qtde'] * 220;
+            } else {
+                $qtde = 0;
+            }
+            
+            
             $mes = date('m');
             $ano = date('Y');
             $sql = "SELECT id FROM comissao WHERE id_user = :id_user AND mes = :mes AND ano = :ano";
@@ -315,7 +339,9 @@ class patentes extends model {
             $sql->bindValue(":mes", $mes);
             $sql->bindValue(":ano", $ano);
             $sql->execute();
-
+            
+            $valor_cadeia = $pontos['pontos'] + $qtde;
+            
             if($sql->rowCount() > 0) {
                 $resultado = $sql->fetch();
                 
@@ -324,7 +350,7 @@ class patentes extends model {
                 $sql = "UPDATE comissao SET  valor_cadeia = :valor, percentual = :percentual WHERE id = :id";
                 $sql = $this->db->prepare($sql);
                 $sql->bindValue(":id", $resultado['id']);
-                $sql->bindValue(":valor", $pontos['pontos']);
+                $sql->bindValue(":valor", $valor_cadeia);
                 $sql->bindValue(":percentual", $percentual);
                 $sql->execute();
 
@@ -336,7 +362,7 @@ class patentes extends model {
                 $sql = "INSERT INTO comissao (id_user, valor_cadeia, percentual, mes, ano) VALUES (:id_user, :valor, :percentual, :mes, :ano)";
                 $sql = $this->db->prepare($sql);
                 $sql->bindValue(":id_user", $user['id']);
-                $sql->bindValue(":valor", $pontos['pontos']);
+                $sql->bindValue(":valor", $valor_cadeia);
                 $sql->bindValue(":percentual", $percentual);
                 $sql->bindValue(":mes", $mes);
                 $sql->bindValue(":ano", $ano);
@@ -395,7 +421,7 @@ class patentes extends model {
         $consumidor['diamante'] = 0;
         $consumidor['duploDiamante'] = 0;
         
-        $sql = "SELECT patent FROM user WHERE id = :id";
+        $sql = "SELECT patent, ativo FROM user WHERE id = :id";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id", $id);
         $sql->execute();
@@ -405,6 +431,7 @@ class patentes extends model {
         }
        
         $consumidor['patent'] = $array['patent'];
+        $consumidor['ativo'] = $array['ativo'];
         
         $sql = "SELECT * FROM user WHERE id_dad = :id_dad";
         $sql = $this->db->prepare($sql);
@@ -463,10 +490,11 @@ class patentes extends model {
             if($sql->rowCount() > 0) {  
                 $id_table = $sql->fetch(PDO::FETCH_ASSOC);
                                     
-                    $sql = "UPDATE qualificados SET patent = :patent, pre = :pre, bronze = :bronze, prata = :prata, ouro = :ouro, rubi = :rubi, diamante = :diamante, duploDiamante = :duploDiamante WHERE id = :id";
+                    $sql = "UPDATE qualificados SET patent = :patent, ativo = :ativo, pre = :pre, bronze = :bronze, prata = :prata, ouro = :ouro, rubi = :rubi, diamante = :diamante, duploDiamante = :duploDiamante WHERE id = :id";
                     $sql = $this->db->prepare($sql);
                     $sql->bindValue(":id", $id_table['id']);
                     $sql->bindValue(":patent", $consumidor['patent']);
+                    $sql->bindValue(":ativo", $consumidor['ativo']);
                     $sql->bindValue(":pre", $consumidor['pre']);
                     $sql->bindValue(":bronze", $consumidor['bronze']);
                     $sql->bindValue(":prata", $consumidor['prata']);
@@ -484,11 +512,12 @@ class patentes extends model {
                     if($sql->rowCount() > 0) {  
                         $id_dad = $sql->fetch(PDO::FETCH_ASSOC);
                         
-                        $sql = "INSERT INTO qualificados (id_user, patent, id_dad, pre, bronze, prata, ouro, rubi, diamante, duploDiamante, mes, ano) VALUES (:id_user, :patent, :id_dad, :pre, :bronze, :prata, :ouro, :rubi, :diamante, :duploDiamante, :mes, :ano)";
+                        $sql = "INSERT INTO qualificados (id_user, patent, ativo, id_dad, pre, bronze, prata, ouro, rubi, diamante, duploDiamante, mes, ano) VALUES (:id_user, :patent, :ativo, :id_dad, :pre, :bronze, :prata, :ouro, :rubi, :diamante, :duploDiamante, :mes, :ano)";
                         $sql = $this->db->prepare($sql);
                         $sql->bindValue(":id_user", $id);
                         $sql->bindValue(":id_dad", $id_dad['id_dad']);
                         $sql->bindValue(":patent", $consumidor['patent']);
+                        $sql->bindValue(":ativo", $consumidor['ativo']);
                         $sql->bindValue(":pre", $consumidor['pre']);
                         $sql->bindValue(":bronze", $consumidor['bronze']);
                         $sql->bindValue(":prata", $consumidor['prata']);

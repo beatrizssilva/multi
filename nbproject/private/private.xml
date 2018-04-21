@@ -6,8 +6,11 @@
             <file>file:/C:/xampp/htdocs/multi/views/painel.php</file>
             <file>file:/C:/xampp/htdocs/multi/controllers/homecontroller.php</file>
             <file>file:/C:/xampp/htdocs/multi/models/comissao.php</file>
+            <file>file:/C:/xampp/htdocs/multi/models/patentes.php</file>
+            <file>file:/C:/xampp/htdocs/multi/models/resetar.php</file>
             <file>file:/C:/xampp/htdocs/multi/controllers/atualizarcontroller.php</file>
             <file>file:/C:/xampp/htdocs/multi/models/arvore.php</file>
+            <file>file:/C:/xampp/htdocs/multi/views/teste.php</file>
         </group>
     </open-files>
 </project-private>

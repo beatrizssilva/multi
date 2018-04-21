@@ -1,27 +1,37 @@
 <?php
 
-echo '<ol>';
+echo '<ol style="list-style:none;">';
+$l = 1;
         foreach ($filho as $usuario){
-           
+            
+            if (isset($c) && $c == 1){    
+            }else {
+                echo '<hr><strong style="font-size:18px;">Linha: '.$l.'</strong>';
+            }
             if ($usuario['ativo'] == 0): ?>
-<li style="color:red">
+<li style="color:#AAA">
 
     
             <?php else: ?>
-    <li>
+    <li style="color:blue">
   
         <?php endif; ?>
-    <?php echo $usuario['name'].' (<strong>'.utf8_encode($usuario['patente']).'</strong>)  tem '.count($usuario['filhos']).' cadastros diretos';
+    <?php echo '<strong>'.$g.'ª Geração - </strong>'.$usuario['name'].' (<strong>'.utf8_encode($usuario['patente']).'</strong>)';
     if ($usuario['ativo'] == 0){
-        echo ' - <strong>CONSUMIDOR INATIVO.</strong>';
+        echo ' - <strong>INATIVO.</strong>';
+        echo '</li>';
+    } else {
+        echo ' - <strong>ATIVO.</strong>';
         echo '</li>';
     }
         
             if(count($usuario['filhos']) > 0) {
-                $this->loadView('filhos',array('filho' => $usuario['filhos']));
+                $this->loadView('filhos',array('filho' => $usuario['filhos'], 'c' => 1, 'g' => $g+1));
             }
             echo '</li>';
+            $l++;
         }
+        
 echo '</ol>';
 ?>
 
