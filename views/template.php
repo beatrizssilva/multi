@@ -14,11 +14,11 @@
         
         <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>assets/css/style.css" />
         
-        <title>Inoveh Multinivel</title>
+        <title>Lar Alimentos</title>
     </head>
 <body>
     <header>
-        <h1>SISTEMA DE MARKETING MULTINIVEL</h1>
+        <h1>LAR ALIMENTOS</h1>
     </header>
 
 <?php $this->loadViewinTemplate($viewName, $viewData); ?>

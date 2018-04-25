@@ -1,18 +1,17 @@
-<?php
-//echo '<pre>';
-//print_r($comissao);
-//exit();
-?>
 <h4>Olá <?php echo $dadosUser['name'];
 if ($dadosUser['ativo'] == 0){
     echo '<strong style="color:red"> - VOCÊ ESTÁ INATIVO </strong>';
 }else{
 echo ' (<strong>'.utf8_encode($dadosUser['cargo']).'</strong>)  você tem '.count($filhos).' cadastros diretos<strong style="color:blue"> - ATIVO </strong>';
-}?>
+}
+echo ' - Seu ID: '.$dadosUser['identificador'];
+?>
 </h4>
 <br/><br/>
 <div class="painel">
-<div>
+    <h3>Convidar</h3><br/>
+    <a href="http://localhost/multi/usuarios/cadastrar?id=<?php echo$dadosUser['identificador']; ?>">Convidar</a>
+    <!--<div>
 <h3>Cadastrar Novo Usuário</h3>
 
     <form method="POST" action="<?php echo BASE_URL;?>usuarios/cadastrar">
@@ -25,7 +24,7 @@ echo ' (<strong>'.utf8_encode($dadosUser['cargo']).'</strong>)  você tem '.coun
         <input type="submit" value="Cadastrar"  />
 
     </form>
-</div>
+</div>-->
 <div>
 <h3>Comprar Nova Cesta</h3>
     <form method="POST" action="<?php echo BASE_URL;?>transacoes/comprar">
@@ -83,3 +82,4 @@ echo ' (<strong>'.utf8_encode($dadosUser['cargo']).'</strong>)  você tem '.coun
 </div>
 <a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a><br/><br/>
 <a href="<?php echo BASE_URL;?>atualizar/atualizar">Atualizar Patentes</a><br/>
+<a href="<?php echo BASE_URL;?>teste/codigo">Teste</a><br/>

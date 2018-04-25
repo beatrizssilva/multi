@@ -11,40 +11,49 @@ class usuarioscontroller extends controller {
     public function cadastrar() {
         $u = new usuarios();
         $c = new comissao();
-        global $config;
-        if(!empty($_POST['nome']) && !empty ($_POST['email'])) {
+      if(!empty($_GET['id'])){
+          
+          $dados['id'] = addslashes($_GET['id']); 
+          $this->loadTemplate('cadastrar', $dados);
+      } else
+        if(!empty($_POST['nome']) && !empty ($_POST['email']) && !empty ($_POST['id']) && !empty ($_POST['senha'])) {
             $email = addslashes($_POST['email']);
-            $nome = addslashes($_POST['nome']);            
-            //setNewUser -> envia os dados para novo cadastro
-            $u->setNewUser($email, $nome);
-            //getFilhos -> seleciona a arvore até a 5ª geração definida na global $config
-            $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
-            //envia mensagem
-            $dados['msg'] = "Cadastro Realizado com Sucesso.";
-            //getDadosUser -> seleciona as informações do usuario
-            $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
-            //getPremios -> seleciona a premiação do usuario
-            $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
-            $this->loadTemplate('painel', $dados);
+            $nome = addslashes($_POST['nome']); 
+            $id = addslashes($_POST['id']); 
+            $senha = addslashes($_POST['senha']);
+            
+            $dados['nome'] = $nome;
+            $dados['email'] = $email;
+            $dados['id'] = $id;
+            
+                    
+            if($u->verifyEmail($email)) {
+                $dados['op'] = 0;
+                $dados['msg'] = "E-mail já Cadastrado.";
+                $this->loadTemplate('cadastrar', $dados);
+            } else if($u->verifyID($id)) {
+                if($u->setNewUser($email, $nome, $senha, $id)){
+                    $dados['op'] = 0;
+                    $dados['login'] = 1;
+                    $dados['msg'] = "Cadastro realizado com sucesso.";
+                    $this->loadTemplate('cadastrar', $dados);
+                }
+            } else {
+                $dados['op'] = 0;
+                $dados['msg'] = "ID Incorreto.";
+                $this->loadTemplate('cadastrar', $dados);
+            }           
+           
         } else {
-            //getFilhos -> seleciona a arvore até a 5ª geração definida na global $config
-            $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);            
-            //getDadosUser -> seleciona as informações do usuario
-            $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
-            //getPremios -> seleciona a premiação do usuario
-            $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
+            $dados['op'] = 1;
             $dados['msg'] = "Preencha todos os campos.";
-            $this->loadTemplate('painel', $dados);
+            $this->loadTemplate('cadastrar', $dados);
         }
-    }
+    }  
     
-//    public function patentes(){
-//        global $config;
-//        $dados = array();
-//        $u = new usuarios();
-//        $dados['patente'] = $u->patente();
-//        $this->loadTemplate('teste', $dados);
-//    }
-   
+    public function cadastro(){
+        $dados = array();
+        $this->loadTemplate('cadastrar', $dados);
+    }
 }
 

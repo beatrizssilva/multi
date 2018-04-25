@@ -1,5 +1,2 @@
 <?php
-echo '<pre>';
-print_r($ativos);
-exit();
-
+print_r ($token);

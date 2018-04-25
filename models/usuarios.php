@@ -49,11 +49,19 @@ class usuarios extends model {
     }
     
     //cadastrar novo usuario
-    public function setNewUser($email, $nome) {
-        $senha = 123;
+    public function setNewUser($email, $nome, $senha, $id) {
+        $sql = "SELECT * FROM user WHERE identificador = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+        }
         $ativo = 0;
         $data_ativacao = date("Y-m-d h:m:i");
-        $id_dad = $_SESSION['multLogin'];
+        $id_dad = $array['id'];
+        
         $sql = "INSERT INTO user (id_dad, name, email, pass, ativo, data_ativacao) VALUES (:id_dad, :name, :email, :pass, :ativo, :data_ativacao)";
         $sql = $this->db->prepare($sql);
         $sql->bindValue("id_dad", $id_dad);
@@ -63,6 +71,21 @@ class usuarios extends model {
         $sql->bindValue("ativo", $ativo);
         $sql->bindValue("data_ativacao", $data_ativacao);        
         $sql->execute();
+        
+        $id_user = $this->db->lastInsertId();
+        $token = md5(date('Y-m-d H:i:s').rand(0, 999).rand(0, 999));
+        $token1 = str_split($token);
+        $t = $token1[0].$token1[1].$token1[2].$token1[3];
+        $n = intval(1000+$id_user); 
+        $identificador = $n.$t;
+        
+        $sql = "UPDATE user SET identificador = :identificador WHERE id =:id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":identificador", $identificador);
+        $sql->bindValue(":id", $id_user);
+        $sql->execute();
+        
+        return true;
     }
     
     //seleciona a arvore até a 5ª geração definida na global $config
@@ -71,7 +94,7 @@ class usuarios extends model {
 
         $sql = "SELECT *, (select patent.name from patent where patent.id = user.patent)as patente FROM user WHERE id_dad = :id_dad";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("id_dad", $id);
+        $sql->bindValue(":id_dad", $id);
         $sql->execute();
 
         if($sql->rowCount() > 0) {
@@ -87,5 +110,33 @@ class usuarios extends model {
         return $array;
     }
     
+    //verifica se email ja cadastrado
+    public function verifyEmail($email) {
+        $sql = "SELECT * FROM user WHERE email = :email";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":email", $email);
+        $sql->execute();
 
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+        //verifica se ID está correto
+    public function verifyID($id) {
+        $sql = "SELECT * FROM user WHERE identificador = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

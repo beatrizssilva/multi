@@ -51,10 +51,7 @@ class homecontroller extends controller {
             } else {
                 $this->loadTemplate('login', $dados);
             }
-    }
-    
-    public function arvore(){
-        
-    }
+    }   
+   
 }
 
