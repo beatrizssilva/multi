@@ -19,7 +19,7 @@ class homecontroller extends controller {
         
         //getPremios -> seleciona a premiação do usuario
         $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
-        $this->loadTemplate('painel', $dados);
+        $this->loadTemplatePanel('painel', $dados);
         
         } else if(isset($_POST['name']) && !empty ($_POST['name'])) {
             $name = addslashes($_POST['name']);
@@ -40,16 +40,16 @@ class homecontroller extends controller {
         
                     //getPremios -> seleciona a premiação do usuario
                     $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
-                    $this->loadTemplate('painel', $dados);
+                    $this->loadTemplatePanel('painel', $dados);
                     
                   
                 } else {
                     $dados['msg'] = "E-mail ou Senha Incorretos. Tente Novamente.";
-                    $this->loadTemplate('login', $dados);
+                    $this->loadTemplateLogin('login', $dados);
                 }
             
             } else {
-                $this->loadTemplate('login', $dados);
+                $this->loadTemplateLogin('login', $dados);
             }
     }   
    

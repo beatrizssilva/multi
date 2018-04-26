@@ -12,7 +12,7 @@ class testecontroller extends controller {
         $t = $token1[0].$token1[1].$token1[2].$token1[3];
         
         $dados['token'] = $t;
-        $this->loadTemplate('teste', $dados);
+        $this->loadTemplatePanel('teste', $dados);
     }
     
    

@@ -14,7 +14,7 @@ class usuarioscontroller extends controller {
       if(!empty($_GET['id'])){
           
           $dados['id'] = addslashes($_GET['id']); 
-          $this->loadTemplate('cadastrar', $dados);
+          $this->loadTemplatePanel('cadastrar', $dados);
       } else
         if(!empty($_POST['nome']) && !empty ($_POST['email']) && !empty ($_POST['id']) && !empty ($_POST['senha'])) {
             $email = addslashes($_POST['email']);
@@ -30,30 +30,30 @@ class usuarioscontroller extends controller {
             if($u->verifyEmail($email)) {
                 $dados['op'] = 0;
                 $dados['msg'] = "E-mail já Cadastrado.";
-                $this->loadTemplate('cadastrar', $dados);
+                $this->loadTemplatePanel('cadastrar', $dados);
             } else if($u->verifyID($id)) {
                 if($u->setNewUser($email, $nome, $senha, $id)){
                     $dados['op'] = 0;
                     $dados['login'] = 1;
                     $dados['msg'] = "Cadastro realizado com sucesso.";
-                    $this->loadTemplate('cadastrar', $dados);
+                    $this->loadTemplatePanel('cadastrar', $dados);
                 }
             } else {
                 $dados['op'] = 0;
                 $dados['msg'] = "ID Incorreto.";
-                $this->loadTemplate('cadastrar', $dados);
+                $this->loadTemplatePanel('cadastrar', $dados);
             }           
            
         } else {
             $dados['op'] = 1;
             $dados['msg'] = "Preencha todos os campos.";
-            $this->loadTemplate('cadastrar', $dados);
+            $this->loadTemplatePanel('cadastrar', $dados);
         }
     }  
     
     public function cadastro(){
         $dados = array();
-        $this->loadTemplate('cadastrar', $dados);
+        $this->loadTemplatePanel('cadastrar', $dados);
     }
 }
 

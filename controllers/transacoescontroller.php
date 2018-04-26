@@ -19,7 +19,7 @@ class transacoescontroller extends controller {
         $dados['qt'] = $qt;
         $dados['transacao'] = $t->comprando($id, $qt);
         
-        $this->loadTemplate('comprar', $dados);
+        $this->loadTemplatePanel('comprar', $dados);
     }
 }
 

@@ -12,12 +12,34 @@ class controller {
         extract($viewData);
         require 'views/'.$viewName.'.php';
     }
-    public function loadViewDescricao($viewName, $viewData = array()) {
+    
+    
+    
+    public function loadViewLogin($viewName, $viewData = array()) {
         extract($viewData);
-        require 'views-descricao/'.$viewName.'.php';
+        require 'views-login/'.$viewName.'.php';
     }    
-    public function loadViewinTemplateDescricao($viewName, $viewData = array()){
+    public function loadTemplateLogin($viewName, $viewData = array()){
+        require 'views-login/templateLogin.php';
+    }
+    public function loadViewinTemplateLogin($viewName, $viewData = array()){
         extract($viewData);
-        require 'views-descricao/'.$viewName.'.php';
+        require 'views-login/'.$viewName.'.php';
+    }
+    
+    
+    
+    
+    
+    public function loadViewPanel($viewName, $viewData = array()) {
+        extract($viewData);
+        require 'views-panel/'.$viewName.'.php';
+    }    
+    public function loadTemplatePanel($viewName, $viewData = array()){
+        require 'views-panel/templatePanel.php';
+    }
+    public function loadViewinTemplatePanel($viewName, $viewData = array()){
+        extract($viewData);
+        require 'views-panel/'.$viewName.'.php';
     }
 }

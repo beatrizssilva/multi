@@ -9,9 +9,9 @@ echo ' - Seu ID: '.$dadosUser['identificador'];
 </h4>
 <br/><br/>
 <div class="painel">
-    <h3>Convidar</h3><br/>
+    <div>
     <a href="http://localhost/multi/usuarios/cadastrar?id=<?php echo$dadosUser['identificador']; ?>">Convidar</a>
-    <!--<div>
+    </div><!--<div>
 <h3>Cadastrar Novo Usuário</h3>
 
     <form method="POST" action="<?php echo BASE_URL;?>usuarios/cadastrar">
