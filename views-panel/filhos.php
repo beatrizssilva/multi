@@ -26,7 +26,7 @@ $l = 1;
     }
         
             if(count($usuario['filhos']) > 0) {
-                $this->loadView('filhos',array('filho' => $usuario['filhos'], 'c' => 1, 'g' => $g+1));
+                $this->loadViewPanel('filhos',array('filho' => $usuario['filhos'], 'c' => 1, 'g' => $g+1));
             }
             echo '</li>';
             $l++;

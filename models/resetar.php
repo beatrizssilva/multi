@@ -4,7 +4,7 @@ class resetar extends model {
 
     public function apagar(){
         
-        $sql = "UPDATE user SET ativo = 0, patent = 1";
+        $sql = "UPDATE user SET ativo = 0, patent = 1, pontos = 0";
         $sql = $this->db->query($sql);
         
         $sql = "DELETE FROM comissao";

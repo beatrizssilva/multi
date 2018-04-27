@@ -49,7 +49,7 @@ class usuarios extends model {
     }
     
     //cadastrar novo usuario
-    public function setNewUser($email, $nome, $senha, $id) {
+    public function setNewUser($email, $nome, $senha, $id, $cpf) {
         $sql = "SELECT * FROM user WHERE identificador = :id";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id", $id);
@@ -62,14 +62,16 @@ class usuarios extends model {
         $data_ativacao = date("Y-m-d h:m:i");
         $id_dad = $array['id'];
         
-        $sql = "INSERT INTO user (id_dad, name, email, pass, ativo, data_ativacao) VALUES (:id_dad, :name, :email, :pass, :ativo, :data_ativacao)";
+        $sql = "INSERT INTO user (id_dad, name, cpf, email, pass, ativo, data_ativacao) VALUES (:id_dad, :name, :cpf, "
+                . ":email, :pass, :ativo, :data_ativacao)";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("id_dad", $id_dad);
-        $sql->bindValue("name", $nome);
+        $sql->bindValue(":id_dad", $id_dad);
+        $sql->bindValue(":name", $nome);
+        $sql->bindValue(":cpf", $cpf);
         $sql->bindValue("email", $email);
-        $sql->bindValue("pass", MD5($senha));
-        $sql->bindValue("ativo", $ativo);
-        $sql->bindValue("data_ativacao", $data_ativacao);        
+        $sql->bindValue(":pass", MD5($senha));
+        $sql->bindValue(":ativo", $ativo);
+        $sql->bindValue(":data_ativacao", $data_ativacao);        
         $sql->execute();
         
         $id_user = $this->db->lastInsertId();

@@ -10,7 +10,7 @@ echo ' - Seu ID: '.$dadosUser['identificador'];
 <br/><br/>
 <div class="painel">
     <div>
-    <a href="http://localhost/multi/usuarios/cadastrar?id=<?php echo$dadosUser['identificador']; ?>">Convidar</a>
+    <a href="http://localhost/multi/usuarios/cadastro?id=<?php echo$dadosUser['identificador']; ?>">Convidar</a>
     </div><!--<div>
 <h3>Cadastrar Novo Usuário</h3>
 
@@ -54,13 +54,14 @@ echo ' - Seu ID: '.$dadosUser['identificador'];
                 <div class="dados">
 
                 </div>                
-                    <?php $this->loadView('filhos',array('filho' =>$filhos, 'c' => 0, 'g' => 1));?>
+                    <?php $this->loadViewPanel('filhos',array('filho' =>$filhos, 'c' => 0, 'g' => 1));?>
                 
             </div>
         <?php  else: ?>
             <h4>Não há Usuários Cadastrados</h4>
         <?php endif; ?>
     </div>
+    <?php if ($dadosUser['ativo'] == 1): ?>
     <div>
         <h3>Premiação do Mês Atual:</h3>
         <p>Quantidade de Pontos: <strong><?php echo $premios['pontos'];?></strong></p>
@@ -79,6 +80,7 @@ echo ' - Seu ID: '.$dadosUser['identificador'];
         <?php endif; ?>
         
     </div>
+    <?php endif;?>
 </div>
 <a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a><br/><br/>
 <a href="<?php echo BASE_URL;?>atualizar/atualizar">Atualizar Patentes</a><br/>

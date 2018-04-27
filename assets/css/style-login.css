@@ -4,15 +4,27 @@ body{
 header{
     
 }
-.login{
+.login, .cadastrar{
     display: flex;
     height: 100%;
     justify-content: center;
     align-items: center;
-    background: #000;
+    background-image: url(../images/fundo.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
-
-.login-all h1{
+.login-logo, .cadastrar-logo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+}
+.login-logo #lar, .cadastrar-logo #lar{
+    height: 90px;
+    width: 220px;
+    margin-bottom: 5px;
+}
+.login-all h1, .cadastrar-all h1{
     color:yellow;
     padding-bottom: 20px;
     text-align: center;
@@ -27,14 +39,29 @@ header{
     background: #fff;
     box-shadow: 0 1px 3px rgba(0,0,0,.13);
 }
-.login-form form{
+.cadastrar-form {    
+    height: 500px;
+    width: 420px;
+    border: 1px #ccc solid;
+    padding: 2px 24px 16px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,.13);
+}
+.login-form form, .cadastrar-form form{
     height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;   
     color: #72777c;
     font-size: 16px;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
+}
+.cadastrar-form form{
+    height: 445px;
+}
+.cadastrar-form form h3{
+    font-weight: bold;
+    color: #000;
 }
 .login-form form input{
     font-size: 24px;
@@ -50,6 +77,9 @@ header{
     text-decoration: none;
     text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
     width: 90px;
-    height: 30px;
+    height: 30px;    
+}
+.cadastrar-login{
+    text-align: right;
     
 }
