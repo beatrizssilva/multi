@@ -24,11 +24,9 @@
         <meta name="theme-color" content="#ffffff">
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/bootstrap.min.js"></script> 
-        <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script> 
-        
+        <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script>
+                
         <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>assets/css/style.css" />
         
         <title>Lar Alimentos</title>
@@ -45,8 +43,11 @@
     <script type="text/javascript">
         var BASE_URL = '<?php echo BASE_URL; ?>';
     </script>
-    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/jquery-ui.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/script.js" type="text/javascript"></script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/bootstrap.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/script.js" type="text/javascript"></script>    
+    
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/bootstrap.min.js"></script> 
+     
     
 </body>
 </html>

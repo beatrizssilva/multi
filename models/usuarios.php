@@ -2,12 +2,13 @@
 class usuarios extends model {
 
     //verifica o login do usuario
-    public function verifyUser($name, $senha){
+    public function verifyUser($id, $senha){
        
-        $sql = "SELECT * FROM user WHERE name = :name AND pass = :pass";
+        $sql = "SELECT * FROM user WHERE email = :email OR cpf = :cpf AND pass = :pass";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("name", $name);
-        $sql->bindValue("pass", MD5($senha));
+        $sql->bindValue(":email", $id);
+        $sql->bindValue(":cpf", $id);
+        $sql->bindValue(":pass", MD5($senha));
         $sql->execute();
 
         if($sql->rowCount() > 0) {
@@ -33,13 +34,14 @@ class usuarios extends model {
     }
 
     //Seleciona os dados do usuario após o login 
-    public function getUser($name, $senha){
+    public function getUser($id, $senha){
         $array = array();
 
-        $sql = "SELECT * FROM user WHERE name = :name AND pass = :pass";
+        $sql = "SELECT * FROM user WHERE email = :email OR cpf = :cpf AND pass = :pass";
         $sql = $this->db->prepare($sql);
-        $sql->bindValue("name", $name);
-        $sql->bindValue("pass", MD5($senha));
+        $sql->bindValue(":email", $id);
+        $sql->bindValue(":cpf", $id);
+        $sql->bindValue(":pass", MD5($senha));
         $sql->execute();
 
         if($sql->rowCount() > 0) {
@@ -132,6 +134,21 @@ class usuarios extends model {
         $sql = "SELECT * FROM user WHERE identificador = :id";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id", $id);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    //verifica se CPF já Cadastrado
+    public function verifyCPF($cpf) {
+        $sql = "SELECT * FROM user WHERE cpf = :cpf";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":cpf", $cpf);
         $sql->execute();
 
         if($sql->rowCount() > 0) {

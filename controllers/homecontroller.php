@@ -22,13 +22,13 @@ class homecontroller extends controller {
         $this->loadTemplatePanel('painel', $dados);
         
         } else if(isset($_POST['name']) && !empty ($_POST['name'])) {
-            $name = addslashes($_POST['name']);
+            $id = addslashes($_POST['name']);
             $senha = addslashes($_POST['senha']);
                 
                 //verifyUser-> verifica o login do usuario
-                if($u->verifyUser($name, $senha)) {
+                if($u->verifyUser($id, $senha)) {
                     //getUser -> seleciona o id e nome do usuario após logar
-                    $dados['user'] = $u->getUser($name, $senha);
+                    $dados['user'] = $u->getUser($id, $senha);
                     $_SESSION['multLoginName'] = $dados['user']['name'];
                     $_SESSION['multLogin'] = $dados['user']['id'];
                     

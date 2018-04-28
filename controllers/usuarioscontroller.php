@@ -7,77 +7,93 @@ class usuarioscontroller extends controller {
         unset($_SESSION['multLogin']);
         header("Location: ".BASE_URL);        
     }
+    public function login() {
+        
+        header("Location: ".BASE_URL);        
+    }
     
     public function cadastrar() {
-        $u = new usuarios();
-        $dados = array();
-        
-        if(!empty($_POST['nome']) && !empty ($_POST['email'])  && !empty ($_POST['cpf']) && !empty ($_POST['id']) 
-                && !empty ($_POST['senha']) && !empty ($_POST['senha2'])) {
-            $senha = addslashes($_POST['senha']);
-            $senha2 = addslashes($_POST['senha2']);
-            
-            if ($senha == $senha2){
-            $email = addslashes($_POST['email']);
-            $nome = addslashes($_POST['nome']); 
-            $cpf = addslashes($_POST['cpf']);
-            $id = addslashes($_POST['id']); 
-            $senha = addslashes($_POST['senha']);
+        $u = new usuarios();        
+                
+        $email = addslashes($_POST['email']);
+        $nome = addslashes($_POST['nome']); 
+        $cpf = addslashes($_POST['cpf']);
+        $id = addslashes($_POST['id']); 
+        $senha = addslashes($_POST['senha']);
 
-            $dados['nome'] = $nome;
-            $dados['email'] = $email;
-            $dados['id'] = $id;
-            $dados['cpf'] = $cpf;
-
-                if($u->verifyEmail($email)) {
-                    $dados['op'] = 0;
-                    $dados['msg'] = "E-mail já Cadastrado.";
-                    $this->loadTemplatePanel('cadastrar', $dados);
-                } else if($u->verifyID($id)) {
-                    if($u->setNewUser($email, $nome, $senha, $id, $cpf)){
-                        $dados['op'] = 0;
-                        $dados['login'] = 1;
-                        $dados['msg'] = "Cadastro realizado com sucesso.";
-                        $this->loadTemplateLogin('cadastrar', $dados);
-                    }
-                } else {
-                    $dados['op'] = 0;
-                    $dados['msg'] = "ID Incorreto.";
-                    $this->loadTemplateLogin('cadastrar', $dados);
-                }           
-
-            } else {
-                $dados['op'] = 0;
-                $dados['msg'] = "Senhas não são iguais.";
-                $this->loadTemplateLogin('cadastrar', $dados);
-            }
+        if($u->setNewUser($email, $nome, $senha, $id, $cpf)){
+            echo '1';
         } else {
-            if (!empty($_POST['nome'])) {
-                $nome = addslashes($_POST['nome']);
-                $dados['nome'] = $nome;
-            }
-            if (!empty($_POST['email'])) {
-                $email = addslashes($_POST['email']);
-                $dados['email'] = $email;
-            }
-            if (!empty($_POST['cpf'])) {
-                $cpf = addslashes($_POST['cpf']);
-                $dados['cpf'] = $cpf;
-            }
-            if (!empty($_POST['id'])) {
-                $id = addslashes($_POST['id']);
-                $dados['id'] = $id;
-            }
-            $dados['op'] = 0;
-            $dados['msg'] = "Preencha todos os campos.";
-            $this->loadTemplateLogin('cadastrar', $dados);
-        }
+            echo '0';
+        }        
     }  
     
     public function cadastro(){
         $dados = array();
         unset($_SESSION['multLogin']);
         $this->loadTemplateLogin('cadastrar', $dados);
+    }
+    
+    public function pesquisarID($id) {
+
+        $u = new usuarios();
+        if($u->verifyID($id)) {          
+            echo '1';
+        } else {
+            echo '0';
+        }     
+    }
+    
+    public function pesquisarCPF($cpf) {
+
+        $u = new usuarios();
+        if($u->verifyCPF($cpf)) {          
+            echo '1';
+        } else {
+            echo '0';
+        }     
+    }
+    
+    public function pesquisarEmail($email) {
+
+        $u = new usuarios();
+        if($u->verifyEmail($email)) {          
+            echo '1';
+        } else {
+            echo '0';
+        }     
+    }
+    public function validaCPF($cpf) {
+         //validação do CPF
+        
+        $cpf = preg_replace('/[^0-9]/', '', $cpf);
+        
+        $digitoA = 0;
+        $digitoB = 0;
+        if(strlen($cpf) < 11) {
+            echo '1';
+            exit();
+        };
+        for ($i=0, $x=10;$i<=8;$i++, $x--) {
+            $digitoA += $cpf[$i] *$x;
+        }
+        for ($i=0, $x=11;$i<=9;$i++, $x--) {
+                if(str_repeat($i, 11) == $cpf) {
+                     echo '1';
+                     exit();
+                }
+                $digitoB += $cpf[$i] *$x;            
+            }     
+        //% = quociente, ou seja o resto da divisão, no caso abaixo é o resto de $digitoA divido por 11, exemplo: 20/11= 1 e resto 9, 9 é o quociente
+        $somaA = (($digitoA%11) < 2) ? 0 : 11-($digitoA%11);
+        $somaB = (($digitoB%11) < 2) ? 0 : 11-($digitoB%11);
+        //indice 9 é o nono digito do CPF
+        if($somaA != $cpf[9] || $somaB != $cpf[10]) {        
+            echo '1';
+        } else {
+             echo '0';
+        }
+        
     }
 }
 
