@@ -15,7 +15,7 @@
                 <label>ID*:</label>
                 <input type="text" name="id" <?php if(!empty($_GET['id'])){          
                 $id = addslashes($_GET['id']); 
-                echo 'value="'.$id.'"'; }?> />
+                echo 'value="'.$id.'" disabled="disabled"'; }?> />
                 <label>Senha*:</label>
                 <input type="password" name="senha" />  
                 <label>Repita a Senha*:</label>

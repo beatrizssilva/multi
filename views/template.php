@@ -37,7 +37,7 @@
     </header>
 
 <?php $this->loadViewinTemplate($viewName, $viewData); ?>
-    <footer style="min-height: 200px;">
+    <footer>
         
     </footer>
     <script type="text/javascript">

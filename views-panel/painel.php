@@ -1,4 +1,6 @@
-<h4>Olá <?php echo $dadosUser['name'];
+<h2>HOME</h2><br>
+
+<!--<h4>Olá <?php echo $dadosUser['name'];
 if ($dadosUser['ativo'] == 0){
     echo '<strong style="color:red"> - VOCÊ ESTÁ INATIVO </strong>';
 }else{
@@ -11,7 +13,7 @@ echo ' - Seu ID: '.$dadosUser['identificador'];
 <div class="painel">
     <div>
     <a href="http://localhost/multi/usuarios/cadastro?id=<?php echo$dadosUser['identificador']; ?>">Convidar</a>
-    </div><!--<div>
+    </div><div>
 <h3>Cadastrar Novo Usuário</h3>
 
     <form method="POST" action="<?php echo BASE_URL;?>usuarios/cadastrar">
@@ -24,7 +26,7 @@ echo ' - Seu ID: '.$dadosUser['identificador'];
         <input type="submit" value="Cadastrar"  />
 
     </form>
-</div>-->
+</div>
 <div>
 <h3>Comprar Nova Cesta</h3>
     <form method="POST" action="<?php echo BASE_URL;?>transacoes/comprar">
@@ -84,4 +86,4 @@ echo ' - Seu ID: '.$dadosUser['identificador'];
 </div>
 <a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a><br/><br/>
 <a href="<?php echo BASE_URL;?>atualizar/atualizar">Atualizar Patentes</a><br/>
-<a href="<?php echo BASE_URL;?>teste/codigo">Teste</a><br/>
+<a href="<?php echo BASE_URL;?>teste/codigo">Teste</a><br/>-->

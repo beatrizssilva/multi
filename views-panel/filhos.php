@@ -1,5 +1,16 @@
 <?php
 
+foreach ($filho as $usuario): ?>
+<ol><li><?php echo ucfirst($usuario['name']); ?> </li>
+           
+        <?php
+            if(count($usuario['filhos']) > 0) {
+                $this->loadViewPanel('filhos',array('filho' => $usuario['filhos']));
+            }
+    ?></ol><?php        
+        endforeach;?>
+            
+<?php /*
 echo '<ol style="list-style:none;">';
 $l = 1;
         foreach ($filho as $usuario){
@@ -32,11 +43,4 @@ $l = 1;
             $l++;
         }
         
-echo '</ol>';
-?>
-
-
-
-
-
-
+echo '</ol>';*/

@@ -1,0 +1,200 @@
+body{
+    margin:0;
+    padding: 0;
+}
+header{
+   
+}
+.painel-corpo{
+    display: flex;
+    flex-direction: column;
+}
+.painel-template-topo, .painel-template-corpo{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+.painel-template-corpo, .painel-home{
+    height: auto;
+}
+.painel-bl-template{
+    width: 18%;
+    height: 50px;
+    background: #397EA8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.painel-bl-template img{
+    height: 28px;
+}
+.painel-corpo-template{
+    width: 82%;
+    height: 50px;
+    background: #3F8CBB;
+    color: #FFF;
+    font-size: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 60px;
+}
+.user-profile{
+    width: 270px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;    
+}
+.user-profile a{
+    color:#FFF;
+}
+.mensage-qt{
+    position: absolute;
+    margin-top: -25px;
+    margin-left: 10px;
+    width: 15px;
+    height: 15px;
+    background: #DC4D3B;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.notificacoes-qt{
+    position: absolute;
+    margin-top: -25px;
+    margin-left: 10px;
+    width: 15px;
+    height: 15px;
+    background: #F29B18;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dados-user{
+    font-size: 16px;
+}
+.dados-user img{
+    height: 25px;
+}
+.painel-barra-lateral{
+    background: #273135;
+    height: auto;
+    min-height: 100%;
+    width: 18%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 30px;
+}
+.painel-barra-lateral hr{
+    width: 100%;
+    border: 1px solid #FFF;
+}
+.perfil-user{
+    display: flex;
+    flex-direction: row;
+    color: #FFF;
+    font-size: 20px;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.perfil-user img{
+    height: 50px;
+}
+.perfil-user span{
+    padding-left: 10px;
+}
+.painel-corpo hr{
+    color: #FFF;
+    border: 1px solid #FFF;
+    width: 100%;    
+}
+.graduacao{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;    
+    font-size: 30px;
+    width: 100%;
+    margin-bottom: 30px;
+    margin-left: 14px;
+}
+.graduacao span{
+    padding-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    text-justify: auto;
+}
+.consumidor{
+    margin-bottom: 10px;
+}
+.consumidor span{
+    font-size: 15px;
+    color: #FFF;
+    margin-left: 14px;
+}
+.colapse, #headingOne, #headingTwo, #headingThree, #headingFour, #headingFive{
+    background: none;
+    border:none;
+    color: #FFF;
+}
+#home a{
+    font-size: 17px;
+    color: #FFF;
+    font-family: inherit;
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: bold;
+}
+#home a:hover{
+    color: #397EA8;
+}
+#lista-menu{
+    list-style: none;
+    padding: 10px;
+    padding-top: 0;   
+}
+#lista-menu li{
+    font-size: 14px;
+    margin-bottom: 4px;
+    margin-top: 4px;
+}
+#lista-menu li i{
+    font-size: 10px;
+}
+#lista ul a:hover{
+    color:#397EA8;
+    text-decoration: none;
+}
+#lista{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+#lista ul a{
+    color:#FFF;
+}
+.panel-body{
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.panel-title a:hover, .panel-title a:visited{
+    text-decoration: none;
+    color:#397EA8;
+}
+.panel-title{
+    display: flex;
+    justify-content: space-between;
+}
+/*CSS Afiliados - Collapse*/
+#lista2{
+    color:#000;
+}
+
+
+
