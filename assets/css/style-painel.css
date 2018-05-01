@@ -191,10 +191,106 @@ header{
     display: flex;
     justify-content: space-between;
 }
+/*CSS Corpo do Painel*/
+.painel-home{
+    padding: 40px;
+    width: 100%;
+}
+.painel-home h3{
+    font-weight: bold;
+}
 /*CSS Afiliados - Collapse*/
+.afiliados-head{
+ display: flex;
+ justify-content: flex-start;
+ width: 100%;
+}
 #lista2{
     color:#000;
 }
+#ol-filhos{
+    list-style: none;    
+}
+#ol-filhos li{
+    font-size: 16px;
+}
 
-
+.legenda{
+    border: 1px solid #ccc;
+    max-width: 200px;
+    min-width: 200px;
+    margin-right: 10px;
+}
+.legenda-itens ul{
+    list-style: none;
+    
+}
+.legenda-itens h5{
+    font-size: 15px;
+    font-weight: bold;
+    padding-left: 35px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+#ativo, #afiliados-ativos{
+    color:blue;
+}
+#inativo, #afiliados-inativos{
+    color: #AAA;
+}
+#afiliados-total{
+    color:#000;
+}
+#lista-menu2 {
+    padding: 0;
+    margin: 0;
+}
+#linha-filhos{
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    margin-left: -35px;
+    padding-right: 40px;
+}
+#afiliados-filhos{
+    display: flex;
+    justify-content: flex-start;
+    padding-right: 10px;
+    margin-right: 10px;
+}
+#afiliados-nome{
+    flex: 1;
+}
+#afiliados-sobre{
+    flex: 1;
+    color: #AAA;
+    text-align: right;
+}
+#afiliados-sobre:hover{
+    color:blue;
+    cursor: pointer;
+}
+#afiliados-mais{
+    flex: 10;
+    color: #AAA;
+    text-align: right;
+}
+/*CSS Pagina Convidar*/
+.convidar{
+    display: flex;
+    flex-direction: column;
+}
+.convidar-form{
+    margin-top: 30px;
+    padding: 0;    
+}
+.convidados{
+    margin-top: 30px;
+}
+.convidados h3{
+    margin-bottom: 30px;
+}
+/*CSS Modal Veja Mais*/
+.modal-body p{
+    color: #000;
+}
 

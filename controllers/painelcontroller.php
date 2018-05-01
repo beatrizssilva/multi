@@ -51,10 +51,12 @@ class painelcontroller extends controller {
         $this->loadTemplatePanel('convidar', $dados);
     }
     public function afiliados(){
-       $dados = array();
-        $u = new usuarios();
         global $config;
+        $dados = array();
+        $u = new usuarios();
+        $p = new patentes();
         
+        $dados['filhosAtivos'] = $p->cadeiaAtivos($_SESSION['multLogin']);
         $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
         $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
        
