@@ -4,62 +4,94 @@
         <form method="post" action="<?php echo BASE_URL;?>painel/convite" class="col-md-5">
             <div class="form-group">
                 <label for="nome">Nome do Convidado:*</label>
-                <input type="email" class="form-control" id="nome" name="nome">
+                <input type="text" class="form-control" id="nome" name="nome">
             </div>
             <div class="form-group">
                 <label for="email">E-mail do Convidado:*</label>
                 <input type="email" class="form-control" id="email" name="email">
             </div>
             
-            <button type="submit" class="btn btn-primary">Convidar</button>
+            <button type="button" class="btn btn-primary" onclick="enviarConvite()">Convidar</button>
           </form>
     </div>
     <div class="convidar-link">
         <h4>Compartilhar Link de Convite:</h4>
-        <form method="post" class="col-md-5">
-            <div class="form-inline">
-                <label for="link">Link:</label>
-                <input type="texte" class="form-control" id="nome" name="link" value="3239eueu" disabled="disabled">
+        
+        <div class="form-inline">
+                
+                <input type="text" class="form-control" id="link" name="link" 
+                    value="<?php echo 'http://localhost/multi/usuarios/cadastro?id='.$dadosUser['identificador'];?>" 
+                    disabled="disabled" >
             </div>
-        </form>
+      
     </div>
     <div class="convidados">
+        <?php if(isset($convidados) && !empty($convidados)):?>
         <h3>Convites Enviados</h3>
         <table class="table table-hover">
             <thead>
                 <tr>
                     <th>Nome</th>
-                    <th>E-mail</th>
+                    <th colspan="2">E-mail</th>
+                    <th>Data</th>
                     <th>Status</th>
-                    <th>reenviar</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
+                <?php foreach ($convidados as $dados):?>
                 <tr>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
-                    <td>Renviar Convite</td>
+                    <td><?php echo ucfirst($dados['nome']);?></td>
+                    <td colspan="2"><?php echo $dados['email'];?></td>
+                    <td><?php 
+                    $data = date('d-m-Y H:i:s', strtotime($dados['data']));
+                    echo $data;?></td>
+                    <td><?php echo ($dados['status'] == 1)?'Convite Aceito':'Aguardando';?></td>
+                    <td><button class="btn-primary">Reenviar</button></td>
                 </tr>
-                <tr>
-                    <td>Mary</td>
-                    <td>Moe</td>
-                    <td>mary@example.com</td>
-                    <td>Renviar Convite</td>
-                </tr>
-                <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                    <td>Renviar Convite</td>
-                </tr>
-                <tr>
-                    <td>July</td>
-                    <td>Dooley</td>
-                    <td>july@example.com</td>
-                    <td>Renviar Convite</td>
-                </tr>
+                <?php endforeach;?>
             </tbody>
           </table>
+        <?php endif;?>
     </div>
+</div>
+
+<!--Modal Campos Obrigatórios-->
+<div class="modal fade" role='dialog' id='camposobrigatorios' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificação</h4>
+      </div>
+      <div class="modal-body">
+        <p>Favor Preencha todos os Campos!</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal Convite Enviado-->
+<div class="modal fade" role='dialog' id='conviteSucesso' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificação</h4>
+      </div>
+      <div class="modal-body">
+        <p>Convite Enviado com Sucesso.</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
 </div>

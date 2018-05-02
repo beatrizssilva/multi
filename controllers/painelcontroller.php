@@ -5,7 +5,15 @@ class painelcontroller extends controller {
     public function index() {
          
     }
-    
+    public function nova_compra(){
+        $dados = array();
+        $u = new usuarios();
+        
+        $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
+       
+        $this->loadTemplatePanel('nova_compra', $dados);
+    }
+
     public function dados_pessoais() {
         $dados = array();
         $u = new usuarios();
@@ -47,6 +55,7 @@ class painelcontroller extends controller {
         $u = new usuarios();
         
         $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
+        $dados['convidados'] = $u->convidados($_SESSION['multLogin']);
        
         $this->loadTemplatePanel('convidar', $dados);
     }

@@ -1,6 +1,80 @@
-<h2>HOME</h2><br>
 
-<!--<h4>Olá <?php echo $dadosUser['name'];
+<h3>Painel de Controle</h3><br>
+
+<div class="home-head">
+    <div class="ativos">
+        <div class="painel-dados">
+            <div class="dados">
+                <h4><?php if(isset($premios['ativos']) && $premios['ativos'] > 0) {echo $premios['ativos'];}
+                else { echo '0';}?></h4>
+                <h5>Ativados no Mês Atual</h5>
+            </div>
+            <div id="icone">
+               <i class="fas fa-user-plus"></i> 
+            </div>
+        </div>
+        <div class="saiba-mais">
+            <a href=""><h5>Saiba Mais <i class="fas fa-arrow-circle-right"></i></h5></a>
+        </div>
+    </div>
+    <div class="indicados">
+        <div class="painel-dados">
+            <div class="dados">
+                <h4><?php if(isset($premios['indicados']) && $premios['indicados'] > 0) {echo $premios['indicados'];}
+                else { echo '0';}?></h4>
+                <h5>Indicados no Mês Atual</h5>
+            </div>
+            <div id="icone">
+               <i class="fas fa-user-plus"></i> 
+            </div>
+        </div>
+       <div class="saiba-mais">
+            <a href=""><h5>Saiba Mais <i class="fas fa-arrow-circle-right"></i></h5></a>
+        </div>        
+    </div>
+    <div class="pontos">
+        <div class="painel-dados">
+            <div class="dados">
+                <h4><?php if(isset($premios['pontos']) && $premios['pontos'] > 0) {echo $premios['pontos'];}
+                else { echo '0';}?></h4>
+                <h5>Pontos no Mês Atual</h5>
+            </div>
+            <div id="icone">
+               <i class="fas fa-thumbs-up"></i>
+            </div>
+        </div>
+       <div class="saiba-mais">
+            <a href=""><h5>Saiba Mais <i class="fas fa-arrow-circle-right"></i></h5></a>
+        </div>         
+    </div>
+    <div class="premios">
+        <div class="painel-dados">
+            <div class="dados">
+                <h4><?php echo 'R$ '.number_format($premios['valor_total'], 2, ',', '.');?></h4>
+                <h5>Prêmios do Mês Atual*</h5>
+            </div>
+            <div id="icone">
+               <i class="fas fa-dollar-sign"></i>
+            </div>
+        </div>
+       <div class="saiba-mais">
+            <a href=""><h5>Saiba Mais <i class="fas fa-arrow-circle-right"></i></h5></a>
+        </div> 
+    </div>
+</div>
+
+<div class="grafico">
+    <div class="grafico-titulo">
+        <h3>Comparativo Indicados e Ativados Durante o Ano Vigente</h3>
+    </div>
+    <div class="grafico-canvas">
+        <canvas id="grafico"></canvas>
+    </div>
+</div>
+
+
+<?php /*
+<h4>Olá <?php echo $dadosUser['name'];
 if ($dadosUser['ativo'] == 0){
     echo '<strong style="color:red"> - VOCÊ ESTÁ INATIVO </strong>';
 }else{
@@ -86,4 +160,5 @@ echo ' - Seu ID: '.$dadosUser['identificador'];
 </div>
 <a href="<?php echo BASE_URL;?>usuarios/logout">Logout</a><br/><br/>
 <a href="<?php echo BASE_URL;?>atualizar/atualizar">Atualizar Patentes</a><br/>
-<a href="<?php echo BASE_URL;?>teste/codigo">Teste</a><br/>-->
+<a href="<?php echo BASE_URL;?>teste/codigo">Teste</a><br/>
+*/?>

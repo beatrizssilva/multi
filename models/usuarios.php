@@ -158,4 +158,34 @@ class usuarios extends model {
             return false;
         }
     }
+    
+    public function convidar($nome, $email){
+        $id_user = $_SESSION['multLogin'];
+        $data = date('Y-m-d H:i:s');
+        $status = 0;
+        
+        $sql = "INSERT INTO convites (id_user, data, nome, email, status) VALUES (:id_user, :data, :nome, :email, :status)";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id_user", $id_user);
+        $sql->bindValue(":nome", $nome);
+        $sql->bindValue(":data", $data);
+        $sql->bindValue(":email", $email);
+        $sql->bindValue(":status", $status);        
+        $sql->execute();
+        return true;
+    }
+    
+     public function convidados($id){
+         $array = array();
+     
+        $sql = "SELECT * FROM convites WHERE id_user = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return $array;
+     }
 }

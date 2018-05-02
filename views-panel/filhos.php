@@ -8,7 +8,7 @@ foreach ($filho as $usuario): ?>
                 <li style="color:blue">  
             <?php endif; ?>
             <?php echo '<span id="linha-filhos"></span>'.ucfirst($usuario['name']);?>
-                    <span class="abrir-sobre" data-toggle="tooltip" data-placement="right" title="Veja Mais!"> 
+                    <span class="abrir-sobre" id="afiliados-sobre" onclick="abrirModalPerfil()" data-toggle="tooltip" data-placement="right" title="Veja Mais!"> 
                         <i class="fas fa-eye"></i></span> </li>           
         <?php
             if(count($usuario['filhos']) > 0) {

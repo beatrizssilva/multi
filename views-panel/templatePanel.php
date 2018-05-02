@@ -21,7 +21,7 @@
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
         <meta name="theme-color" content="#ffffff">
-        
+         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script> 
@@ -38,7 +38,9 @@
       
             <div class="painel-template-topo">
                 <div class="painel-bl-template">
-                    <img src="<?php echo BASE_URL; ?>assets/images/lar.png" alt=""/>
+                    <a href="<?php echo BASE_URL; ?>">
+                        <img src="<?php echo BASE_URL; ?>assets/images/lar.png" alt=""/>
+                    </a>
                 </div>
                 <div class="painel-corpo-template">
                     <div class="user-profile">
@@ -184,7 +186,7 @@
                           <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                             <div class="panel-body" id="lista">
                                 <ul id="lista-menu">
-                                    <a href=""><li><i class="fas fa-minus-square"></i> Novas</li></a>
+                                    <a href="<?php echo BASE_URL;?>painel/nova_compra"><li><i class="fas fa-minus-square"></i> Nova</li></a>
                                     <a href=""><li><i class="fas fa-minus-square"></i> Efetuadas</li></a>
                                     <a href=""><li><i class="fas fa-minus-square"></i> Canceladas</li></a>
                                 </ul>
@@ -267,8 +269,12 @@
     <script type="text/javascript">
         var BASE_URL = '<?php echo BASE_URL; ?>';
     </script>
+    <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/Chart.min.js"></script>
+    <script src="<?php echo BASE_URL; ?>assets/js/script-painel.js" type="text/javascript"></script> 
+    
+   
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/bootstrap.min.js"></script>
-    <script src="<?php echo BASE_URL; ?>assets/js/script-painel.js" type="text/javascript"></script>    
+       
     
     <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/bootstrap.min.js"></script> 
     

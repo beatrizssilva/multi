@@ -5,7 +5,7 @@ class transacoescontroller extends controller {
     public function comprar(){
 
         $dados = array();
-        
+        $u = new usuarios();
         $t = new transacoes();
         
         $id = $_SESSION['multLogin'];
@@ -14,12 +14,12 @@ class transacoescontroller extends controller {
         } else {
             $qt = 1;
         }
-        
+        $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
         $dados['logado'] = $id;
         $dados['qt'] = $qt;
         $dados['transacao'] = $t->comprando($id, $qt);
         
-        $this->loadTemplatePanel('comprar', $dados);
+        $this->loadTemplatePanel('painel', $dados);
     }
 }
 

@@ -21,6 +21,7 @@
             <div class="login-cadastrar">
                 <h4>Ainda não tem cadastro?</h4>
                 <a href="<?php echo BASE_URL;?>usuarios/cadastro">Cadastrar</a>
+                <a href="<?php echo BASE_URL;?>usuarios/recuperar_senha" style="float: right">Esqueci minha senha</a>
             </div>
         </div>
         

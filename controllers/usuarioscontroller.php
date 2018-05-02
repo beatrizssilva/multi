@@ -92,8 +92,21 @@ class usuarioscontroller extends controller {
             echo '1';
         } else {
              echo '0';
-        }
-        
+        }        
     }
+    
+    public function convite(){
+        $u = new usuarios();
+        
+        $email = addslashes($_POST['email']);
+        $nome = addslashes($_POST['nome']); 
+        if(isset($nome) && !empty($nome) && isset($email) && !empty($email)){
+            if($u->convidar($nome, $email)){
+                echo '1';
+            }
+        }
+    }
+    
+   
 }
 

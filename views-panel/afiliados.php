@@ -24,7 +24,7 @@
 <?php if (isset($filhos) && !empty($filhos)): 
    echo '<h3>Usuarios Cadastrados</h3>
 <div class="panel-group colapse" id="accordion1" role="tablist" aria-multiselectable="true">';
-echo $total;
+
     $l = 10;
 foreach ($filhos as $usuario):     ?>      
     <div class="panel panel-default colapse">
@@ -43,7 +43,7 @@ foreach ($filhos as $usuario):     ?>
                     $nome = explode(' ', $usuario['name']);                    
                     echo '<span>'.ucfirst($nome[0]);?> </span> 
               </a>
-                <span class="abrir-sobre" id="afiliados-sobre" data-toggle="tooltip" data-placement="right" title="Veja Mais!">
+                <span class="abrir-sobre" id="afiliados-sobre" onclick="abrirModalPerfil()" data-toggle="tooltip" data-placement="right" title="Veja Mais!">
                     <i class="fas fa-eye"></i>
                 </span>
                 <a class="collapsed" role="button" id="afiliados-mais" data-toggle="collapse" data-parent="#accordion1" 
