@@ -19,6 +19,9 @@ class homecontroller extends controller {
         
         //getPremios -> seleciona a premiação do usuario
         $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
+        
+        $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
+        
         $this->loadTemplatePanel('painel', $dados);
         
         } else if(isset($_POST['name']) && !empty ($_POST['name'])) {
@@ -40,6 +43,9 @@ class homecontroller extends controller {
         
                     //getPremios -> seleciona a premiação do usuario
                     $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
+                    
+                    $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
+                    
                     $this->loadTemplatePanel('painel', $dados);
                     
                   

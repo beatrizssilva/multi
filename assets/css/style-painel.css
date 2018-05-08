@@ -12,6 +12,7 @@ header{
 }
 .painel-template-topo{
     position: fixed;
+    z-index: 999;
 }
 .painel-template-topo, .painel-template-corpo{
     height: 50px;
@@ -114,8 +115,26 @@ header{
 .perfil-user img{
     height: 50px;
 }
+.perfil-user:hover>#edit_foto {
+    display: block;
+}
 .perfil-user span{
     padding-left: 10px;
+}
+#edit_foto{
+    display: none;
+    position: absolute;
+    background: orange;
+    border-radius: 5px;
+    font-size: 13px;
+    margin: 0;
+    margin-top: 30px;
+    padding: 3px;
+    cursor: pointer;
+}
+#edit_foto a{
+    color: #FFF;
+    text-decoration: none;
 }
 .painel-corpo hr{
     color: #FFF;
@@ -208,6 +227,21 @@ header{
 .painel-home h3{
     font-weight: bold;
 }
+#modalFotoPerfil{
+    width: 350px;
+}
+#modalFotoPerfil .modal-body{
+    text-align: center;
+    
+}
+#modalFotoPerfil .modal-footer{
+    display: flex;
+    justify-content: space-between;    
+}
+#fotoPerfil{
+    height: 140px;
+    width: 120px;
+}
 /*CSS Afiliados - Collapse*/
 .afiliados-head{
  display: flex;
@@ -245,7 +279,7 @@ header{
     color:blue;
 }
 #inativo, #afiliados-inativos{
-    color: #AAA;
+    color: #3CB371;
 }
 #afiliados-total{
     color:#000;
@@ -271,7 +305,7 @@ header{
 }
 #afiliados-sobre{
     flex: 1;
-    color: #AAA;
+    color: #3CB371;
     text-align: right;
 }
 #afiliados-sobre:hover{
@@ -280,7 +314,7 @@ header{
 }
 #afiliados-mais{
     flex: 10;
-    color: #AAA;
+    color: #3CB371;
     text-align: right;
 }
 /*CSS Pagina Convidar*/
@@ -308,10 +342,73 @@ header{
     cursor: text;
 }
 /*CSS Modal Veja Mais*/
-.modal-body p{
+.modal-body p, .modal-title{
     color: #000;
 }
-/*CSS HOMES*/
+.afiliados{
+    display: flex;
+    justify-content: flex-start;
+    
+}
+.foto-afiliados, .foto-afiliados2{
+    max-height: 180px;
+    max-width: 140px;
+    border: 1px solid #ccc;
+    padding: 4px;
+}
+.foto-afiliados img, .foto-afiliados2 img{
+    height: 140px;
+    width: 120px;
+}
+.dados-afiliados{
+    color:#000;
+    margin-left: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-bottom: 10px;
+    width: 100%;
+}
+.afiliados-nome, .afiliados-telefone, .afiliados-email, .afiliados-data{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+/*CSS HOME*/
+.painel-inativo{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+.painel-inativo h3{
+    margin-top: 50px;
+    align-self: center;
+    font-size: 50px;
+}
+.painel-inativo span{
+    font-size: 20px;
+}
+.painel-opcoes{
+    margin-top: 150px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.painel-reativar, .painel-saldo{
+    width: 48%;
+    padding-bottom: 15px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.painel-reativar a button{
+    height: 40px;
+    font-size: 20px;
+}
 .home-head{
     display: flex;
     justify-content: space-between;

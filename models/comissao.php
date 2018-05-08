@@ -2,7 +2,7 @@
 class comissao extends model {
     
     //seleciona o valor da comissao da tabela comissao
-    public function setComissao($id) {
+    public function getComissao($id) {
         $c = 0;
         $mes = date('m');
         $ano = date('Y');
@@ -39,49 +39,49 @@ class comissao extends model {
             $ano = date('Y');  
             
             //seleciona o valor da comissão($l['comissao']) caso tenha cargo de liderança
-            $l = $this->setComissao($user['id']);
+            $l = $this->getComissao($user['id']);
             $p = $this->getPontos($user['id']);
             $ativos = $a->pagamentoAtivacao($user['id'], $config['limit']);
             $indicados = $a->pagamentoIndicados($user['id'], $config['limit']);
             
-            $n = $ativos * 8;
-            $n1 = $indicados * 8;
+            $n = $ativos * $config['premioAtivacao'];
+            $n1 = $indicados * $config['premioIndicacao'];
             $total = $n+$n1+$l['comissao'];
             
             switch ($user['patent']){
                 case '1':
-                    if ($total > 250) {
-                        $total = 250;
+                    if ($total > $config['bonusTotalPre']) {
+                        $total = $config['bonusTotalPre'];
                     }
                     break;
                 case '2':
-                    if ($total > 1500) {
-                        $total = 1500;
+                    if ($total > $config['bonusTotalBronze']) {
+                        $total = $config['bonusTotalBronze'];
                     }
                     break;
                 case '3':
-                    if ($total > 2500) {
-                        $total = 2500;
+                    if ($total > $config['bonusTotalPrata']) {
+                        $total = $config['bonusTotalPrata'];
                     }
                     break;
                 case '4':
-                    if ($total > 4000) {
-                        $total = 4000;
+                    if ($total > $config['bonusTotalOuro']) {
+                        $total = $config['bonusTotalOuro'];
                     }
                     break;
                 case '5':
-                    if ($total > 6000) {
-                        $total = 6000;
+                    if ($total > $config['bonusTotalRubi']) {
+                        $total = $config['bonusTotalRubi'];
                     }
                     break;
                 case '6':
-                    if ($total > 10000) {
-                        $total = 10000;
+                    if ($total > $config['bonusTotalDiamante']) {
+                        $total = $config['bonusTotalDiamante'];
                     }
                     break;
                 case '7':
-                    if ($total > 30000) {
-                        $total = 30000;
+                    if ($total > $config['bonusTotalDuploDiamante']) {
+                        $total = $config['bonusTotalDuploDiamante'];
                     }
                     break;
             }
@@ -172,6 +172,5 @@ class comissao extends model {
             return $c;
         }
     }
-    
-    //OKOKOKOKOKOKOKKK 
+  
 }

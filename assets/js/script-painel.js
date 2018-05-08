@@ -41,8 +41,78 @@ window.onload = function(){
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip(); 
 });
-function abrirModalPerfil() {
-    $('#vejaMais').modal('show');
+function abrirModalPerfil(id) {
+    
+    $.ajax({
+            url:BASE_URL+"usuarios/dadosAfiliados",
+            type:'POST',
+            data:{                
+                id:id
+            },
+            dataType:'json',
+            success:function(dados) {
+               
+                var date = dados.compra.data.split("-");                
+                var data = date[2]+"/"+date[1]+"/"+date[0];
+                
+                var nome = " "+dados.name;
+                var email = dados.email;
+                var tel = dados.dados.telefone;
+                var foto = "<img src='"+BASE_URL+"assets/images/perfil/"+dados.dados.foto_perfil+"' />";
+                $("#email").html(email);
+                $("#tel").html(tel);
+                $("#nome").html(nome);
+                $("#data").html(data);
+                $(".foto-afiliados").html(foto);
+                $('#vejaMais').modal('show'); 
+                 
+            }
+        });
+    
+}
+function abrirModalPerfil2(id) {
+    $.ajax({
+            url:BASE_URL+"usuarios/dadosAfiliados",
+            type:'POST',
+            data:{                
+                id:id
+            },
+            dataType:'json',
+            success:function(dados) {
+              
+                var date = dados.compra.data.split("-");                
+                var data = date[2]+"/"+date[1]+"/"+date[0];
+                
+                var nome = " "+dados.name;
+                var email = dados.email;
+                var tel = dados.dados.telefone;
+                var foto = "<img src='"+BASE_URL+"assets/images/perfil/"+dados.dados.foto_perfil+"' />";
+                $("#email2").html(email);
+                $("#tel2").html(tel);
+                $("#nome2").html(nome);
+                $("#data2").html(data);
+                $(".foto-afiliados2").html(foto);
+                $('#vejaMais2').modal('show'); 
+                 
+            }
+        });    
+}
+function edit_foto(){
+    $('#editFoto').modal('show'); 
+}
+function previewImagem(){
+    
+    var imagem = document.querySelector('input[name=imagemPerfil').files[0];
+    var preview = document.querySelector('img[name=fotoPerfil]');
+    var reader = new FileReader();
+    reader.onloadend = function() {        
+        preview.src = reader.result;
+    }
+    if(imagem){
+        reader.readAsDataURL(imagem);
+    }else {
+        preview.src = "";
+    }
 }
 function enviarConvite(){
     if ($('input[name="nome"]').val() <= 0 || $('input[name="email"]').val() <= 0){
@@ -66,5 +136,31 @@ function enviarConvite(){
             }
         });
     }
+}
+function editarFotoPerfil(){
+    var nome = $('input[name=idPerfil]').val();
+    var id = $('input[name=namePerfil]').val();
+    var imagem = $('#imagemPerfil')[0].files;
+//    var data = new FormData();
+//    var imagem = $('#imagemPerfil')[0].files;
+//    
+//    if(imagem.length > 0){
+//        data.append('name', $('#namePerfil').val());
+//        data.append('id', $('#idPerfil').val());
+//        data.append('foto', imagem[0]);
+        
+        $.ajax({
+           type:'POST',
+           url:BASE_URL+"usuarios/editFoto",
+           data:{                
+                nome:nome,
+                id:id,
+                imagem:imagem
+            },
+           success:function(msg){
+               alert(msg);
+           }
+        });
+//}
 }
 

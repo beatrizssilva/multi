@@ -1,4 +1,18 @@
-
+<?php if ($dadosUser['ativo'] == 0):?>
+<div class="painel-inativo">
+    <h3>Usuário Inativo</h3>
+    <div class="painel-opcoes">    
+        <div class="painel-reativar">
+            <span>Para acessar o Painel, Você Precisa se Reativar.</span><br/>
+            <a href="<?php echo BASE_URL;?>painel/nova_compra"><button class="btn-primary">Clique Aqui para Reativar</button></a>
+        </div>
+        <div class="painel-saldo">
+            <span>Cancelar a Conta</span><br/>
+            <a href="<?php echo BASE_URL;?>painel/cancelar_conta"><button class="btn-danger">Cancelar Conta</button></a>
+        </div>
+    </div>
+</div>
+<?php else:?>
 <h3>Painel de Controle</h3><br>
 
 <div class="home-head">
@@ -50,8 +64,12 @@
     <div class="premios">
         <div class="painel-dados">
             <div class="dados">
+                <?php if(isset($premios['valor_total']) && $premios['valor_total'] > 0) :?>
                 <h4><?php echo 'R$ '.number_format($premios['valor_total'], 2, ',', '.');?></h4>
-                <h5>Prêmios do Mês Atual*</h5>
+                <?php else: $premios['valor_total'] = 0;?>
+                <h4><?php echo 'R$ '.number_format($premios['valor_total'], 2, ',', '.');?></h4>
+                <?php endif; ?>
+                <h5>Bônus do Mês Atual*</h5>
             </div>
             <div id="icone">
                <i class="fas fa-dollar-sign"></i>
@@ -71,7 +89,7 @@
         <canvas id="grafico"></canvas>
     </div>
 </div>
-
+<?php endif;?>
 
 <?php /*
 <h4>Olá <?php echo $dadosUser['name'];

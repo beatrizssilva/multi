@@ -12,7 +12,7 @@
                 <input type="email" name="email" />
                 <label>CPF (Somente Números)*:</label>
                 <input type="text" name="cpf" maxlength="11" onblur="CPF()" />
-                <label>ID*:</label>
+                <label>ID do Patrocinador*:</label>
                 <input type="text" name="id" <?php if(!empty($_GET['id'])){          
                 $id = addslashes($_GET['id']); 
                 echo 'value="'.$id.'" disabled="disabled"'; }?> />

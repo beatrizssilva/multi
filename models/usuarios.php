@@ -1,6 +1,78 @@
 <?php
 class usuarios extends model {
 
+    public function editFoto($id, $name){
+        $sql = "SELECT * FROM user_dados WHERE id_user = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            
+            $sql = "UPDATE user_dados SET foto_perfil = :foto WHERE id_user = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->bindValue(":foto", $name);      
+            $sql->execute();
+        } else {
+            $sql = "INSERT INTO user_dados (id_user, foto_perfil) values (:id, :foto)";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->bindValue(":foto", $name);        
+            $sql->execute();
+        }
+    }
+
+    public function getDadosAfiliados($id){
+        $array = array();
+        
+        $sql = "SELECT * FROM user WHERE id = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetch();
+            
+            $sql = "SELECT * FROM transacoes WHERE id_user = :id ORDER BY data DESC";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->execute();
+            
+            if($sql->rowCount() > 0) {
+                $array['compra'] = $sql->fetch();
+            } else {
+                $array['compra']['data'] = "2018-01-01";
+            }
+            
+            $sql = "SELECT * FROM user_dados WHERE id_user = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->execute();
+            
+            if($sql->rowCount() > 0) {
+                $array['dados'] = $sql->fetch();
+            } else {
+                $array['dados']['foto_perfil'] = "user.jpg";
+                $array['dados']['telefone'] = "358282828282";
+            }
+        }
+       
+        return $array;
+    }
+
+    //Reseta Ativo e Patente para o inicio do mes
+    public function resetMes(){
+       
+        $sql = "UPDATE user SET ativo = :ativo, patent = :patent";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":ativo", 0);
+        $sql->bindValue(":patent", 1);        
+        $sql->execute();
+
+        
+    }
+    
     //verifica o login do usuario
     public function verifyUser($id, $senha){
        

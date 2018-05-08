@@ -7,19 +7,23 @@ class transacoescontroller extends controller {
         $dados = array();
         $u = new usuarios();
         $t = new transacoes();
-        
-        $id = $_SESSION['multLogin'];
-        if(isset($_POST['qtde']) && !empty($_POST['qtde'])){
-            $qt = addslashes($_POST['qtde']);
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $id = $_SESSION['multLogin'];
+            if(isset($_POST['qtde']) && !empty($_POST['qtde'])){
+                $qt = addslashes($_POST['qtde']);
+            } else {
+                $qt = 1;
+            }
+            $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
+            $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
+            $dados['logado'] = $id;
+            $dados['qt'] = $qt;
+            $dados['transacao'] = $t->comprando($id, $qt);
+
+            $this->loadTemplatePanel('painel', $dados);
         } else {
-            $qt = 1;
+            $this->loadTemplateLogin('login', $dados);
         }
-        $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
-        $dados['logado'] = $id;
-        $dados['qt'] = $qt;
-        $dados['transacao'] = $t->comprando($id, $qt);
-        
-        $this->loadTemplatePanel('painel', $dados);
     }
 }
 

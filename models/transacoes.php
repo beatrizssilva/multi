@@ -2,7 +2,7 @@
 class transacoes extends model {
     
     public function comprando($id, $qtde){
-        global $config;
+        
         
         $date = date("Y-m-d");
         //insere na tabela transacoes a nova transacao
@@ -56,8 +56,8 @@ class transacoes extends model {
       
     //Inserir pontos total no cadastro do usuario
     public function insertPontosTotal($id, $qt) {
-        
-        $ponto = intval($qt) * 220;
+        global $config;
+        $ponto = intval($qt) * $config['valorCesta'];
        
         //seleciona a quantidade de pontos atual
         $sql = "SELECT pontos FROM user WHERE id = :id";
@@ -92,9 +92,10 @@ class transacoes extends model {
     
     //insere quantidade de pontos na tabela comissoes
     public function insertPontosMes($id, $qt) {
+        global $config;
         $mes = date('m');
         $ano = date('Y');
-        $ponto = intval($qt) * 220;
+        $ponto = intval($qt) * $config['valorCesta'];
         
         $sql = "SELECT id FROM comissoes WHERE id_user = :id AND mes = :mes AND ano = :ano";
         $sql = $this->db->prepare($sql);        

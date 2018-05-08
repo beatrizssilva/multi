@@ -12,6 +12,36 @@ class usuarioscontroller extends controller {
         header("Location: ".BASE_URL);        
     }
     
+    public function editFoto(){
+        $u = new usuarios();
+        
+        $id = addslashes($_POST['idPerfil']);
+        $nome1 = addslashes($_POST['namePerfil']);
+        $nome = explode(' ', $nome1);        
+        $name = strtolower($nome[0]).'.jpg';
+        $dados['nome'] = strtolower($name);
+        
+        if(isset($_FILES['imagemPerfil'])) {
+            $dados['arquivo'] = $_FILES['imagemPerfil'];
+            move_uploaded_file($dados['arquivo']['tmp_name'], 'assets/images/perfil/'.$name);
+            $u->editFoto($id, $name);
+        }
+        
+        header("Location: ".BASE_URL);
+    }
+
+    public function dadosAfiliados(){
+        $u = new usuarios();
+        
+        $id = addslashes($_POST['id']);
+        
+        if(!empty($id)) {
+            $array = $u->getDadosAfiliados($id);
+            echo json_encode($array);
+            exit();
+        }
+    }
+
     public function cadastrar() {
         $u = new usuarios();        
                 
@@ -97,13 +127,16 @@ class usuarioscontroller extends controller {
     
     public function convite(){
         $u = new usuarios();
-        
-        $email = addslashes($_POST['email']);
-        $nome = addslashes($_POST['nome']); 
-        if(isset($nome) && !empty($nome) && isset($email) && !empty($email)){
-            if($u->convidar($nome, $email)){
-                echo '1';
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $email = addslashes($_POST['email']);
+            $nome = addslashes($_POST['nome']); 
+            if(isset($nome) && !empty($nome) && isset($email) && !empty($email)){
+                if($u->convidar($nome, $email)){
+                    echo '1';
+                }
             }
+        } else {
+            $this->loadTemplateLogin('login', $dados);
         }
     }
     

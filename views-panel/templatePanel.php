@@ -64,7 +64,7 @@
                         <div class="dados-user">
                             <a href="">
                                 <!--<i class="fas fa-user-circle"></i>-->
-                                <img src="<?php echo BASE_URL; ?>assets/images/user.jpg" class="img-circle" alt="Cinque Terre">
+                                <img src="<?php echo BASE_URL; ?>assets/images/perfil/<?php echo $viewData['perfil']['dados']['foto_perfil'];?>" class="img-circle" alt="Cinque Terre">
                                 <?PHP //echo (isset($viewData['qt_carrinho']))?$viewData['qt_carrinho']:'0';?>
                                 <span><?php 
                                 $nome = explode(' ', $viewData['dadosUser']['name']);
@@ -86,7 +86,8 @@
         <div class="painel-template-corpo">
                 <div class="painel-barra-lateral">
                     <div class="perfil-user">
-                        <img src="<?php echo BASE_URL; ?>assets/images/user.jpg" class="img-circle" alt="Cinque Terre">                        
+                        <img src="<?php echo BASE_URL; ?>assets/images/perfil/<?php echo $viewData['perfil']['dados']['foto_perfil'];?>" class="img-circle" alt="Cinque Terre">                        
+                        <span id="edit_foto" onclick="edit_foto(<?php echo $viewData['dadosUser']['id'];?>)">Editar</span>
                         <span><?php 
                         $nome = explode(' ', $viewData['dadosUser']['name']);
                         echo ucfirst($nome[0]);?></span>                        
@@ -281,3 +282,29 @@
     
 </body>
 </html>
+<!--Modal Editar Foto do Perfil-->
+<div class="modal fade" role='dialog' id='editFoto' >
+<div class="modal-dialog">
+
+    <div class="modal-content" id="modalFotoPerfil">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Editar Foto do Perfil</h4>
+      </div>
+      <div class="modal-body">          
+          <form id="formFotoPerfil" method="POST" enctype="multipart/form-data" 
+                action="<?php echo BASE_URL;?>usuarios/editFoto" />
+         
+              <img src="<?php echo BASE_URL; ?>assets/images/perfil/<?php echo $viewData['perfil']['dados']['foto_perfil'];?>" name="fotoPerfil" id="fotoPerfil" /><br/><br/>
+              <input type="file" name="imagemPerfil" id="imagemPerfil" onchange="previewImagem()" />
+              <input type="hidden" name="idPerfil" id="idPerfil" value="<?PHP echo $viewData['dadosUser']['id']; ?>" />
+              <input type="hidden" name="namePerfil" id="namePerfil" value="<?PHP echo $viewData['dadosUser']['name']; ?>" />         
+      </div>
+      <div class="modal-footer">
+          <input type="submit" class="btn btn-primary" value="Salvar" /></form>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
+</div>

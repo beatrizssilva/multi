@@ -59,10 +59,10 @@ class patentes extends model {
             if(isset($user['rubi']) && $user['rubi'] > 0){
                 $linha[$l]['rubi'] += $user['rubi'];
             }
-            if(isset($user['pdiamantere']) && $user['diamante'] > 0){
+            if(isset($user['diamante']) && $user['diamante'] > 0){
                 $linha[$l]['diamante'] += $user['diamante'];
             }
-            if(isset($user['pduploDiamantere']) && $user['duploDiamante'] > 0){
+            if(isset($user['duploDiamante']) && $user['duploDiamante'] > 0){
                 $linha[$l]['DuploDiamante'] += $user['duploDiamante']; 
             }
             
@@ -178,22 +178,22 @@ class patentes extends model {
             }
         }
         $p = 1;
-        if($qtdePre >= 3 && intval($usuarios[$chave]['pontuacao']) >= 2000){
+        if($qtdePre >= 3 && intval($usuarios[$chave]['pontuacao']) >= $config['pontosBronze']){
            $p = 2;
         }
-        if($qtdeBronze >= 3 && intval($usuarios[$chave]['pontuacao']) >= 6000){
+        if($qtdeBronze >= 3 && intval($usuarios[$chave]['pontuacao']) >= $config['pontosPrata']){
            $p = 3;
         }
-        if($qtdePrata >= 3 && intval($usuarios[$chave]['pontuacao']) >= 18000){
+        if($qtdePrata >= 3 && intval($usuarios[$chave]['pontuacao']) >= $config['pontosOuro']){
            $p = 4;
         }
-        if($qtdeOuro >= 3 && intval($usuarios[$chave]['pontuacao']) >= 60000){
+        if($qtdeOuro >= 3 && intval($usuarios[$chave]['pontuacao']) >= $config['pontosRubi']){
            $p = 5;
         }
-        if($qtdeRubi >= 3 && intval($usuarios[$chave]['pontuacao']) >= 180000){
+        if($qtdeRubi >= 3 && intval($usuarios[$chave]['pontuacao']) >= $config['pontosDiamante']){
            $p = 6;
         }
-        if($qtdeDiamante >= 3 && intval($usuarios[$chave]['pontuacao']) >= 540000){
+        if($qtdeDiamante >= 3 && intval($usuarios[$chave]['pontuacao']) >= $config['pontosDuploDiamante']){
            $p = 7;
         }
 
@@ -272,6 +272,7 @@ class patentes extends model {
     
     //atualiza o valor da comissao na tabela comissao
     public function setComissao(){
+        global $config;
         $sql = "SELECT id, patent FROM user ORDER BY id DESC";
         $sql = $this->db->query($sql);
         
@@ -325,7 +326,7 @@ class patentes extends model {
             
             if($sql->rowCount() > 0) {
                 $transacoes = $sql->fetch();
-                $qtde = $transacoes['qtde'] * 220;
+                $qtde = $transacoes['qtde'] * $config['valorCesta'];
             } else {
                 $qtde = 0;
             }

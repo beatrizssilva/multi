@@ -33,9 +33,9 @@ foreach ($filhos as $usuario):     ?>
               <a class="collapsed" role="button" id="afiliados-nome" data-toggle="collapse" data-parent="#accordion1" 
                     href="#collapse<?php echo $l; ?>" aria-expanded="false" aria-controls="collapse<?php echo $l; ?>"
                     <?php if ($usuario['ativo'] == 0){
-                        echo 'style="color:#AAA"';  
+                        echo 'style="color:#3CB371"';  
                     } else {
-                        echo 'style="color:blue"';  
+                        echo 'style="color:blue; font-weight:bold"';  
                     }
                             ?>
                     >
@@ -43,7 +43,7 @@ foreach ($filhos as $usuario):     ?>
                     $nome = explode(' ', $usuario['name']);                    
                     echo '<span>'.ucfirst($nome[0]);?> </span> 
               </a>
-                <span class="abrir-sobre" id="afiliados-sobre" onclick="abrirModalPerfil()" data-toggle="tooltip" data-placement="right" title="Veja Mais!">
+                <span class="abrir-sobre" id="afiliados-sobre" onclick="abrirModalPerfil(<?php echo $usuario['id'];?>)" data-toggle="tooltip" data-placement="right" title="Veja Mais!">
                     <i class="fas fa-eye"></i>
                 </span>
                 <a class="collapsed" role="button" id="afiliados-mais" data-toggle="collapse" data-parent="#accordion1" 
@@ -78,10 +78,82 @@ foreach ($filhos as $usuario):     ?>
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Notificação</h4>
+        <h4 class="modal-title">Dados do Usuário</h4>
       </div>
-      <div class="modal-body">
-        <p>CPF Inválido</p>
+      <div class="modal-body">          
+          <div class="afiliados">
+              <div class="foto-afiliados">
+                  
+              </div>
+              <div class="dados-afiliados">
+                  <div class="afiliados-nome">
+                    <p> <strong>Nome: </strong></p>
+                    
+                    <p id="nome"></p>
+                </div>
+                  <div class="afiliados-telefone">
+                    <strong>Telefone:</strong>
+                    <p> </p>
+                    <p id="tel"></p>
+                </div>
+                  <div class="afiliados-email">
+                    <strong>E-mail:</strong>
+                    <p> </p>
+                    <p id="email"> </p>
+                </div>
+                  <div class="afiliados-data">
+                    <strong>Ultima Compra:</strong>
+                    <p> </p>
+                    <p id="data"></p>
+                </div>
+              </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal Veja Mais2-->
+<div class="modal fade" role='dialog' id='vejaMais2' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Dados do Usuário</h4>
+      </div>
+      <div class="modal-body">          
+          <div class="afiliados">
+              <div class="foto-afiliados2">
+                  
+              </div>
+              <div class="dados-afiliados">
+                  <div class="afiliados-nome">
+                    <p> <strong>Nome: </strong></p>
+                    
+                    <p id="nome2"></p>
+                </div>
+                  <div class="afiliados-telefone">
+                    <strong>Telefone:</strong>
+                    <p> </p>
+                    <p id="tel2"></p>
+                </div>
+                  <div class="afiliados-email">
+                    <strong>E-mail:</strong>
+                    <p> </p>
+                    <p id="email2"> </p>
+                </div>
+                  <div class="afiliados-data">
+                    <strong>Ultima Compra:</strong>
+                    <p> </p>
+                    <p id="data2"></p>
+                </div>
+              </div>
+          </div>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
