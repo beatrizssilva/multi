@@ -11,6 +11,9 @@
                 <input type="email" class="form-control" id="email" name="email">
             </div>
             
+    <input type="hidden" class="form-control" id="identificador" name="identificador" value="<?php echo $dadosUser['identificador'];?>">
+    <input type="hidden" class="form-control" id="name" name="name" value="<?php echo $dadosUser['name'];?>">
+            
             <button type="button" class="btn btn-primary" onclick="enviarConvite()">Convidar</button>
           </form>
     </div>
@@ -33,21 +36,25 @@
                 <tr>
                     <th>Nome</th>
                     <th colspan="2">E-mail</th>
+                    <th>Nº Convite</th>
                     <th>Data</th>
                     <th>Status</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($convidados as $dados):?>
+                <?php foreach ($convidados as $dados):
+                    $convite = $dados['convite'];
+                    ?>
                 <tr>
                     <td><?php echo ucfirst($dados['nome']);?></td>
                     <td colspan="2"><?php echo $dados['email'];?></td>
+                    <td><?php echo $convite;?></td>
                     <td><?php 
                     $data = date('d-m-Y H:i:s', strtotime($dados['data']));
                     echo $data;?></td>
-                    <td><?php echo ($dados['status'] == 1)?'Convite Aceito':'Aguardando';?></td>
-                    <td><button class="btn-primary">Reenviar</button></td>
+                    <td><?php echo ($dados['status'] == 1)?'<strong style="color:blue">Convite Aceito</strong>':'Aguardando';?></td>
+                    <td><button class="btn-danger" onclick="excluirConvite(<?php echo $convite; ?>)">Excluir</button></td>
                 </tr>
                 <?php endforeach;?>
             </tbody>
@@ -87,6 +94,26 @@
       </div>
       <div class="modal-body">
         <p>Convite Enviado com Sucesso.</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal Convite Enviado-->
+<div class="modal fade" role='dialog' id='excluidoSucesso' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificação</h4>
+      </div>
+      <div class="modal-body">
+        <p>Convite Excluido com Sucesso.</p>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>

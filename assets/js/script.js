@@ -1,6 +1,9 @@
 //Funções da Pagina Cadastrar
 
 function cadastrar() {
+    if($('input[name="convite"]').val() != 0){
+        var convite = $('input[name="convite"]').val();        
+    }
     
     if ($('input[name="nome"]').val() <= 0 || $('input[name="email"]').val() <= 0 || $('input[name="cpf"]').val() <= 0 
             || $('input[name="id"]').val() <= 0 || $('input[name="senha"]').val() <= 0 || $('input[name="senha2"]').val() <= 0){
@@ -41,22 +44,33 @@ function cadastrar() {
                                                     if (msg3 === '0' ){
                                                         $('#idinvalido').modal('show');                                  
                                                     } else {
-                                                        $.ajax({
-                                                            url:BASE_URL+"usuarios/cadastrar",
+                                                        $.ajax({                        
+                                                            url:BASE_URL+"usuarios/pesquisarConvite/"+convite,
                                                             type:'POST',
-                                                            data:{
-                                                                id:id,
-                                                                nome:nome,
-                                                                email:email,
-                                                                cpf:cpf,
-                                                                senha:senha
-                                                            },
+                                                            success:function(msg3) {	
+                                                                if (msg3 === '0' ){
+                                                                    $('#conviteinvalido').modal('show');                                  
+                                                                } else {
+                                                                    $.ajax({
+                                                                        url:BASE_URL+"usuarios/cadastrar",
+                                                                        type:'POST',
+                                                                        data:{
+                                                                            id:id,
+                                                                            nome:nome,
+                                                                            email:email,
+                                                                            cpf:cpf,
+                                                                            senha:senha,
+                                                                            convite:convite
+                                                                        },
 
-                                                            success:function(res) {
-                                                                if (res === '1') {
-                                                                    $('#CadastroSucesso').modal('show');
-                                                                    window.setTimeout("location.href='"+BASE_URL+"'",3000); 
-                                                                } 
+                                                                        success:function(res) {
+                                                                            if (res === '1') {
+                                                                                $('#CadastroSucesso').modal('show');
+                                                                                window.setTimeout("location.href='"+BASE_URL+"'",3000); 
+                                                                            } 
+                                                                        }
+                                                                    });
+                                                                }
                                                             }
                                                         });
                                                     }
@@ -74,7 +88,7 @@ function cadastrar() {
             }
         });
     }
-//    document.cadastrarPJ.submit();
+
 }
 
 

@@ -50,8 +50,10 @@ class usuarioscontroller extends controller {
         $cpf = addslashes($_POST['cpf']);
         $id = addslashes($_POST['id']); 
         $senha = addslashes($_POST['senha']);
+        $convite = addslashes($_POST['convite']);
+       
 
-        if($u->setNewUser($email, $nome, $senha, $id, $cpf)){
+        if($u->setNewUser($email, $nome, $senha, $id, $cpf, $convite)){
             echo '1';
         } else {
             echo '0';
@@ -93,6 +95,15 @@ class usuarioscontroller extends controller {
             echo '0';
         }     
     }
+    public function pesquisarConvite($convite) {
+
+        $u = new usuarios();
+        if($u->verifyConvite($convite)) {          
+            echo '1';
+        } else {
+            echo '0';
+        }     
+    }
     public function validaCPF($cpf) {
          //validação do CPF
         
@@ -127,19 +138,33 @@ class usuarioscontroller extends controller {
     
     public function convite(){
         $u = new usuarios();
+        $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $email = addslashes($_POST['email']);
             $nome = addslashes($_POST['nome']); 
+            $identificador = addslashes($_POST['identificador']); 
+            $name = addslashes($_POST['name']); 
+            
             if(isset($nome) && !empty($nome) && isset($email) && !empty($email)){
-                if($u->convidar($nome, $email)){
+               
+                $convite = $u->convidar($nome, $email, $identificador, $name);
+                
+                if(isset($convite) && !empty($convite)){
                     echo '1';
-                }
+                } 
             }
         } else {
             $this->loadTemplateLogin('login', $dados);
         }
     }
     
-   
+    public function apagarConvite(){
+        $u = new usuarios();
+//         if(isset($_POST['convite']) && !empty($_POST['convite'])){
+            $convite = addslashes($_POST['convite']);
+            $u->dellConvite($convite);
+            
+//         }
+    }
 }
 

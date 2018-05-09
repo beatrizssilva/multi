@@ -115,20 +115,26 @@ function previewImagem(){
     }
 }
 function enviarConvite(){
+    
     if ($('input[name="nome"]').val() <= 0 || $('input[name="email"]').val() <= 0){
         $('#camposobrigatorios').modal('show');
     } else {
         var nome = $('input[name=nome]').val();
         var email = $('input[name=email]').val();
+        var identificador = $('input[name=identificador]').val();
+        var name = $('input[name=name]').val();
         
         $.ajax({
             url:BASE_URL+"usuarios/convite",
             type:'POST',
             data:{                
                 nome:nome,
-                email:email
+                email:email,
+                identificador:identificador,
+                name:name
             },
             success:function(res) {
+               
                 if (res === '1') {
                     $('#conviteSucesso').modal('show');
                     window.setTimeout("location.href='"+BASE_URL+"painel/convidar'",3000); 
@@ -136,6 +142,22 @@ function enviarConvite(){
             }
         });
     }
+}
+function excluirConvite(convite){
+   alert(convite);
+//    $.ajax({
+//        url:BASE_URL+"usuarios/apagarConvite",
+//        type:'POST',
+//        data:{                
+//            convite:convite
+//        },
+//        success:function() {             
+//
+//                $('#excluidoSucesso').modal('show');
+//                window.setTimeout("location.href='"+BASE_URL+"painel/convidar'",3000); 
+//
+//        }
+//    });
 }
 function editarFotoPerfil(){
     var nome = $('input[name=idPerfil]').val();

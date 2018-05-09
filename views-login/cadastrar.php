@@ -16,7 +16,10 @@
                 <input type="text" name="id" <?php if(!empty($_GET['id'])){          
                 $id = addslashes($_GET['id']); 
                 echo 'value="'.$id.'" disabled="disabled"'; }?> />
-                <label>Senha*:</label>
+                <?php if(isset($_GET['c']) && !empty($_GET['c'])): ?>                    
+                    <input type="hidden" name="convite" value="<?php echo $_GET['c'];?>" />
+                <?php endif;?>
+                <label>Senha*:</label>                
                 <input type="password" name="senha" />  
                 <label>Repita a Senha*:</label>
                 <input type="password" name="senha2" />             
@@ -162,6 +165,26 @@
       </div>
       <div class="modal-body">
         <p>CPF já Cadastrado.</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal Cadastro Realizado com Sucesso-->
+<div class="modal fade" role='dialog' id='conviteinvalido' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificação</h4>
+      </div>
+      <div class="modal-body">
+        <p>Convite Inválido.</p>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
