@@ -9,18 +9,18 @@ class transacoescontroller extends controller {
         $t = new transacoes();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $id = $_SESSION['multLogin'];
+            
             if(isset($_POST['qtde']) && !empty($_POST['qtde'])){
                 $qt = addslashes($_POST['qtde']);
             } else {
                 $qt = 1;
             }
-            $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
-            $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
-            $dados['logado'] = $id;
-            $dados['qt'] = $qt;
-            $dados['transacao'] = $t->comprando($id, $qt);
+            $valor = addslashes($_POST['valor']);
+            
+            $protocolo = $t->comprando($id, $qt, $valor);
 
-            $this->loadTemplatePanel('painel', $dados);
+            echo json_encode($protocolo);
+            exit();
         } else {
             $this->loadTemplateLogin('login', $dados);
         }

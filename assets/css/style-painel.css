@@ -243,6 +243,9 @@ header{
     width: 120px;
 }
 /*CSS Afiliados - Collapse*/
+.panel-default>.panel-heading{
+    background-color: #ddd;
+}
 .afiliados-head{
  display: flex;
  justify-content: flex-start;
@@ -301,7 +304,7 @@ header{
     margin-right: 10px;
 }
 #afiliados-nome{
-    flex: 1;
+    flex: 3;
 }
 #afiliados-sobre{
     flex: 1;
@@ -489,4 +492,113 @@ header{
 }
 .painel-arvore{
     margin-top: 50px;
+}
+/*CSS Compra*/
+.compraGeral{
+    background: #00a65a;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    
+}
+.compraIcon{
+    width: 10%;
+    height: 100%;
+   
+}
+.compraIcon span{
+    font-size: 70px;
+    color:#000;
+    padding: 15px;
+    opacity: 0.3;
+}
+.compraStatus{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgba(0,0,0,0.2);
+    padding-right: 10px;
+    padding-left: 10px;
+    color:#FFF;
+}
+.compraStatusTitulo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;       
+    padding: 15px 15px 0 5px;
+}
+.compraStatusTitulo span{
+    font-size: 18px;
+}
+#bonus{
+    font-size: 22px;
+    font-weight: bold;
+}
+#valor{
+    
+}
+.compraStatusValores{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: bold;
+  
+}
+.compraStatusBarra{
+    height: 5px;
+    margin-bottom: 20px;
+}
+#barraBonus{
+    height: 5px;
+    background: #FFF;
+    position: absolute;
+    margin-top: 0;
+    z-index: 999;
+}
+#barraGeral{
+    width: 100%;
+    height: 5px;
+    background: #000;
+   opacity: 0.3;
+}
+.compraButton{
+    width: 20%;
+    height: 100%;   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    
+    padding-top: 15px;
+    color: #FFF;
+    font-size: 18px;
+}
+.compraValor span{
+    font-size: 20px;
+    font-weight: bold;
+}
+/*CSS Protocolo de Compra*/
+.protocolo{
+    display: flex;
+    justify-content: flex-start;
+}
+.modal-body h3{
+    font-size: 24px;
+    font-weight: bold;
+}
+.protocolo p{
+    font-size: 22px;
+}
+#protocolo{
+    padding-left: 10px;
+}
+#modalFooterCompra{
+    height: 50px;
+    text-align: center;
+}
+#buttonImprimirBoleto{
+    font-size: 18px;
 }

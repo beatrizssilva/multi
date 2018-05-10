@@ -54,7 +54,7 @@
                     $data = date('d-m-Y H:i:s', strtotime($dados['data']));
                     echo $data;?></td>
                     <td><?php echo ($dados['status'] == 1)?'<strong style="color:blue">Convite Aceito</strong>':'Aguardando';?></td>
-                    <td><button class="btn-danger" onclick="excluirConvite(<?php echo $convite; ?>)">Excluir</button></td>
+                    <td><button class="btn-danger" onclick="excluirConvite('<?php echo $convite; ?>')">Excluir</button></td>
                 </tr>
                 <?php endforeach;?>
             </tbody>

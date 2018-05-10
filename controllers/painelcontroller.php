@@ -9,7 +9,8 @@ class painelcontroller extends controller {
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $u = new usuarios();
-        
+            $c = new comissao();
+            $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
             $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
             $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
             $this->loadTemplatePanel('nova_compra', $dados);

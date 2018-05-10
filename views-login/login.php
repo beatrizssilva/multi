@@ -8,15 +8,9 @@
                 <label>E-mail ou CPF do Usuário:</label>
                 <input type="text" name="name" />
                 <label>Senha:</label>
-                <input type="password" name="senha" />
+                <input type="password" name="senha" />                                
+                <input type="button" value="Entrar" id="button-login" onclick="login()"/>
                 
-                <?php if(isset($msg)):
-                echo $msg;
-                header("Refresh: 2;url=".BASE_URL);
-                else:
-                ?>
-                <input type="submit" value="Entrar" id="button-login"/>
-                <?php endif; ?>
             </form>
             <div class="login-cadastrar">
                 <h4>Ainda não tem cadastro?</h4>
@@ -29,4 +23,42 @@
 </div>
 
 
+<!--Modal Login Inválido-->
+<div class="modal fade" role='dialog' id='loginInvalido' >
+<div class="modal-dialog">
 
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificação</h4>
+      </div>
+      <div class="modal-body">
+        <p>E-mail e/ou Senha Incorreto(s). Tente Novamente.</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal Campos Obrigatórios-->
+<div class="modal fade" role='dialog' id='CamposObrigatorios' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificação</h4>
+      </div>
+      <div class="modal-body">
+        <p>Preencha Todos os Campos.</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
+</div>

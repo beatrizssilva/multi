@@ -114,6 +114,24 @@ function previewImagem(){
         preview.src = "";
     }
 }
+function editarFotoPerfil(){
+    var nome = $('input[name=idPerfil]').val();
+    var id = $('input[name=namePerfil]').val();
+    var imagem = $('#imagemPerfil')[0].files;
+       
+        $.ajax({
+           type:'POST',
+           url:BASE_URL+"usuarios/editFoto",
+           data:{                
+                nome:nome,
+                id:id,
+                imagem:imagem
+            },
+           success:function(msg){
+               alert(msg);
+           }
+        });
+}
 function enviarConvite(){
     
     if ($('input[name="nome"]').val() <= 0 || $('input[name="email"]').val() <= 0){
@@ -144,45 +162,45 @@ function enviarConvite(){
     }
 }
 function excluirConvite(convite){
-   alert(convite);
-//    $.ajax({
-//        url:BASE_URL+"usuarios/apagarConvite",
-//        type:'POST',
-//        data:{                
-//            convite:convite
-//        },
-//        success:function() {             
-//
-//                $('#excluidoSucesso').modal('show');
-//                window.setTimeout("location.href='"+BASE_URL+"painel/convidar'",3000); 
-//
-//        }
-//    });
+   
+    $.ajax({
+        url:BASE_URL+"usuarios/apagarConvite",
+        type:'POST',
+        data:{                
+            convite:convite
+        },
+        success:function() {             
+
+                $('#excluidoSucesso').modal('show');
+                window.setTimeout("location.href='"+BASE_URL+"painel/convidar'",3000); 
+
+        }
+    });
 }
-function editarFotoPerfil(){
-    var nome = $('input[name=idPerfil]').val();
-    var id = $('input[name=namePerfil]').val();
-    var imagem = $('#imagemPerfil')[0].files;
-//    var data = new FormData();
-//    var imagem = $('#imagemPerfil')[0].files;
-//    
-//    if(imagem.length > 0){
-//        data.append('name', $('#namePerfil').val());
-//        data.append('id', $('#idPerfil').val());
-//        data.append('foto', imagem[0]);
-        
-        $.ajax({
-           type:'POST',
-           url:BASE_URL+"usuarios/editFoto",
-           data:{                
-                nome:nome,
-                id:id,
-                imagem:imagem
-            },
-           success:function(msg){
-               alert(msg);
-           }
-        });
-//}
+
+function comprar(){
+    
+    var valor = $('input[name=valor]').val();
+    var qtde = $('input[name=name]').val();
+
+    $.ajax({
+        url:BASE_URL+"transacoes/comprar",
+        type:'POST',
+        data:{  
+            qtde:qtde,
+            valor:valor
+        },
+        dataType:'json',
+        success:function(res) {
+           
+            var protocolo = res;                
+            $("#protocolo").html(protocolo);
+            $('#compraSucesso').modal('show');
+        }
+    });
+}
+function fecharComprar(){
+    $('#compraSucesso').modal('hide');
+    window.setTimeout("location.href='"+BASE_URL+"painel/nova_compra'");
 }
 

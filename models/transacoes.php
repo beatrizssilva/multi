@@ -1,16 +1,17 @@
 <?php
 class transacoes extends model {
     
-    public function comprando($id, $qtde){
+    public function comprando($id, $qtde, $valor){
         
         
         $date = date("Y-m-d");
         //insere na tabela transacoes a nova transacao
-        $sql = "INSERT INTO transacoes (id_user, data, qtde) VALUES (:id_user, :data, :qtde)";
+        $sql = "INSERT INTO transacoes (id_user, data, qtde, valor_pago) VALUES (:id_user, :data, :qtde, :valor)";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id_user", $id);
         $sql->bindValue(":data", $date);
         $sql->bindValue(":qtde", $qtde);
+        $sql->bindValue(":valor", $valor);
         $sql->execute();
         
         //pega o ultimo ID
