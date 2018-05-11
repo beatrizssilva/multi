@@ -18,7 +18,7 @@ class transacoes extends model {
         $id_venda = $this->db->lastInsertId();
         
         //gera o codigo do pedido
-        $n = intval(100000+$id_venda);        
+        $n = intval(100+$id_venda);        
         $data = intval(date("Y").date("m").date("d"));
         $pedido = $data.'345'.$n;
         

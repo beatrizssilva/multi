@@ -45,6 +45,61 @@ class usuarioscontroller extends controller {
 //        header("Location: ".BASE_URL);        
     }
     
+    public function verifyEndereco() {
+        
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $u = new usuarios();
+      
+            $id = strtoupper(addslashes($_POST['id']));
+            $end = $u->getEndereco($id);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+
+    public function setEndereco(){
+        $dados = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+        $u = new usuarios();
+        $id = $_SESSION['multLogin'];
+        $rua = strtoupper(addslashes($_POST['rua']));
+        $numero = addslashes($_POST['numero']);
+        $complemento = strtoupper(addslashes($_POST['complemento']));
+        $bairro = strtoupper(addslashes($_POST['bairro']));
+        $cidade = strtoupper(addslashes($_POST['cidade']));
+        $uf = strtoupper(addslashes($_POST['uf']));
+        
+        $n = addslashes($_POST['cep']);
+        $n2 = explode('.', $n);
+        $n1 = $n2[0].$n2[1];
+        $n3 = explode('-', $n1);
+        $cep = $n3[0].$n3[1];
+        
+        $u->editEndereco($id, $rua, $numero, $complemento, $bairro, $cidade, $uf, $cep);
+        
+        
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+    
+    public function setDados(){
+        $dados = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+        $u = new usuarios();
+        $id = $_SESSION['multLogin'];
+        $d = addslashes($_POST['date']);
+        $d2 = str_split($d);
+        $date = $d2[6].$d2[7].$d2[8].$d2[9].'-'.$d2[3].$d2[4].'-'.$d2[0].$d2[1];
+        
+        $u->editDados($id, $date);
+        
+        
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+
     public function editFoto(){
         $u = new usuarios();
         
@@ -78,12 +133,16 @@ class usuarioscontroller extends controller {
     public function cadastrar() {
         $u = new usuarios();        
                 
-        $email = addslashes($_POST['email']);
-        $nome = addslashes($_POST['nome']); 
+        $email = strtolower(addslashes($_POST['email']));
+        $nome = strtoupper(addslashes($_POST['nome'])); 
         $cpf = addslashes($_POST['cpf']);
         $id = addslashes($_POST['id']); 
         $senha = addslashes($_POST['senha']);
+        if(isset($_POST['convite']) && !empty($_POST['convite'])){
         $convite = addslashes($_POST['convite']);
+        } else {
+            $convite = '';
+        }
        
 
         if($u->setNewUser($email, $nome, $senha, $id, $cpf, $convite)){

@@ -23,7 +23,8 @@
                 <input type="password" name="senha" />  
                 <label>Repita a Senha*:</label>
                 <input type="password" name="senha2" />             
-                <input type="button" value="Cadastar" onclick="cadastrar()"  id="button-login"/>                
+                <input type="button" value="Cadastar" onclick="<?php if(isset($_GET['c']) && !empty($_GET['c'])){
+                echo 'cadastrar()'; } else {echo 'cadastrar2()';} ?>" id="button-login"/>                
             </form> 
             <div class="cadastrar-login">
                 <h5>Já Tenho Cadastro. <a href="<?php echo BASE_URL;?>">Logar no Sistema</a></h5>                

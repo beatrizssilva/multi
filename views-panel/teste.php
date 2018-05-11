@@ -1,8 +1,6 @@
 <?php
 
 echo '<pre>';
-print_r($arquivo);
+print_r($cep);
 
-echo '<br/><pre>';
-print_r($nome);
 

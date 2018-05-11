@@ -1,5 +1,80 @@
 <?php
 class usuarios extends model {
+    
+    public function getEndereco($id){
+        $sql = "SELECT * FROM user_dados WHERE id_user = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetch();            
+            if(!empty($array['rua']) || !empty($array['bairro']) || !empty($array['cidade']) || !empty($array['estado']) || !empty($array['cep'])) {
+                echo '1';
+            } else {
+                echo '0';
+            }
+        } else {
+            echo '0';
+        }
+    }
+
+    public function editEndereco($id, $rua, $numero, $complemento, $bairro, $cidade, $uf, $cep){
+        $sql = "SELECT * FROM user_dados WHERE id_user = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $sql = "UPDATE user_dados SET rua = :rua, numero = :numero, complemento = :complemento, bairro = :bairro"
+                    . ", cidade = :cidade, estado = :uf, cep = :cep WHERE id_user = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->bindValue(":rua", $rua);
+            $sql->bindValue(":numero", $numero);
+            $sql->bindValue(":complemento", $complemento);
+            $sql->bindValue(":bairro", $bairro);
+            $sql->bindValue(":cidade", $cidade);
+            $sql->bindValue(":uf", $uf);
+            $sql->bindValue(":cep", $cep);
+            $sql->execute();
+        } else {
+            $sql = "INSERT INTO user_dados (id_user, rua, numero, complemento, bairro, cidade, estado, cep)"
+                    . " values (:id, :rua, :numero, :complemento, :bairro, :cidade, :uf, :cep)";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->bindValue(":rua", $rua);
+            $sql->bindValue(":numero", $numero);
+            $sql->bindValue(":complemento", $complemento);
+            $sql->bindValue(":bairro", $bairro);
+            $sql->bindValue(":cidade", $cidade);
+            $sql->bindValue(":uf", $uf);
+            $sql->bindValue(":cep", $cep);
+            $sql->execute();
+        }
+        
+    }
+    public function editDados($id, $date){
+        $sql = "SELECT * FROM user_dados WHERE id_user = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $sql = "UPDATE user_dados SET nasc = :date WHERE id_user = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->bindValue(":date", $date);
+            $sql->execute();
+        } else {
+            $sql = "INSERT INTO user_dados (id_user, nasc) values (:id, :nasc)";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->bindValue(":date", $date);
+            $sql->execute();
+        }
+        
+    }
 
     public function editFoto($id, $name){
         $sql = "SELECT * FROM user_dados WHERE id_user = :id";
@@ -52,9 +127,11 @@ class usuarios extends model {
             
             if($sql->rowCount() > 0) {
                 $array['dados'] = $sql->fetch();
+                if (empty($array['dados']['foto_perfil'])){
+                    $array['dados']['foto_perfil'] = "user.jpg";    
+                }
             } else {
                 $array['dados']['foto_perfil'] = "user.jpg";
-                $array['dados']['telefone'] = "358282828282";
             }
         }
        

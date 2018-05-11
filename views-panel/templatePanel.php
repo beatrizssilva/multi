@@ -67,8 +67,9 @@
                                 <img src="<?php echo BASE_URL; ?>assets/images/perfil/<?php echo $viewData['perfil']['dados']['foto_perfil'];?>" class="img-circle" alt="Cinque Terre">
                                 <?PHP //echo (isset($viewData['qt_carrinho']))?$viewData['qt_carrinho']:'0';?>
                                 <span><?php 
-                                $nome = explode(' ', $viewData['dadosUser']['name']);
-                                echo ucfirst($nome[0]);?></span>
+                                $nome1 = explode(' ', $viewData['dadosUser']['name']);
+                                $nome = strtolower($nome1[0]);
+                                echo ucfirst($nome);?></span>
                             </a>
                         </div>
                         <div class="logout">
@@ -89,8 +90,9 @@
                         <img src="<?php echo BASE_URL; ?>assets/images/perfil/<?php echo $viewData['perfil']['dados']['foto_perfil'];?>" class="img-circle" alt="Cinque Terre">                        
                         <span id="edit_foto" onclick="edit_foto(<?php echo $viewData['dadosUser']['id'];?>)">Editar</span>
                         <span><?php 
-                        $nome = explode(' ', $viewData['dadosUser']['name']);
-                        echo ucfirst($nome[0]);?></span>                        
+                        $nome1 = explode(' ', $viewData['dadosUser']['name']);
+                        $nome = strtolower($nome1[0]);
+                        echo ucfirst($nome);?></span>                        
                     </div>
                     <div class="consumidor">
                         <span>Consumidor:</span>
@@ -166,7 +168,7 @@
                             <div class="panel-body" id="lista">
                                 <ul id="lista-menu">
                                     <a href="<?php echo BASE_URL;?>painel/dados_pessoais"><li><i class="fas fa-minus-square"></i> Pessoais</li></a>
-                                    <a href="<?php echo BASE_URL;?>painel/dados_enderecos"><li><i class="fas fa-minus-square"></i> Endereços</li></a>
+                                    <a href="<?php echo BASE_URL;?>painel/dados_enderecos"><li><i class="fas fa-minus-square"></i> Endereço</li></a>
                                     <a href="<?php echo BASE_URL;?>painel/dados_cartoes"><li><i class="fas fa-minus-square"></i> Cartões</li></a>
                                     <a href="<?php echo BASE_URL;?>painel/dados_pontos"><li><i class="fas fa-minus-square"></i> Pontos</li></a>
                                 </ul>
