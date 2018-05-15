@@ -557,15 +557,27 @@ header{
 #barraBonus{
     height: 5px;
     background: #FFF;
-    position: absolute;
-    margin-top: 0;
+    border: 0;
+   
     z-index: 999;
 }
-#barraGeral{
+.compraStatusDados{
     width: 100%;
+}
+.compraStatusBarra{
+    width: 100%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+#barraGeral{
+    border: 0;
     height: 5px;
     background: #000;
-   opacity: 0.3;
+    margin-right: 0;
+    opacity: 0.3;
+   
+    
 }
 .compraButton{
     width: 20%;
@@ -609,4 +621,29 @@ header{
 }
 #buttonImprimirBoleto{
     font-size: 18px;
+}
+/*CSS Premiacao*/
+#premiosGeral thead{
+    border: 0;
+}
+#premiosGeral input{
+    background: transparent;
+    border:0;
+    font-size: 16px;
+}
+#premiosGeral td{
+    font-size: 16px;
+    font-weight: bold;
+}
+#credito{
+    color:blue;
+    font-weight: bold;
+}
+#debito{
+    color:red;
+    font-weight: bold;
+}
+#total{
+    color: #000;
+    font-weight: bold;
 }

@@ -62,7 +62,7 @@
                             </a>
                         </div>                    
                         <div class="dados-user">
-                            <a href="">
+                            <a href="<?php echo BASE_URL;?>painel/dados_pessoais">
                                 <!--<i class="fas fa-user-circle"></i>-->
                                 <img src="<?php echo BASE_URL; ?>assets/images/perfil/<?php echo $viewData['perfil']['dados']['foto_perfil'];?>" class="img-circle" alt="Cinque Terre">
                                 <?PHP //echo (isset($viewData['qt_carrinho']))?$viewData['qt_carrinho']:'0';?>
@@ -170,7 +170,7 @@
                                     <a href="<?php echo BASE_URL;?>painel/dados_pessoais"><li><i class="fas fa-minus-square"></i> Pessoais</li></a>
                                     <a href="<?php echo BASE_URL;?>painel/dados_enderecos"><li><i class="fas fa-minus-square"></i> Endereço</li></a>
                                     <a href="<?php echo BASE_URL;?>painel/dados_cartoes"><li><i class="fas fa-minus-square"></i> Cartões</li></a>
-                                    <a href="<?php echo BASE_URL;?>painel/dados_pontos"><li><i class="fas fa-minus-square"></i> Pontos</li></a>
+                                   
                                 </ul>
                             </div>
                           </div>
@@ -230,6 +230,7 @@
                             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
                               <div class="panel-body" id="lista">
                                 <ul id="lista-menu">
+                                    <a href="<?php echo BASE_URL;?>painel/premios_geral"><li><i class="fas fa-minus-square"></i> Geral</li></a>
                                     <a href=""><li><i class="fas fa-minus-square"></i> Indicação</li></a>
                                     <a href=""><li><i class="fas fa-minus-square"></i> Ativação</li></a>
                                     <a href=""><li><i class="fas fa-minus-square"></i> Liderança</li></a>

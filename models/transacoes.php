@@ -1,7 +1,7 @@
 <?php
 class transacoes extends model {
     
-    public function comprando($id, $qtde, $valor){
+    public function comprando($id, $qtde, $valor, $resgatado){
         
         
         $date = date("Y-m-d");
@@ -42,15 +42,32 @@ class transacoes extends model {
         $sql->execute();
             
         if($sql->rowCount() > 0) {
-            $id = $sql->fetch(PDO::FETCH_ASSOC);           
+            $dad = $sql->fetch(PDO::FETCH_ASSOC);           
             
             //Inserir pontos total no cadastro do usuario
-            $this->insertPontosTotal($id['id_dad'], $qtde);
+            $this->insertPontosTotal($dad['id_dad'], $qtde);
             //Insere quantidade de pontos na tabela comissoes
-            $this->insertPontosMes($id['id_dad'], $qtde);
+            $this->insertPontosMes($dad['id_dad'], $qtde);
            
         }
         
+        //atualiza o valor do saldo do usuario
+        $sql = "SELECT * FROM resgate WHERE id_user = :id";
+        $sql = $this->db->prepare($sql);        
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $id = $sql->fetch(PDO::FETCH_ASSOC); 
+            $total = $id['total'] - $resgatado;
+      
+            $sql = "UPDATE resgate SET total = :total, valor_resgatado = :resgatado WHERE id_user = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id['id_user']);
+            $sql->bindValue(":resgatado", $resgatado);
+            $sql->bindValue(":total", $total);
+            $sql->execute();
+        }
         return $pedido;
     }
     

@@ -189,6 +189,7 @@ function login(){
             },
 
             success:function(res) {
+                
                 if (res === '1') {                    
                     window.setTimeout("location.href='"+BASE_URL+"'"); 
                 } else {                  

@@ -40,7 +40,9 @@ foreach ($filhos as $usuario):     ?>
                             ?>
                     >
                     <?php 
-                    $nome = explode(' ', $usuario['name']);  
+                    $nome1 = explode(' ', $usuario['name']); 
+                    $nome2 = strtolower($nome1[0]);
+                    $nome = ucfirst($nome2);
                     switch ($usuario['patent']){
                                 case '1':
                                     $patent = 'Consumidor Pré';
@@ -64,7 +66,7 @@ foreach ($filhos as $usuario):     ?>
                                     $patent = 'Duplo Diamante';
                                     break;
                             }
-                    echo '<span>'.ucfirst($nome[0]).' ('.$patent.')';?> </span> 
+                    echo '<span>'.$nome.' ('.$patent.')';?> </span> 
               </a>
                 <span class="abrir-sobre" id="afiliados-sobre" onclick="abrirModalPerfil(<?php echo $usuario['id'];?>)" data-toggle="tooltip" data-placement="right" title="Veja Mais!">
                     <i class="fas fa-eye"></i>

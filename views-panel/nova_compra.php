@@ -1,10 +1,14 @@
 
 <h2>Nova Compra</h2><br>
 <?php 
-$x = $premios['valor_total'] *100;
+if(isset($premios['total']) && $premios['total'] > 0){
+$x = $premios['total'] *100;
 $n = $x/220;
 //$n = $n1+1;
-$v = 220-$premios['valor_total'];
+$v = 220-$premios['total'];
+} else {
+    $n = 0; $v = 220;
+}
 ?>
 <input type="hidden" name="id" value="<?PHP echo $_SESSION['multLogin'];?>"
 <div class="dadosCompra">
@@ -19,18 +23,18 @@ $v = 220-$premios['valor_total'];
             </div>
             <div class="compraStatusDados">
                 <div class="compraStatusValores" style="width:100%">
-                    <?php if(isset($premios['valor_total']) && $premios['valor_total'] > 0) :?>
-                    <span style="padding-left: <?php echo number_format($n, 0)?>%">                        
-                        <?php echo 'R$ '.number_format($premios['valor_total'], 2, ',', '.');?>
-                        <?php else: $premios['valor_total'] = 0;?>
-                        <?php echo 'R$ '.number_format($premios['valor_total'], 2, ',', '.');?>
+                    <?php if(isset($premios['total']) && $premios['total'] > 0) :?>
+                    <span style="padding-left: <?php echo number_format($n, 0);?>%">                        
+                        <?php echo 'R$ '.number_format($premios['total'], 2, ',', '.');?>
+                        <?php else: $premios['total'] = 0;?>
+                        <?php echo 'R$ '.number_format($premios['total'], 2, ',', '.');?>
                         <?php endif; ?>
                     </span>
                     
                 </div>
                 <div class="compraStatusBarra">
-                    <div id="barraBonus" style="width: <?php echo number_format($n, 0)?>%"></div>
-                    <div id="barraGeral"></div>
+                    <div id="barraBonus" style="width: <?php echo number_format($n, 0);?>%"></div>
+                    <div id="barraGeral" style="width: <?php echo 100-$n;?>%"></div>
                     
                 </div>
             </div>
@@ -44,6 +48,7 @@ $v = 220-$premios['valor_total'];
                 <form method="POST" action="<?php echo BASE_URL;?>transacoes/comprar">        
                     <input name="qtde" type="hidden" value="1" />
                     <input type="hidden" value="<?php echo $v;?>" name="valor" />
+                    <input type="hidden" value="<?php echo $premios['total'];?>" name="resgatado" />
                     <input type="button" class="btn-warning" value="Comprar" onclick="comprar()"/>
                 </form>
             </div>

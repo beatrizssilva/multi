@@ -9,8 +9,8 @@ class painelcontroller extends controller {
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $u = new usuarios();
-            $c = new comissao();
-            $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
+            
+            $dados['premios'] = $u->getValorResgate($_SESSION['multLogin']);
             $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
             $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
             $this->loadTemplatePanel('nova_compra', $dados);
@@ -59,14 +59,15 @@ class painelcontroller extends controller {
         }
     }
     
-    public function dados_pontos(){
+    public function premios_geral(){
        $dados = array();
        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){ 
             $u = new usuarios();
-        
+            $c = new comissao();
+            $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
             $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
             $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
-            $this->loadTemplatePanel('dados_pontos', $dados);
+            $this->loadTemplatePanel('premios_geral', $dados);
         } else {
             $this->loadTemplateLogin('login', $dados);
         }

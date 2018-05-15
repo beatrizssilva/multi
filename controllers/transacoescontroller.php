@@ -16,8 +16,9 @@ class transacoescontroller extends controller {
                 $qt = 1;
             }
             $valor = addslashes($_POST['valor']);
+            $resgate = addslashes($_POST['resgatado']);
             
-            $protocolo = $t->comprando($id, $qt, $valor);
+            $protocolo = $t->comprando($id, $qt, $valor, $resgate);
 
             echo json_encode($protocolo);
             exit();

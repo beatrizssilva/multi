@@ -149,8 +149,67 @@ class usuarios extends model {
 
         
     }
+    public function resgate() {
+        
+        $ano = date('Y');
+        $mes = date('m')-1;
+        $sql = "SELECT * FROM ganhos WHERE mes = :mes AND ano = :ano";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":mes", $mes);
+        $sql->bindValue(":ano", $ano);        
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+            
+            foreach ($array as $id){
+                
+                $sql = "SELECT * FROM resgate WHERE id_user = :id";
+                $sql = $this->db->prepare($sql);
+                $sql->bindValue(":id", $id['id_user']);                
+                $sql->execute();
+                
+                if($sql->rowCount() > 0) {
+                    $resgate = $sql->fetch(PDO::FETCH_ASSOC);
+                    $total = $id['valor_total'] + $resgate['total'];
+                    $sql = "UPDATE resgate SET total = :total WHERE id_user =:id";
+                    $sql = $this->db->prepare($sql);
+                    $sql->bindValue(":total", $total);
+                    $sql->bindValue(":id", $resgate['id_user']);
+                    $sql->execute();
+                    
+                } else {
+                
+                    $sql = "INSERT INTO resgate (id_user, valor_inicial, valor_resgatado, total) VALUES (:id_user, :valor_inicial,"
+                            . " :valor_resgatado, :total)";
+                    $sql = $this->db->prepare($sql);
+                    $sql->bindValue(":id_user", $id['id_user']);
+                    $sql->bindValue(":valor_inicial", $id['valor_total']);
+                    $sql->bindValue(":valor_resgatado", 0);
+                    $sql->bindValue(":total", $id['valor_total']);
+                    $sql->execute();
+                }
+            }
+        }
+        
+    }
     
-    //verifica o login do usuario
+    public function getValorResgate($id){
+        $array = array();
+    
+        $sql = "SELECT * FROM resgate WHERE id_user = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);        
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+        }
+            
+        return $array;
+    }
+
+        //verifica o login do usuario
     public function verifyUser($id, $senha){
        
         $sql = "SELECT * FROM user WHERE email = :email OR cpf = :cpf AND pass = :pass";

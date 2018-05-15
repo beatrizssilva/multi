@@ -15,7 +15,7 @@
 </div>
 <?php else:?>
 <h3>Painel de Controle</h3><br>
-
+<a href="<?php echo BASE_URL;?>teste/relatorioTXT">TEste</a><br>
 <div class="home-head">
     <div class="ativos">
         <div class="painel-dados">
@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="saiba-mais">
-            <a href=""><h5>Saiba Mais <i class="fas fa-arrow-circle-right"></i></h5></a>
+            <a href="<?php echo BASE_URL;?>painel/afiliados"><h5>Saiba Mais <i class="fas fa-arrow-circle-right"></i></h5></a>
         </div>
     </div>
     <div class="indicados">
@@ -44,7 +44,7 @@
             </div>
         </div>
        <div class="saiba-mais">
-            <a href=""><h5>Saiba Mais <i class="fas fa-arrow-circle-right"></i></h5></a>
+            <a href="<?php echo BASE_URL;?>painel/afiliados"><h5>Saiba Mais <i class="fas fa-arrow-circle-right"></i></h5></a>
         </div>        
     </div>
     <div class="pontos">
@@ -65,9 +65,18 @@
     <div class="premios">
         <div class="painel-dados">
             <div class="dados">
-                <?php if(isset($premios['valor_total']) && $premios['valor_total'] > 0) :?>
+                <?php if(isset($premios['valor_total']) && $premios['valor_total'] > 0) :
+                    if($dadosUser['patent'] > 1):
+                    ?>
                 <h4><?php echo 'R$ '.number_format($premios['valor_total'], 2, ',', '.');?></h4>
-                <?php else: $premios['valor_total'] = 0;?>
+                
+                <?php 
+                else: ?>
+                <h4><?php 
+                $v = $premios['valor_total']-$premios['com_lider'];
+                echo 'R$ '.number_format($v, 2, ',', '.');?></h4>
+                <?php endif; 
+                else: $premios['valor_total'] = 0;?>
                 <h4><?php echo 'R$ '.number_format($premios['valor_total'], 2, ',', '.');?></h4>
                 <?php endif; ?>
                 <h5>Bônus do Mês Atual*</h5>

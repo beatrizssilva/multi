@@ -1,0 +1,1 @@
+Nº  Descrição           Tamanho         Posição         Formato<br/>1   Assalariado: Tipo   1               1               1<br/>2   Assalariado: Numero 4               2               5<br/>3   Nro                 4               6               9<br/>4   Valor               7               10              16<br/>            

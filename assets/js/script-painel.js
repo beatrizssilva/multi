@@ -154,11 +154,11 @@ function excluirConvite(convite){
 }
 
 function comprar(){
-    
+    var resgatado = $('input[name=resgatado]').val();
     var valor = $('input[name=valor]').val();
     var qtde = $('input[name=name]').val();
     var id = $('input[name=id]').val();
-   
+
     $.ajax({
         url:BASE_URL+"usuarios/verifyEndereco",
         type:'POST',
@@ -174,7 +174,8 @@ function comprar(){
                 type:'POST',
                 data:{  
                     qtde:qtde,
-                    valor:valor
+                    valor:valor,
+                    resgatado:resgatado
                 },
                 dataType:'json',
                 success:function(res) {
