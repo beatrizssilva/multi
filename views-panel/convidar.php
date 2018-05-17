@@ -103,7 +103,7 @@
   </div>
 </div>
 
-<!--Modal Convite Enviado-->
+<!--Modal Convite Excluido-->
 <div class="modal fade" role='dialog' id='excluidoSucesso' >
 <div class="modal-dialog">
 

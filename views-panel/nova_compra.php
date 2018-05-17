@@ -92,7 +92,7 @@ $v = 220-$premios['total'];
         <input  maxlength="2" name="uf" type="hidden" value="<?php echo $perfil['dados']['estado'];?>"/>
         <input name="codEspDocumento" type="hidden" value="DM"  />
         <input name="dataEmissao" type="hidden"  value="<?php echo date("Ymd");?>"/>
-        <input name="seuNumero" id="seuNumero" type="hidden"  value="1"/>
+        <input name="seuNumero" id="seuNumero" type="hidden"  value="1001"/>
         <input name="nomeSacador" type="hidden"  />
         <input name="numCGCCPFSacador" type="hidden" />
         <input name="qntMonetaria" type="hidden"  value="5"/>

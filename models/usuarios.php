@@ -1,6 +1,39 @@
 <?php
 class usuarios extends model {
     
+    public function getDependentes($id) {
+        $array = array();
+        
+        $sql = "SELECT * FROM dependentes WHERE id_user = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0){
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+        } 
+        return $array;
+    }
+    
+    public function apagarDependente($id){
+        $sql = "DELETE FROM dependentes WHERE id = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+    }
+
+    public function setDependente($id, $nome, $relacao, $nasc, $documento){
+        $sql = "INSERT INTO dependentes (id_user, nome, nasc, documento, relacao)"
+                    . " values (:id, :nome, :nasc, :documento, :relacao)";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->bindValue(":nome", $nome);
+            $sql->bindValue(":nasc", $nasc);
+            $sql->bindValue(":documento", $documento);
+            $sql->bindValue(":relacao", $relacao);
+            $sql->execute();
+    }
+
     public function getEndereco($id){
         $sql = "SELECT * FROM user_dados WHERE id_user = :id";
         $sql = $this->db->prepare($sql);
@@ -54,25 +87,40 @@ class usuarios extends model {
         }
         
     }
-    public function editDados($id, $date){
+    public function editDados($id, $date, $nome, $email, $tel, $pis, $rg, $senha){
         $sql = "SELECT * FROM user_dados WHERE id_user = :id";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id", $id);
         $sql->execute();
         
         if($sql->rowCount() > 0) {
-            $sql = "UPDATE user_dados SET nasc = :date WHERE id_user = :id";
+            $sql = "UPDATE user_dados SET nasc = :date, pis = :pis, rg = :rg, telefone = :tel WHERE id_user = :id";
             $sql = $this->db->prepare($sql);
             $sql->bindValue(":id", $id);
             $sql->bindValue(":date", $date);
+            $sql->bindValue(":tel", $tel);
+            $sql->bindValue(":pis", $pis);
+            $sql->bindValue(":rg", $rg);
+            $sql->execute();
+            
+            $sql = "UPDATE user SET name = :nome, email = :email, pass = :senha WHERE id = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->bindValue(":nome", $nome);
+            $sql->bindValue(":email", $email);
+            $sql->bindValue(":senha", md5($senha));
             $sql->execute();
         } else {
-            $sql = "INSERT INTO user_dados (id_user, nasc) values (:id, :nasc)";
+            $sql = "INSERT INTO user_dados (id_user, nasc, telefone, pis, rg) values (:id, :nasc, :tel, :pis, :rg)";
             $sql = $this->db->prepare($sql);
             $sql->bindValue(":id", $id);
             $sql->bindValue(":date", $date);
+            $sql->bindValue(":tel", $tel);
+            $sql->bindValue(":pis", $pis);
+            $sql->bindValue(":rg", $rg);
             $sql->execute();
         }
+        
         
     }
 
@@ -212,17 +260,25 @@ class usuarios extends model {
         //verifica o login do usuario
     public function verifyUser($id, $senha){
        
-        $sql = "SELECT * FROM user WHERE email = :email OR cpf = :cpf AND pass = :pass";
+        $sql = "SELECT * FROM user WHERE email = :email AND pass = :pass";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":email", $id);
-        $sql->bindValue(":cpf", $id);
         $sql->bindValue(":pass", MD5($senha));
         $sql->execute();
 
         if($sql->rowCount() > 0) {
             return true;    
-        } else {       
-            return false;
+        } else {      
+            $sql = "SELECT * FROM user WHERE cpf = :cpf AND pass = :pass";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":cpf", $id);
+            $sql->bindValue(":pass", MD5($senha));
+            $sql->execute();
+            if($sql->rowCount() > 0) {
+                return true;    
+            } else {
+                return false;
+            }
         }
     }
     

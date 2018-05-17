@@ -647,3 +647,11 @@ header{
     color: #000;
     font-weight: bold;
 }
+/*CSS Dependentes*/
+.btn-dependente{
+    width: 100%;
+    text-align: center;
+}
+#table-dependentes{
+    border-bottom: 1px solid #ccc;
+}

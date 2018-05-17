@@ -3,7 +3,7 @@ $n = str_split($dadosUser['cpf']);
 $cpf =$n[0].$n[1].$n[2].'.'.$n[3].$n[4].$n[5].'.'.$n[6].$n[7].$n[8].'-'.$n[9].$n[10];
 if(isset($perfil['dados']['telefone']) && !empty($perfil['dados']['telefone'])){
 $n = str_split($perfil['dados']['telefone']);
-$tel =$n[0].$n[1].'-'.$n[2].$n[3].$n[4].$n[5].'-'.$n[6].$n[7].$n[8].$n[9];
+$tel =$n[0].$n[1].'-'.$n[2].$n[3].$n[4].$n[5].$n[6].'-'.$n[7].$n[8].$n[9].$n[10];
 } else { $tel = '';}
 if(isset($perfil['dados']['nasc']) && !empty($perfil['dados']['nasc'])){
 $n = str_split($perfil['dados']['nasc']);
@@ -27,38 +27,34 @@ $nasc = $n[8].$n[9].'/'.$n[5].$n[6].'/'.$n[0].$n[1].$n[2].$n[3];
                 <input type="email" class="form-control" id="email" name="email" value="<?php echo $dadosUser['email'];?>">
             </div>
             <div class="form-group">
-                <label for="email">Telefone:</label>
-                <input type="email" class="form-control" id="tel" name="tel" maxlength="13"
+                <label for="tel">Telefone:</label>
+                <input type="text" class="form-control" id="tel" name="tel" maxlength="14"
                        OnKeyPress="formatar('##-#####-####', this)" value="<?php echo $tel;?>">
             </div>
             <div class="form-group">
-                <label for="email">Data de Nascimento:</label>
+                <label for="nasc">Data de Nascimento:</label>
                 <input type="text" class="form-control" id="nasc" name="nasc" maxlength="10"
                        OnKeyPress="formatar('##/##/####', this)" value="<?php echo $nasc;?>">
             </div>
             <div class="form-group">
-                <label for="civil">Estado Civil:</label>
-                <input type="text" class="form-control" id="civil" name="civil" >
-            </div>            
-            <div class="form-group">
-                <label for="nomePai">Nome do Pai:</label>
-                <input type="text" class="form-control" id="nomePai" name="nomePai">
-            </div>
-            <div class="form-group">
-                <label for="nomeMae">Nome da Mãe:</label>
-                <input type="text" class="form-control" id="nomeMae" name="nomeMae">
-            </div>
-            <div class="form-group">
                 <label for="pis" data-toggle="tooltip" data-placement="right" 
                        title="Informação Necessária para Liberação do Pagamento!">PIS:*</label>
-                <input type="text" class="form-control" id="pis" name="pis">
+                <input type="text" class="form-control" id="pis" name="pis" value="<?php echo $perfil['dados']['pis'];?>">
             </div>
             <div class="form-group">
                 <label for="rg">RG:</label>
-                <input type="text" class="form-control" id="rg" name="rg">
+                <input type="text" class="form-control" id="rg" name="rg" value="<?php echo $perfil['dados']['rg'];?>">
+            </div>
+            <div class="form-group">
+                <label for="rg">Senha de Acesso:</label>
+                <input type="password" class="form-control" id="senha" name="senha" value="<?php echo $dadosUser['pass'];?>">
+            </div>
+            <div class="form-group">
+                <label for="rg">Repita a Senha:</label>
+                <input type="password" class="form-control" id="senha2" name="senha2" value="<?php echo $dadosUser['pass'];?>">
             </div>
       
-            <button type="button" class="btn btn-primary" onclick="editDados()">Salvar</button>
+            <button type="button" class="btn btn-primary" onclick="editDados('<?php echo $dadosUser['email'];?>', '<?php echo $dadosUser['pass'];?>' )">Salvar</button>
          
     </div>
 
@@ -80,6 +76,46 @@ $nasc = $n[8].$n[9].'/'.$n[5].$n[6].'/'.$n[0].$n[1].$n[2].$n[3];
         <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
         
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal E-mail já cadastrado-->
+<div class="modal fade" role='dialog' id='emailjacadastrado' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificação</h4>
+      </div>
+      <div class="modal-body">
+        <p>E-mail já cadastrado</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal Senhas Diferentes-->
+<div class="modal fade" role='dialog' id='senhaserradas' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificação</h4>
+      </div>
+      <div class="modal-body">
+        <p>As Senhas não são Iguais!</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
         </div>
     </div>
 

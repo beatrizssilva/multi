@@ -169,7 +169,8 @@
                                 <ul id="lista-menu">
                                     <a href="<?php echo BASE_URL;?>painel/dados_pessoais"><li><i class="fas fa-minus-square"></i> Pessoais</li></a>
                                     <a href="<?php echo BASE_URL;?>painel/dados_enderecos"><li><i class="fas fa-minus-square"></i> Endereço</li></a>
-                                    <a href="<?php echo BASE_URL;?>painel/dados_cartoes"><li><i class="fas fa-minus-square"></i> Cartões</li></a>
+                                    <a href="<?php echo BASE_URL;?>painel/dados_dependentes"><li><i class="fas fa-minus-square"></i> Dependentes</li></a>
+                                    <a href="<?php echo BASE_URL;?>painel/dados_bancarios"><li><i class="fas fa-minus-square"></i> Bancários</li></a>
                                    
                                 </ul>
                             </div>

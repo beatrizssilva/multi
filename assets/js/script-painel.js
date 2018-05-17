@@ -1,4 +1,45 @@
 //Funções do Painel
+function novoDependente(){
+    $('#cadastroDependente').modal('show');
+}
+
+function excluirDependente(id){
+    $.ajax({
+        type:'POST',
+        url:BASE_URL+"usuarios/dellDependente",
+        data:{                
+             id:id            
+         },
+        success:function(){            
+            $('#excluidoSucesso').modal('show');
+            window.setTimeout("location.href='"+BASE_URL+"painel/dados_dependentes'",3000); 
+         
+        }
+     });
+}
+
+function salvarDependente(){
+    var relacao = $('select[name=relacao]').val();
+    var nome = $('input[name=nome]').val();
+    var nasc = $('input[name=nasc]').val();
+    var documento = $('input[name=documento]').val();
+   
+    $.ajax({
+        type:'POST',
+        url:BASE_URL+"usuarios/addDependente",
+        data:{                
+             nome:nome,
+             relacao:relacao,
+             nasc:nasc,
+             documento:documento             
+         },
+        success:function(){            
+            $('#CadastroSucesso').modal('show');
+            window.setTimeout("location.href='"+BASE_URL+"painel/dados_dependentes'",3000); 
+         
+        }
+     });
+}
 function formatar(mascara, documento){
   var i = documento.value.length;
   var saida = mascara.substring(0,1);
@@ -9,9 +50,6 @@ function formatar(mascara, documento){
   }
   
 }
-
-
-
 
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip(); 
@@ -335,18 +373,108 @@ function meu_callback2(conteudo) {
             $('#CEPInvalido').modal('show');
         }
     };
-    function editDados(){
+    function editDados(email2, senha3){
+          
+        var nome = $("input[name=nome]").val();
+        var tel = $("input[name=tel]").val();
+        var pis = $("input[name=pis]").val();
+        var rg = $("input[name=rg]").val();
         var date = $("input[name=nasc]").val();
-       
-        $.ajax({
-                url:BASE_URL+"usuarios/setDados",
-                type:'POST',
-                data:{  
-                    date:date                    
-                },
-                success:function() {
-                    $('#dadosSucesso').modal('show');
-                    window.setTimeout("location.href='"+BASE_URL+"painel/dados_pessoais'",3000); 
+        var email = $("input[name=email]").val();
+        var senha = $("input[name=senha]").val();
+        var senha2 = $("input[name=senha2]").val();
+        
+        if (senha3 != senha || senha3 != senha2){
+            if (senha === '' || senha <= 0 || senha2 === '' || senha2 <= 0){
+                $('#senhaserradas').modal('show');
+            }else if(senha === senha2) {
+                if(email === email2) {
+                    $.ajax({
+                        url:BASE_URL+"usuarios/setDados",
+                        type:'POST',
+                        data:{  
+                            date:date,
+                            nome:nome,
+                            email:email,
+                            tel:tel,
+                            pis:pis,
+                            rg:rg,
+                            senha:senha
+                        },
+                        success:function() {
+                            $('#dadosSucesso').modal('show');
+                            window.setTimeout("location.href='"+BASE_URL+"painel/dados_pessoais'",3000); 
+                        }
+                    });
+                } else {
+                    $.ajax({                        
+                        url:BASE_URL+"usuarios/pesquisarEmail/"+email2,
+                        type:'POST',
+                        success:function(msg3) {	
+                            if (msg3 === '1' ){
+                                $('#emailjacadastrado').modal('show');                                  
+                            } else {
+                                $.ajax({
+                                    url:BASE_URL+"usuarios/setDados",
+                                    type:'POST',
+                                    data:{  
+                                        date:date                    
+                                    },
+                                    success:function() {
+                                        $('#dadosSucesso').modal('show');
+                                        window.setTimeout("location.href='"+BASE_URL+"painel/dados_pessoais'",3000); 
+                                    }
+                                });
+                            }
+                        }
+                    });
                 }
-            });
+            } else {
+                $('#senhaserradas').modal('show'); 
+            }
+        } else if(senha === senha2) {
+                if(email === email2) {
+                    $.ajax({
+                        url:BASE_URL+"usuarios/setDados",
+                        type:'POST',
+                        data:{  
+                            date:date,
+                            nome:nome,
+                            email:email,
+                            tel:tel,
+                            pis:pis,
+                            rg:rg,
+                            senha:senha
+                        },
+                        success:function() {
+                            $('#dadosSucesso').modal('show');
+                            window.setTimeout("location.href='"+BASE_URL+"painel/dados_pessoais'",3000); 
+                        }
+                    });
+                } else {
+                    $.ajax({                        
+                        url:BASE_URL+"usuarios/pesquisarEmail/"+email2,
+                        type:'POST',
+                        success:function(msg3) {	
+                            if (msg3 === '1' ){
+                                $('#emailjacadastrado').modal('show');                                  
+                            } else {
+                                $.ajax({
+                                    url:BASE_URL+"usuarios/setDados",
+                                    type:'POST',
+                                    data:{  
+                                        date:date                    
+                                    },
+                                    success:function() {
+                                        $('#dadosSucesso').modal('show');
+                                        window.setTimeout("location.href='"+BASE_URL+"painel/dados_pessoais'",3000); 
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            } else {
+                $('#senhaserradas').modal('show'); 
+            }
     }

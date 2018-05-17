@@ -27,7 +27,7 @@
         <script type="text/javascript" src="<?php echo BASE_URL; ?>assets/js/jquery.min.js"></script> 
         <!--        FontAwesome-->
         <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-        
+        <script src="<?php echo BASE_URL; ?>assets/js/script.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>assets/css/style-login.css" />
         
         <title>Lar Alimentos</title>

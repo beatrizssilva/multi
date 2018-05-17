@@ -15,7 +15,8 @@
 </div>
 <?php else:?>
 <h3>Painel de Controle</h3><br>
-<a href="<?php echo BASE_URL;?>teste/relatorioTXT">TEste</a><br>
+<a href="<?php echo BASE_URL;?>teste/relatorio_pagamento">Layout Relatorio Pagamento</a><br>
+<a href="<?php echo BASE_URL;?>teste/relatorio_cadastro">Layout Relatorio de Cadastro</a><br>
 <div class="home-head">
     <div class="ativos">
         <div class="painel-dados">

@@ -45,6 +45,35 @@ class usuarioscontroller extends controller {
 //        header("Location: ".BASE_URL);        
     }
     
+    public function addDependente() {
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $u = new usuarios();
+            
+            $relacao = addslashes($_POST['relacao']);
+            $nome = strtoupper(addslashes($_POST['nome'])); 
+            $nasc2 = addslashes($_POST['nasc']); 
+            $nasc1 = explode('/', $nasc2);
+            $nasc = $nasc1[2].$nasc1[1].$nasc1[0];
+            $documento = addslashes($_POST['documento']); 
+            $id = $_SESSION['multLogin'];
+            $u->setDependente($id, $nome, $relacao, $nasc, $documento);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+
+    public function dellDependente() {
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $u = new usuarios();
+            
+            $id = addslashes($_POST['id']);
+            
+            $u->apagarDependente($id);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+
     public function verifyEndereco() {
         
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
@@ -90,9 +119,21 @@ class usuarioscontroller extends controller {
         $id = $_SESSION['multLogin'];
         $d = addslashes($_POST['date']);
         $d2 = str_split($d);
+        
         $date = $d2[6].$d2[7].$d2[8].$d2[9].'-'.$d2[3].$d2[4].'-'.$d2[0].$d2[1];
         
-        $u->editDados($id, $date);
+        $tel1 = addslashes($_POST['tel']);
+        $tel2 = explode('-', $tel1);
+        $tel = $tel2[0].$tel2[1].$tel2[2];
+        
+        $nome = addslashes($_POST['nome']);
+        $email = addslashes($_POST['email']);
+        $senha = addslashes($_POST['senha']);
+        
+        $pis = addslashes($_POST['pis']);
+        $rg = addslashes($_POST['rg']);
+        
+        $u->editDados($id, $date, $nome, $email, $tel, $pis, $rg, $senha);
         
         
         } else {

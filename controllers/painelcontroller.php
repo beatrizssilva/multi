@@ -46,14 +46,15 @@ class painelcontroller extends controller {
         }
     }
     
-    public function dados_cartoes(){
+    public function dados_dependentes(){
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $u = new usuarios();
         
             $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
             $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
-            $this->loadTemplatePanel('dados_cartoes', $dados);
+            $dados['dependentes'] = $u->getDependentes($_SESSION['multLogin']);
+            $this->loadTemplatePanel('dados_dependentes', $dados);
         } else {
             $this->loadTemplateLogin('login', $dados);
         }
