@@ -218,6 +218,108 @@ header{
     display: flex;
     justify-content: space-between;
 }
+/*CSS Acompanhamento no Painel*/
+.acompanhamento{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 40px;
+    background: #3f8cbb;
+    color:#fff;
+}
+.acompanhamento-corpo{
+    width: 100%;
+    height: 200px;
+    border: 2px solid #ccc;
+}
+.acompanhamento-titulo{
+    display: flex;
+    justify-content: center;
+}
+.acompanhamento-status{
+    display: flex;    
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0 20px 0 20px;
+    
+}
+.acompanhamento-proximo{
+  
+   width: 20%;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   align-items: center;
+   
+}
+.acompanhamento-proximo span{
+    font-size: 16px;
+    font-weight: bold;
+}
+.acompanhamento-dados{
+    margin: 0 20px 0 20px;
+    width: 80%;
+    
+}
+.icone{
+    font-size: 90px;
+}
+.acompanhamento-afiliado, .acompanhamento-pontos, .acompanhamento-linhas{
+    height: 30px;
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;    
+}
+.acompanhamento-afiliado span, .acompanhamento-pontos span, .acompanhamento-linhas span{
+    font-size: 14px;
+}
+.ac-afiliado-info{
+    height: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+.ac-afiliado-barras{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    height: 8px;
+}
+.ac-afiliado-barras span{
+    font-size: 24px;
+    margin-left: 20px;
+    margin-top: -10px;
+}
+.ac-afiliado-info span {
+    margin-right: 40px;
+}
+#barraAfiliado{
+    height: 8px;
+    background: #FFF;
+    border: 0;   
+    z-index: 999;
+    
+}
+#barraGeral2{
+    
+    border: 0;
+    height: 8px;
+    background: #000;
+    margin-right: 0;
+    opacity: 0.3;  
+}
+.acompanhamento-check{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 /*CSS Corpo do Painel*/
 .painel-home{
     padding: 40px;
@@ -536,8 +638,13 @@ header{
     font-size: 22px;
     font-weight: bold;
 }
+.bonusValores{
+    display: flex;
+    flex-direction: column;    
+    align-items: flex-end;
+}
 #valor{
-    
+    margin-right: 0;
 }
 .compraStatusValores{
     display: flex;
@@ -553,6 +660,10 @@ header{
 .compraStatusBarra{
     height: 5px;
     margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 #barraBonus{
     height: 5px;
@@ -564,20 +675,13 @@ header{
 .compraStatusDados{
     width: 100%;
 }
-.compraStatusBarra{
-    width: 100%;
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-}
+
 #barraGeral{
     border: 0;
     height: 5px;
     background: #000;
     margin-right: 0;
-    opacity: 0.3;
-   
-    
+    opacity: 0.3;  
 }
 .compraButton{
     width: 20%;
@@ -599,6 +703,11 @@ header{
 .compraValor span{
     font-size: 20px;
     font-weight: bold;
+}
+#modal-endereco-compra{
+    width: 90%;
+    height: auto;
+    min-height: 380px;
 }
 /*CSS Protocolo de Compra*/
 .protocolo{

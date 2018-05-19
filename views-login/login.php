@@ -1,3 +1,4 @@
+<?php clearstatcache();?>
 <div class="login">
     <div class="login-all">
         <div class="login-logo">

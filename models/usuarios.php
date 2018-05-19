@@ -325,11 +325,11 @@ class usuarios extends model {
             $array = $sql->fetch(PDO::FETCH_ASSOC);
         }
         $ativo = 0;
-        $data_ativacao = date("Y-m-d h:m:i");
+        $data_cadastro = date("Y-m-d H:i:s");
         $id_dad = $array['id'];
         
-        $sql = "INSERT INTO user (id_dad, name, cpf, email, pass, ativo, data_ativacao) VALUES (:id_dad, :name, :cpf, "
-                . ":email, :pass, :ativo, :data_ativacao)";
+        $sql = "INSERT INTO user (id_dad, name, cpf, email, pass, ativo, data_cadastro) VALUES (:id_dad, :name, :cpf, "
+                . ":email, :pass, :ativo, :data_cadastro)";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id_dad", $id_dad);
         $sql->bindValue(":name", $nome);
@@ -337,7 +337,7 @@ class usuarios extends model {
         $sql->bindValue("email", $email);
         $sql->bindValue(":pass", MD5($senha));
         $sql->bindValue(":ativo", $ativo);
-        $sql->bindValue(":data_ativacao", $data_ativacao);        
+        $sql->bindValue(":data_cadastro", $data_cadastro);        
         $sql->execute();
         
         $id_user = $this->db->lastInsertId();

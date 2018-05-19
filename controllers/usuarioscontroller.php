@@ -147,7 +147,7 @@ class usuarioscontroller extends controller {
         $id = addslashes($_POST['idPerfil']);
         $nome1 = addslashes($_POST['namePerfil']);
         $nome = explode(' ', $nome1);        
-        $name = strtolower($nome[0]).'.jpg';
+        $name = strtolower($nome[0]).$id.'.jpg';
         $dados['nome'] = strtolower($name);
         
         if(isset($_FILES['imagemPerfil'])) {

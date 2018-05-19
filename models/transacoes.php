@@ -4,7 +4,7 @@ class transacoes extends model {
     public function comprando($id, $qtde, $valor, $resgatado){
         
         
-        $date = date("Y-m-d");
+        $date = date("Y-m-d H:i:s");
         //insere na tabela transacoes a nova transacao
         $sql = "INSERT INTO transacoes (id_user, data, qtde, valor_pago) VALUES (:id_user, :data, :qtde, :valor)";
         $sql = $this->db->prepare($sql);
@@ -30,9 +30,10 @@ class transacoes extends model {
         $sql->execute();
         
         //atualiza o cadastro do usuario 
-        $sql = "UPDATE user SET ativo = 1 WHERE id = :id";
+        $sql = "UPDATE user SET ativo = 1, data_ativacao = :data WHERE id = :id";
         $sql = $this->db->prepare($sql);        
         $sql->bindValue(":id", $id);
+        $sql->bindValue(":data", $date);
         $sql->execute();
         
         //seleciona o id_dad do usuario para adicao dos pontos

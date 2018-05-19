@@ -64,8 +64,9 @@ function abrirModalPerfil(id) {
             },
             dataType:'json',
             success:function(dados) {
+                var date3 = dados.compra.data.split(" "); 
                
-                var date = dados.compra.data.split("-");                
+                var date = date3[0].split("-");                
                 var data = date[2]+"/"+date[1]+"/"+date[0];
                 
                 var nome = " "+dados.name;
@@ -226,7 +227,7 @@ function comprar(){
             });
         } else {
             $('#enderecoInvalido').modal('show');
-            window.setTimeout("location.href='"+BASE_URL+"painel/dados_enderecos'", 3000);
+//            window.setTimeout("location.href='"+BASE_URL+"painel/dados_enderecos'", 3000);
         }
         }
     });
@@ -240,13 +241,149 @@ function fecharComprar(){
 function editEndereco(){
     
     var cep = $('input[name=cep]').val();
+    
     var p = pesquisacep(cep);    
     
     
 }
+function editEnderecoComprar(){
+    
+    var cep = $('input[name=cepComprar]').val();    
+    var p = pesquisacepComprar(cep);    
+}
+function pesquisacepComprar(valor) {
 
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep != "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if(validacep.test(cep)) {
+                
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback_comprar';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+
+            } //end if.
+            else {
+                //cep é inválido.
+
+                $('#CEPInvalido').modal('show');
+                exit;
+            }
+        } //end if.
+        else {
+            //cep sem valor.
+
+            $('#CEPInvalido').modal('show');
+            exit;
+        }
+    };
+function meu_callback_comprar(conteudo) {
+       
+        if (!("erro" in conteudo)) {
+            var rua = $('input[name=ruaComprar]').val();
+            var numero = $('input[name=numeroComprar]').val();
+            var complemento = $('input[name=complementoComprar]').val();
+            var bairro = $('input[name=bairroComprar]').val();
+            var cidade = $('input[name=cidadeComprar]').val();
+            var uf = $('input[name=ufComprar]').val();
+            var cep = $('input[name=cepComprar]').val();
+            $.ajax({
+                url:BASE_URL+"usuarios/setEndereco",
+                type:'POST',
+                data:{  
+                    cep:cep,
+                    rua:rua,
+                    numero:numero,
+                    complemento:complemento,
+                    bairro:bairro,
+                    cidade:cidade,
+                    uf:uf
+                },
+                success:function() {
+                   
+                    $('#enderecoSucesso').modal('show');
+                    window.setTimeout("location.href='"+BASE_URL+"painel/nova_compra'",2000); 
+                },error:function(){
+                    alert('Erro');
+                }
+            });
+              
+        } //end if.
+        else {
+            //CEP não Encontrado.
+            $('#CEPInvalido').modal('show');
+            exit;
+        }
+       
+    }
+function prenchecepComprar(valor) {
+
+        //Nova variável "cep" somente com dígitos.
+        var cep = valor.replace(/\D/g, '');
+
+        //Verifica se campo cep possui valor informado.
+        if (cep != "") {
+
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if(validacep.test(cep)) {
+
+                //Cria um elemento javascript.
+                var script = document.createElement('script');
+
+                //Sincroniza com o callback.
+                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback2_comprar';
+
+                //Insere script no documento e carrega o conteúdo.
+                document.body.appendChild(script);
+
+            } //end if.
+            else {
+                //cep é inválido.
+                $('#CEPInvalido').modal('show');
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            $('#CEPInvalido').modal('show');
+        }
+    }  
+function meu_callback2_comprar(conteudo) {
+        if (!("erro" in conteudo)) {
+            //Atualiza os campos com os valores.
+            
+            document.getElementById('ruaComprar').value=(conteudo.logradouro);
+            document.getElementById('bairroComprar').value=(conteudo.bairro);            
+            document.getElementById('cidadeComprar').value=(conteudo.localidade);
+            document.getElementById('ufComprar').value=(conteudo.uf);
+           
+            document.getElementById('ibge').value=(conteudo.ibge);
+              
+        } //end if.
+        else {
+            //CEP não Encontrado.
+            alert("CEP não encontrado.");
+        }
+       
+    }
+    
 //Preenchimento Endereço Automático pelo CEP - Webservice ViaCEP dos correios 
     function meu_callback(conteudo) {
+       
         if (!("erro" in conteudo)) {
             var rua = $('input[name=rua]').val();
             var numero = $('input[name=numero]').val();
@@ -268,8 +405,11 @@ function editEndereco(){
                     uf:uf
                 },
                 success:function() {
+                   
                     $('#enderecoSucesso').modal('show');
                     window.setTimeout("location.href='"+BASE_URL+"painel/dados_enderecos'",3000); 
+                },error:function(){
+                    alert('Erro');
                 }
             });
               
@@ -339,7 +479,7 @@ function meu_callback2(conteudo) {
        
     }
         
-    function peenchecep(valor) {
+    function prenchecep(valor) {
 
         //Nova variável "cep" somente com dígitos.
         var cep = valor.replace(/\D/g, '');

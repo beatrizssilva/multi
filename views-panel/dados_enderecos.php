@@ -9,7 +9,7 @@ $cep =$n[0].$n[1].'.'.$n[2].$n[3].$n[4].'-'.$n[5].$n[6].$n[7];
         <div class="form-group col-md-4">
                 <label>CEP:</label>
                 <input type="text" class="form-control" id="cep" name="cep" OnKeyPress="formatar('##.###-###', this)"
-                       maxlength="10" value="<?php echo ($cep > 0)?$cep:'';?>" onblur="peenchecep(this.value);">
+                       maxlength="10" value="<?php echo ($cep > 0)?$cep:'';?>" onblur="prenchecep(this.value);">
             </div> 
             <div class="form-group col-md-10">
                 <label>Rua:</label>

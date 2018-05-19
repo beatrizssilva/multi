@@ -15,8 +15,12 @@
 </div>
 <?php else:?>
 <h3>Painel de Controle</h3><br>
-<a href="<?php echo BASE_URL;?>teste/relatorio_pagamento">Layout Relatorio Pagamento</a><br>
+
+<!--<a href="<?php echo BASE_URL;?>teste/relatorio_pagamento">Layout Relatorio Pagamento</a><br>
 <a href="<?php echo BASE_URL;?>teste/relatorio_cadastro">Layout Relatorio de Cadastro</a><br>
+<a href="<?php echo BASE_URL;?>teste/graduacao">Teste Graduacao</a><br>-->
+
+
 <div class="home-head">
     <div class="ativos">
         <div class="painel-dados">
@@ -51,7 +55,7 @@
     <div class="pontos">
         <div class="painel-dados">
             <div class="dados">
-                <h4><?php if(isset($premios['pontos']) && $premios['pontos'] > 0) {echo $premios['pontos'];}
+                <h4><?php if(isset($premios['pontos']) && $premios['pontos'] > 0) {echo number_format($premios['pontos'], 0, '', '.');}
                 else { echo '0';}?></h4>
                 <h5>Pontos no Mês Atual</h5>
             </div>
@@ -92,6 +96,131 @@
     </div>
 </div>
 
+
+<div class="acompanhamento">
+    <div class="acompanhamento-corpo">
+        <div class="acompanhamento-titulo">
+            <h3>Acompanhamento para Graduação</h3>
+        </div>
+        <div class="acompanhamento-status">
+            <div class="acompanhamento-proximo">               
+                <?php switch($dadosUser['patent']){
+                    case 1:
+                        echo '<span>Próxima Graduação</span><span>Consumidor Bronze</span>
+                <div class="icone" style="color:#F0B782;">';
+                        $p = 'pre';
+                        $pontos = 2000;
+                        $l = "Pre";
+                        break;
+                    case 2:
+                        echo '<span>Próxima Graduação</span><span>Consumidor Prata</span>
+                <div class="icone" style="color:#C6C5CB;">';
+                        $p = 'bronze';
+                        $pontos = 6000;
+                        $l = "Bronze";
+                        break;
+                    case 3:
+                        echo '<span>Próxima Graduação</span><span>Consumidor Ouro</span>
+                <div class="icone" style="color:#FFFD90;">';
+                        $p = 'prata';
+                        $pontos = 20000;
+                        $l = "Prata";
+                        break;
+                    case 4:
+                        echo '<span>Próxima Graduação</span><span>Consumidor Rubi</span>
+                <div class="icone" style="color:#EC0798;">';
+                        $p = 'ouro';
+                        $pontos = 60000;
+                        $l = "Ouro";
+                        break;
+                    case 5:
+                        echo '<span>Próxima Graduação</span><span>Consumidor Diamante</span>
+                <div class="icone" style="color:#F7FAFF;">';
+                        $p = 'rubi';
+                        $pontos = 180000;
+                        $l = "Rubi";
+                        break;
+                    case 6:
+                        echo '<span>Próxima Graduação</span><span>Consumidor Duplo Diamante</span>
+                <div class="icone" style="color:#E8EBF2;">';
+                        $p = 'diamante';
+                        $pontos = 540000;
+                        $l = "Diamante";
+                        break;
+                    case 7:
+                        echo '<span>Parabéns!</span><span>Você Atingiu Graduação Máxima</span>
+                <div class="icone" style="color:#E8EBF2;">';
+                        $p = 'duploDiamante';
+                        $pontos = 540000;
+                        $l = "Duplo Diamante";
+                        break;
+                }?>                
+                    <i class="fas fa-trophy" id="taca"></i>
+                </div>
+            </div>
+            <div class="acompanhamento-dados">
+                <div class="acompanhamento-afiliado">
+                    <div class="ac-afiliado-info">
+                        <?php if($dados['dados']['F.Ativos'] > 0){ $f = 1;} else {$f = 0;}
+                        $nf = $f*100;
+                        $b = 100-$nf;
+                        
+                        $patent = $dados['dados'][$p];
+                        $np = $patent*33;
+                        if ($np>100){$np=100;}
+                        $c = ($premios['pontos']*100)/$pontos;
+                        if ($c>100){$c=100;}
+                        ?>
+                        <span>Necessário 1 Afiliado Ativo da 1ª Geração</span>
+                        <span><?php echo $dados['dados']['F.Ativos'];?> / 1</span>
+                    </div>
+                    <div class="ac-afiliado-barras">
+                        
+                        <div id="barraAfiliado" style="width: <?php echo $nf;?>%"></div>
+                        
+                        <div id="barraGeral2" style="width: <?php echo $b;?>%; margin-left: <?php echo $f; ?>"></div>
+                        <span><?php
+                        if ($nf >= 100){
+                            echo '<i class="fas fa-check-circle"></i>'; } else {
+                            echo '<i class="far fa-circle"></i>';
+                        } ?></span>
+                    </div>
+                </div>
+                <div class="acompanhamento-linhas">
+                    <div class="ac-afiliado-info">
+                        <span>Necessário 3 Linhas (<?php echo $l;?>) Diferentes Ativas </span>
+                        <span><?php echo $patent;?> / 3</span>
+                    </div>
+                    <div class="ac-afiliado-barras">
+                        <div id="barraAfiliado" style="width: <?php echo $np;?>%"></div>
+                        <div id="barraGeral2" style="width: <?php echo 100-$np;?>%"></div>
+                        <span><?php
+                        if ($np >= 100){
+                            echo '<i class="fas fa-check-circle"></i>'; } else {
+                            echo '<i class="far fa-circle"></i>';
+                        } ?></span>
+                    </div>
+                </div>
+                <div class="acompanhamento-pontos">
+                    <div class="ac-afiliado-info">
+                        <span>Pontos Necessários Para se Graduar Consumidor Prata - <?php echo number_format($pontos, 0, '', '.');?></span>
+                        <span><?php echo number_format($premios['pontos'], 0, '', '.');?> / <?php echo number_format($pontos, 0, '', '.'); ?></span>
+                    </div>
+                    <div class="ac-afiliado-barras">
+                        <div id="barraAfiliado" style="width: <?php echo number_format($c, 0);?>%"></div>
+                        <div id="barraGeral2" style="width: <?php echo 100-$c;?>%"></div>
+                        <span><?php
+                        if ($c >= 100){
+                            echo '<i class="fas fa-check-circle"></i>'; } else {
+                            echo '<i class="far fa-circle"></i>';
+                        } ?></span>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</div>
 <div class="grafico">
     <div class="grafico-titulo">
         <h3>Comparativo Indicados e Ativados Durante o Ano Vigente</h3>

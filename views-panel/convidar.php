@@ -23,7 +23,7 @@
         <div class="form-inline">
                 
                 <input type="text" class="form-control" id="link" name="link" 
-                    value="<?php echo 'http://localhost/multi/usuarios/cadastro?id='.$dadosUser['identificador'];?>" 
+                    value="<?php echo BASE_URL.'usuarios/cadastro?id='.$dadosUser['identificador'];?>" 
                     disabled="disabled" >
             </div>
       

@@ -1,8 +1,13 @@
 <?php 
 ob_start();
 ?>
-3000100070025382<?php echo "\r\n"; ?>
-3000100070000900<?php echo "\r\n"; ?>
+<!--3 = Fixo
+000001 = numero de cadastro
+0007 = numero da contabilidade
+0000000 = valor (tamanho 7 com 2 casas decimais)-->
+
+300000100070025382<?php echo "\r\n"; ?>
+300000100070000900<?php echo "\r\n"; ?>
             
 <?php
 $html = ob_get_contents();

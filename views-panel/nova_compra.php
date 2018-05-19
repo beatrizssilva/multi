@@ -2,12 +2,23 @@
 <h2>Nova Compra</h2><br>
 <?php 
 if(isset($premios['total']) && $premios['total'] > 0){
-$x = $premios['total'] *100;
+if($premios['total'] > 220){
+    $premios['total'] = 220;
+}
+    $x = $premios['total'] *100;
 $n = $x/220;
 //$n = $n1+1;
-$v = 220-$premios['total'];
+if(!isset($dadosUser['data_ativacao']) && $dadosUser['data_ativacao'] <= 0){
+    $v = 300-$premios['total'];
+} else {
+    $v = 220-$premios['total'];
+}
+} else {
+    if(!isset($dadosUser['data_ativacao']) && $dadosUser['data_ativacao'] <= 0){
+        $n = 0; $v = 300;
 } else {
     $n = 0; $v = 220;
+}
 }
 ?>
 <input type="hidden" name="id" value="<?PHP echo $_SESSION['multLogin'];?>"
@@ -19,12 +30,17 @@ $v = 220-$premios['total'];
         <div class="compraStatus">
             <div class="compraStatusTitulo">
                 <span id="bonus">Bônus para Aquisição</span>
-                <span id="valor">Valor Total: R$ 220,00</span>
+                <div class="bonusValores">
+                    <span id="valor">Valor da Cesta: R$ 220,00</span>
+                    <?php if(!isset($dadosUser['data_ativacao']) && $dadosUser['data_ativacao'] <= 0):?>
+                    <span id="valor">Valor Ativação: R$ 80,00</span>
+                    <?php endif;?>
+                </div>
             </div>
             <div class="compraStatusDados">
-                <div class="compraStatusValores" style="width:100%">
+                <div class="compraStatusValores" style="width:95%">
                     <?php if(isset($premios['total']) && $premios['total'] > 0) :?>
-                    <span style="padding-left: <?php echo number_format($n, 0);?>%">                        
+                    <span style="padding-left: <?php echo number_format($n, 0);?>%; padding-right:20px ">                        
                         <?php echo 'R$ '.number_format($premios['total'], 2, ',', '.');?>
                         <?php else: $premios['total'] = 0;?>
                         <?php echo 'R$ '.number_format($premios['total'], 2, ',', '.');?>
@@ -42,7 +58,7 @@ $v = 220-$premios['total'];
         <div class="compraButton">
             <div class="compraValor">
                 <h5>A Pagar</h5>
-                <span><?php echo 'R$ '.number_format($v, 2, ',', '.');?></span>
+                <span><?php if($v < 0) {$v = 0;}echo 'R$ '.number_format($v, 2, ',', '.');?></span>
             </div>
             <div class="button">
                 <form method="POST" action="<?php echo BASE_URL;?>transacoes/comprar">        
@@ -123,6 +139,61 @@ $v = 220-$premios['total'];
 
 <!--Modal Endereco Invalido-->
 <div class="modal fade" role='dialog' id='enderecoInvalido' >
+<div class="modal-dialog" id="modal-endereco-compra">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Favor Preencher Endereço</h4>
+      </div>
+        <div class="modal-body" id="modal-endereco-compra"> 
+            <div class="dadosPessoais-form">    
+        <div class="form-group col-md-4">
+                <label>CEP:</label>
+                <input type="text" class="form-control" id="cepComprar" name="cepComprar" OnKeyPress="formatar('##.###-###', this)"
+                       maxlength="10" onblur="prenchecepComprar(this.value);">
+            </div> 
+            <div class="form-group col-md-10">
+                <label>Rua:</label>
+                <input type="text" class="form-control" id="ruaComprar" name="ruaComprar" >
+            </div>
+            <div class="form-group col-md-2">
+                <label>Numero:</label>
+                <input type="text" class="form-control" id="numeroComprar" name="numeroComprar" >
+            </div>
+            <div class="form-group col-md-7">
+                <label>Complemento:</label>
+                <input type="email" class="form-control" id="complementoComprar" name="complementoComprar" >
+            </div>
+            <div class="form-group col-md-5">
+                <label>Bairro:</label>
+                <input type="text" class="form-control" id="bairroComprar" name="bairroComprar" >
+            </div>            
+            <div class="form-group col-md-5">
+                <label>Cidade:</label>
+                <input type="text" class="form-control" id="cidadeComprar" name="cidadeComprar" >
+            </div>
+            <div class="form-group col-md-2">
+                <label>UF:</label>
+                <input type="text" class="form-control" id="ufComprar" name="ufComprar" maxlength="2" >
+            </div>           
+            <div class="form-group col-md-12">
+                <button type="button" class="btn btn-primary" onclick="editEnderecoComprar()">Salvar</button>
+            </div>          
+    </div>
+                          
+        </div>        
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal Endereco Editado com Sucesso-->
+<div class="modal fade" role='dialog' id='enderecoSucesso' >
 <div class="modal-dialog">
 
     <div class="modal-content">
@@ -132,7 +203,7 @@ $v = 220-$premios['total'];
       </div>
         <div class="modal-body"> 
             <div>
-                <h4>Favor Preencher Endereço Corretamente.</h4>
+                <h4>Endereco Cadastrado com Sucesso</h4>
             </div>
                           
         </div>        

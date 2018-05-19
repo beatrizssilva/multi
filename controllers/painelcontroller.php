@@ -108,8 +108,8 @@ class painelcontroller extends controller {
             }
         } else {
             $this->loadTemplateLogin('login', $dados);
-        }
-        
-    }
+        }        
+    }    
+    
 }
 
