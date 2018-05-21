@@ -1,4 +1,8 @@
-<h3>Minha Rede de Afiliados</h3>
+<div class="button-convidar" >
+    <h3>Minha Rede de Afiliados</h3>
+        <button class="btn-success"><a href="<?php echo BASE_URL;?>painel/convidar">Enviar Convite</a></button>
+    </div>
+
 <div class="afiliados-head">
     <div class="legenda">
         <div class="legenda-itens">
@@ -13,12 +17,12 @@
         <div class="legenda-itens">
             <h5>Afiliados</h5>
             <ul>
-                <li id="afiliados-total"><i class="fas fa-square"></i> Total()</li>
                 <li id="afiliados-ativos"><i class="fas fa-square"></i> Ativos()</li>
                 <li id="afiliados-inativos"><i class="fas fa-square"></i> Inativos()</li>
             </ul>
         </div>
     </div>
+    
 </div>
 
 <?php if (isset($filhos) && !empty($filhos)): 
@@ -33,9 +37,9 @@ foreach ($filhos as $usuario):     ?>
               <a class="collapsed" role="button" id="afiliados-nome" data-toggle="collapse" data-parent="#accordion1" 
                     href="#collapse<?php echo $l; ?>" aria-expanded="false" aria-controls="collapse<?php echo $l; ?>"
                     <?php if ($usuario['ativo'] == 0){
-                        echo 'style="color:#3CB371"';  
+                        echo 'style="color:#696969"';  
                     } else {
-                        echo 'style="color:blue; font-weight:bold"';  
+                        echo 'style="color:#008000; font-weight:bold"';  
                     }
                             ?>
                     >

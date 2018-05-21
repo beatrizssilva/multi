@@ -29,9 +29,9 @@ foreach ($filho as $usuario):
     }?>
     <ol id="ol-filhos">
             <?php if ($usuario['ativo'] == 0): ?>
-                <li style="color:#3CB371">    
+                <li style="color:#696969">    
             <?php else: ?>
-                <li style="color:blue">  
+                <li style="color:#008000">  
             <?php endif; ?>
             <?php echo '<span id="linha-filhos"></span>'.$nome.' ('.$patent.')';?>
                     <span class="abrir-sobre" id="afiliados-sobre" onclick="abrirModalPerfil2(<?php echo $usuario['id'];?>)" data-toggle="tooltip" data-placement="right" title="Veja Mais!"> 

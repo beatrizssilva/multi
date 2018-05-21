@@ -83,3 +83,21 @@ header{
     text-align: right;
     
 }
+/*CSS esqueci Senha*/
+.login-esqueci{
+    background: #FFF;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;   
+    color: #72777c;
+    font-size: 16px;
+    padding: 20px 20px 30px 20px;
+}
+.login-esqueci input{
+    height: 40px;
+    font-size: 18px;
+}
+.login-esqueci button{
+    width: 70px;
+}

@@ -21,6 +21,10 @@ if(!isset($dadosUser['data_ativacao']) && $dadosUser['data_ativacao'] <= 0){
 }
 }
 ?>
+<div class="imagemCesta">
+    
+    <img src="<?php echo BASE_URL;?>'assets/images/cesta.jpeg'" alt=""/>
+</div>
 <input type="hidden" name="id" value="<?PHP echo $_SESSION['multLogin'];?>"
 <div class="dadosCompra">
     <div class="compraGeral">

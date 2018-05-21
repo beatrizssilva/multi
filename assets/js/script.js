@@ -1,3 +1,65 @@
+function formatar(mascara, documento){
+  var i = documento.value.length;
+  var saida = mascara.substring(0,1);
+  var texto = mascara.substring(i)
+  
+  if (texto.substring(0,1) != saida){
+            documento.value += texto.substring(0,1);
+  }
+  
+}
+
+//função esqueci minha senha
+function esqueci() {
+    var cpf = $('input[name=cpf]').val();
+    
+    $.ajax({
+        type:'POST',
+        url:BASE_URL+"usuarios/esqueciSenha",
+        data:{                
+             cpf:cpf            
+         },
+        success:function(res){            
+            if(res === '0'){
+                $('#cpfInvalido').modal('show');
+            } else {
+            var email = 'Email de Recuperação Enviado para: <strong>'+res+'</strong>';
+            $("#msg").html(email);
+            $('#senhaEnviada').modal('show');            
+            window.setTimeout("location.href='"+BASE_URL+"'",5000); 
+        }
+        }
+     });
+}
+function redefinirSenha(){
+    var senha = $('input[name=senha]').val();
+    var senha2 = $('input[name=senha2]').val();
+    var codigo = $('input[name=codigo]').val();
+    
+    if(senha <= 0 || senha2 <= 0){
+        $('#camposobrigatorios').modal('show');
+    } else if(senha != senha2){
+        $('#senhaserradas').modal('show');
+    } else {
+        $.ajax({
+            type:'POST',
+            url:BASE_URL+"usuarios/redefinirSenha",
+            data:{                
+                 senha:senha,
+                 codigo:codigo
+             },
+            success:function(res){    
+               
+                if(res === '0'){
+                    $('#codigoInvalido').modal('show');
+                } else {                
+                $('#senhaDefinida').modal('show');            
+                window.setTimeout("location.href='"+BASE_URL+"'",5000); 
+            }
+            }
+         });
+    }
+}
 //Funções da Pagina Cadastrar
 
 function cadastrar() {
@@ -189,10 +251,13 @@ function login(){
             },
 
             success:function(res) {
-                
+              
                 if (res === '1') {                    
                     window.setTimeout("location.href='"+BASE_URL+"'"); 
-                } else {                  
+                } else if(res === '2') {                  
+                    $('#contaCancelada').modal('show');
+                    window.setTimeout("location.href='"+BASE_URL+"'",3000); 
+                } else {
                     $('#loginInvalido').modal('show');
                     window.setTimeout("location.href='"+BASE_URL+"'",3000); 
                 }

@@ -1,3 +1,4 @@
+
 //Funções do Painel
 function novoDependente(){
     $('#cadastroDependente').modal('show');
@@ -13,6 +14,24 @@ function excluirDependente(id){
         success:function(){            
             $('#excluidoSucesso').modal('show');
             window.setTimeout("location.href='"+BASE_URL+"painel/dados_dependentes'",3000); 
+         
+        }
+     });
+}
+
+function cancelarConta() {
+    $('#cancelarConta').modal('show');
+}
+function cancelamentoConta(id){
+    $.ajax({
+        type:'POST',
+        url:BASE_URL+"usuarios/cancelarConta",
+        data:{                
+             id:id            
+         },
+        success:function(){            
+            $('#contaExcluidaSucesso').modal('show');
+            window.setTimeout("location.href='"+BASE_URL+"'",3000); 
          
         }
      });

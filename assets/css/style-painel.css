@@ -218,6 +218,19 @@ header{
     display: flex;
     justify-content: space-between;
 }
+/*CSS Cancelar Conta*/
+#cancelar p{
+    font-size: 15px;
+}
+.cancelar{
+    display: flex;
+    justify-content: space-around;
+}
+.cancelar button{
+    width: 50px;
+    height: 35px;
+    font-size: 15px;
+}
 /*CSS Acompanhamento no Painel*/
 .acompanhamento{
     display: flex;
@@ -381,10 +394,10 @@ header{
     border-bottom: 1px solid #ccc;
 }
 #ativo, #afiliados-ativos{
-    color:blue;
+    color:#008000;
 }
 #inativo, #afiliados-inativos{
-    color: #3CB371;
+    color: #696969;
 }
 #afiliados-total{
     color:#000;
@@ -502,6 +515,7 @@ header{
     justify-content: space-between;
     width: 100%;
 }
+
 .painel-reativar, .painel-saldo{
     width: 48%;
     padding-bottom: 15px;
@@ -595,7 +609,28 @@ header{
 .painel-arvore{
     margin-top: 50px;
 }
+.button-convidar{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.button-convidar button{
+    width: 250px;
+    height: 40px;
+    font-size: 20px;    
+}
+.button-convidar button a{
+    color:#fff;
+}
+.button-convidar button a:hover{
+    text-decoration: none;
+}
+
 /*CSS Compra*/
+.imagemCesta{
+    display: flex;
+    width: 100%;
+}
 .compraGeral{
     background: #00a65a;
     height: 100px;

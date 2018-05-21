@@ -4,20 +4,11 @@
         <div class="login-logo">
             <img src="<?php echo BASE_URL;?>assets/images/logo.png" id="lar"/>
         </div>
-        <div class="login-form">
-            <form method="POST" action="<?php echo BASE_URL;?>">
-                <label>E-mail ou CPF do Usuário:</label>
-                <input type="text" name="name" />
-                <label>Senha:</label>
-                <input type="password" name="senha" />                                
-                <input type="button" value="Entrar" id="button-login" onclick="login()"/>
-                
-            </form>
-            <div class="login-cadastrar">
-                <h4>Ainda não tem cadastro?</h4>
-                <a href="<?php echo BASE_URL;?>usuarios/cadastro">Cadastrar</a>
-                <a href="<?php echo BASE_URL;?>home/esqueci" style="float: right">Esqueci minha senha</a>
-            </div>
+        <div class="login-esqueci">                
+            <h3>Esqueci Minha Senha.</h3>
+            <label>Informe seu CPF:</label>
+            <input type="text" name="cpf" OnKeyPress="formatar('###.###.###-##', this)" maxlength="14"/>                
+            <button class="btn-primary" onclick="esqueci()">Enviar</button>            
         </div>
         
     </div>
@@ -25,7 +16,7 @@
 
 
 <!--Modal Login Inválido-->
-<div class="modal fade" role='dialog' id='loginInvalido' >
+<div class="modal fade" role='dialog' id='cpfInvalido' >
 <div class="modal-dialog">
 
     <div class="modal-content">
@@ -34,7 +25,7 @@
         <h4 class="modal-title">Notificação</h4>
       </div>
       <div class="modal-body">
-        <p>E-mail e/ou Senha Incorreto(s). Tente Novamente.</p>
+        <p>CPF Não Encontrado na Base de Dados.</p>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -45,7 +36,7 @@
 </div>
 
 <!--Modal Campos Obrigatórios-->
-<div class="modal fade" role='dialog' id='CamposObrigatorios' >
+<div class="modal fade" role='dialog' id='senhaEnviada' >
 <div class="modal-dialog">
 
     <div class="modal-content">
@@ -54,7 +45,7 @@
         <h4 class="modal-title">Notificação</h4>
       </div>
       <div class="modal-body">
-        <p>Preencha Todos os Campos.</p>
+          <p id="msg"></p>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>

@@ -31,6 +31,11 @@ class homecontroller extends controller {
         }
     }   
    
+    public function esqueci(){
+        $dados = array();
+        
+        $this->loadTemplateLogin('esqueci', $dados);
+    }
     public function graduacao($id){
         $p = new patentes();  
         $dados = array();

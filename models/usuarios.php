@@ -1,6 +1,125 @@
 <?php
 class usuarios extends model {
     
+    public function redefinir($senha, $codigo){
+        $sql = "SELECT * FROM recuperar WHERE codigo = :codigo AND usado = 0";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":codigo", $codigo);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0){
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+            
+            $sql = "UPDATE recuperar SET usado = 1 WHERE id = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $array['id']);
+            $sql->execute();
+            
+            $sql = "UPDATE user SET pass = :senha WHERE id = :id";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $array['id_user']);
+            $sql->bindValue(":senha", md5($senha));
+            $sql->execute();
+            
+            echo '1';
+        } else {
+            echo '0';
+        }
+    }
+
+    public function recuperarSenha($cpf){
+        $c = explode('.', $cpf);
+        $p = explode('-', $c[2]);
+        $cpf = $c[0].$c[1].$p[0].$p[1];
+        
+        $sql = "SELECT * FROM user WHERE cpf = :cpf";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":cpf", $cpf);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0){
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+            
+            $token = md5(date('Y-m-d H:i:s').rand(0, 999).rand(0, 999));
+            $token1 = str_split($token);
+            $t = $token1[0].$token1[1].$token1[2].$token1[3];
+            $n = intval(200+$array['id']); 
+            $codigo = $n.$t;
+
+            $data = date('Y-m-d H:i:s');
+            $sql = "INSERT INTO recuperar (id_user, date, codigo) VALUES (:id_user, :data, :codigo)";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id_user", $array['id']);
+            $sql->bindValue(":data", $data);
+            $sql->bindValue(":codigo", $codigo);
+            $sql->execute();
+
+            // Inclui o arquivo class.phpmailer.php localizado na pasta class
+            require_once("class/class.phpmailer.php");
+
+            // Inicia a classe PHPMailer
+            $mail = new PHPMailer(true);
+
+            // Define os dados do servidor e tipo de conexão
+            // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+            $mail->IsSMTP(); // Define que a mensagem será SMTP
+
+            try {
+                $mail->Host = 'mail.laralimentos.com.br'; // Endereço do servidor SMTP (Autenticação, utilize o host smtp.seudomínio.com.br)
+                $mail->SMTPAuth   = true;  // Usar autenticação SMTP (obrigatório para smtp.seudomínio.com.br)
+                $mail->Port       = 587; //  Usar 587 porta SMTP
+                $mail->Username = 'contato@laralimentos.com.br'; // Usuário do servidor SMTP (endereço de email)
+                $mail->Password = 'Lar@357147'; // Senha do servidor SMTP (senha do email usado)
+
+                //Define o remetente
+                // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=    
+                $mail->SetFrom('contato@laralimentos.com.br', 'Lar Alimentos'); //Seu e-mail
+                $mail->AddReplyTo('contato@laralimentos.com.br', 'Lar Alimentos'); //Seu e-mail
+                $mail->Subject = 'Recuperar Senha';//Assunto do e-mail
+
+
+                //Define os destinatário(s)
+                //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                $mail->AddAddress($email, 'Teste Locaweb');
+
+                //Campos abaixo são opcionais 
+                //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                //$mail->AddCC('destinarario@dominio.com.br', 'Destinatario'); // Copia
+                //$mail->AddBCC('destinatario_oculto@dominio.com.br', 'Destinatario2`'); // Cópia Oculta
+                //$mail->AddAttachment('images/phpmailer.gif');      // Adicionar um anexo
+
+                $name2 = ucfirst($name);
+                //Define o corpo do email
+                $mail->MsgHTML('<img src="'.BASE_URL.'/assets/images/logoEmail.png" alt=""/><br/><br/>'
+                        . '<h3>Para Redefinir sua senha '
+                        . '<h2 style="text-align:center"><strong>Clique '
+                        . '<a href="'.BASE_URL.'usuarios/recuperar?pass='.$codigo.'">Aqui</a> '
+                        . 'para se Cadastrar.</strong></h2><br/>Ou acesse pelo Link: '
+                        . 'http://laralimentos.com.br/usuarios/recuperar?pass='.$codigo);
+
+                ////Caso queira colocar o conteudo de um arquivo utilize o método abaixo ao invés da mensagem no corpo do e-mail.
+                //$mail->MsgHTML(file_get_contents('arquivo.html'));
+
+                $mail->Send();
+    //            echo "Mensagem enviada com sucesso</p>\n";
+
+               //caso apresente algum erro é apresentado abaixo com essa exceção.
+               }catch (phpmailerException $e) {
+                 echo $e->errorMessage(); //Mensagem de erro costumizada do PHPMailer
+           } 
+           echo $array['email'];
+        } else{
+            echo '0';
+        }
+    }
+
+    public function apagarConta($id){
+        $sql = "UPDATE user SET conta = 0 WHERE id = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+    }
+    
     public function getDependentes($id) {
         $array = array();
         

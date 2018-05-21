@@ -22,29 +22,72 @@ class usuarioscontroller extends controller {
                 if($u->verifyUser($id, $senha)) {
                     //getUser -> seleciona o id e nome do usuario após logar
                     $dados['user'] = $u->getUser($id, $senha);
-                    $_SESSION['multLoginName'] = $dados['user']['name'];
                     $_SESSION['multLogin'] = $dados['user']['id'];
-                    
                     //getDadosUser -> seleciona as informações do usuario
                     $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
-                    
-                    //getFilhos -> seleciona a arvore até a 5ª geração definida na global $config
-                    $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
-        
-                    //getPremios -> seleciona a premiação do usuario
-                    $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
-                    
-                    $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
-                    
-                    echo '1';
-                  
+                    if ($dados['dadosUser']['conta'] == 1){
+                      
+                        //getFilhos -> seleciona a arvore até a 5ª geração definida na global $config
+                        $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
+
+                        //getPremios -> seleciona a premiação do usuario
+                        $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
+
+                        $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
+                        echo '1';
+                    } else {
+                        unset($_SESSION['multLogin']);
+                        echo '2';
+                    }   
                 } else {
-                    echo '0';
-                    
-        }}
-//        header("Location: ".BASE_URL);        
+                    echo '0';                    
+                }        
+        }
+    
     }
     
+    public function esqueciSenha(){
+        
+            $u = new usuarios();            
+            $cpf = addslashes($_POST['cpf']);            
+            $u->recuperarSenha($cpf);
+    }
+
+    public function recuperar(){
+        $dados= array();
+        if(isset($_GET['pass']) && !empty($_GET['pass'])){
+            $this->loadTemplateLogin('recuperar', $dados);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+
+    public function redefinirSenha(){
+        $u = new usuarios();            
+        $senha = addslashes($_POST['senha']);
+        $codigo = addslashes($_POST['codigo']);
+        $r = $u->redefinir($senha, $codigo);
+        if($r == '1'){
+            echo '1';
+        } else {
+            echo '0';
+        }
+    }
+
+    public function cancelarConta(){
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $u = new usuarios();
+            
+            $id = addslashes($_POST['id']);
+            
+            $u->apagarConta($id);
+            unset($_SESSION['multLogin']);
+        } else {
+            $dados = array();
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+
     public function addDependente() {
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $u = new usuarios();
@@ -58,6 +101,7 @@ class usuarioscontroller extends controller {
             $id = $_SESSION['multLogin'];
             $u->setDependente($id, $nome, $relacao, $nasc, $documento);
         } else {
+            $dados = array();
             $this->loadTemplateLogin('login', $dados);
         }
     }
