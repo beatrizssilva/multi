@@ -113,6 +113,7 @@
                         $p = 'pre';
                         $pontos = 2000;
                         $l = "Pre";
+                        $proximo = 'Bronze';
                         break;
                     case 2:
                         echo '<span>Próxima Graduação</span><span>Consumidor Prata</span>
@@ -120,6 +121,7 @@
                         $p = 'bronze';
                         $pontos = 6000;
                         $l = "Bronze";
+                        $proximo = 'Prata';
                         break;
                     case 3:
                         echo '<span>Próxima Graduação</span><span>Consumidor Ouro</span>
@@ -127,6 +129,7 @@
                         $p = 'prata';
                         $pontos = 20000;
                         $l = "Prata";
+                        $proximo = 'Ouro';
                         break;
                     case 4:
                         echo '<span>Próxima Graduação</span><span>Consumidor Rubi</span>
@@ -134,6 +137,7 @@
                         $p = 'ouro';
                         $pontos = 60000;
                         $l = "Ouro";
+                        $proximo = 'Rubi';
                         break;
                     case 5:
                         echo '<span>Próxima Graduação</span><span>Consumidor Diamante</span>
@@ -141,6 +145,7 @@
                         $p = 'rubi';
                         $pontos = 180000;
                         $l = "Rubi";
+                        $proximo = 'Diamante';
                         break;
                     case 6:
                         echo '<span>Próxima Graduação</span><span>Consumidor Duplo Diamante</span>
@@ -148,6 +153,7 @@
                         $p = 'diamante';
                         $pontos = 540000;
                         $l = "Diamante";
+                        $proximo = 'Duplo Diamante';
                         break;
                     case 7:
                         echo '<span>Parabéns!</span><span>Você Atingiu Graduação Máxima</span>
@@ -155,6 +161,7 @@
                         $p = 'duploDiamante';
                         $pontos = 540000;
                         $l = "Duplo Diamante";
+                        $proximo = '()';
                         break;
                 }?>                
                     <i class="fas fa-trophy" id="taca"></i>
@@ -205,7 +212,7 @@
                 </div>
                 <div class="acompanhamento-pontos">
                     <div class="ac-afiliado-info">
-                        <span>Pontos Necessários Para se Graduar Consumidor Prata - <?php echo number_format($pontos, 0, '', '.');?></span>
+                        <span>Pontos Necessários Para se Graduar Consumidor <?php echo $proximo. ' - '.number_format($pontos, 0, '', '.');?></span>
                         <span><?php echo number_format($premios['pontos'], 0, '', '.');?> / <?php echo number_format($pontos, 0, '', '.'); ?></span>
                     </div>
                     <div class="ac-afiliado-barras">

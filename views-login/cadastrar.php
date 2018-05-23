@@ -19,8 +19,9 @@
                 <?php if(isset($_GET['c']) && !empty($_GET['c'])): ?>                    
                     <input type="hidden" name="convite" value="<?php echo $_GET['c'];?>" />
                 <?php endif;?>
-                <label>Senha*:</label>                
-                <input type="password" name="senha" />  
+                    <label>Senha*:</label>              
+                    <input type="password" name="senha" id="senha"/>  
+                    <div id="forca" style="width: 0%;"></div>  
                 <label>Repita a Senha*:</label>
                 <input type="password" name="senha2" />             
                 <input type="button" value="Cadastar" onclick="<?php if(isset($_GET['c']) && !empty($_GET['c'])){
@@ -186,6 +187,30 @@
       </div>
       <div class="modal-body">
         <p>Convite Inválido.</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal Senha Fraca-->
+<div class="modal fade" role='dialog' id='SenhaFraca' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificação</h4>
+      </div>
+      <div class="modal-body">
+        <p><strong>A Senha Deve Conter:</strong></p>
+        <p>Mínimo de 6 Caracteres;</p>
+        <p>Letras;</p>
+        <p>Números;</p>
+        <p>Caracteres Especiais.</p>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>

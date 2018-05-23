@@ -1,3 +1,13 @@
+//compartilhar do Facebook
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.0&appId=2240821226131897&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
+
 
 //Funções do Painel
 function novoDependente(){
@@ -89,11 +99,15 @@ function abrirModalPerfil(id) {
                 var data = date[2]+"/"+date[1]+"/"+date[0];
                 
                 var nome = " "+dados.name;
+                var cidade = dados.dados.cidade;
+                var id_user = dados.identificador;
                 var email = dados.email;
                 var tel = dados.dados.telefone;
                 var foto = "<img src='"+BASE_URL+"assets/images/perfil/"+dados.dados.foto_perfil+"' />";
                 $("#email").html(email);
                 $("#tel").html(tel);
+                $("#cidade").html(cidade);
+                $("#id").html(id_user);
                 $("#nome").html(nome);
                 $("#data").html(data);
                 $(".foto-afiliados").html(foto);
@@ -254,7 +268,7 @@ function comprar(){
 }
 function fecharComprar(){
     $('#compraSucesso').modal('hide');
-    window.setTimeout("location.href='"+BASE_URL+"painel/nova_compra'", 3000);
+    window.setTimeout("location.href='"+BASE_URL+"'", 3000);
 }
 
 function editEndereco(){
@@ -532,6 +546,30 @@ function meu_callback2(conteudo) {
             $('#CEPInvalido').modal('show');
         }
     };
+    //força de senha
+$(function(){
+    $('#senha').bind('keyup', function(){
+        var txt = $(this).val();
+        var forca = 0;
+        
+        if(txt.length>6){
+            forca +=25;
+        }
+        var reg = new RegExp(/[0-9]/i);
+        if(reg.test(txt)){
+            forca += 25;
+        }
+        var reg = new RegExp(/[a-z]/i);
+        if(reg.test(txt)){
+            forca += 25;
+        }
+        var reg = new RegExp(/[^a-z0-9]/i);
+        if(reg.test(txt)){
+            forca += 25;
+        }
+        document.querySelector("#forca").style.width = forca+'%';
+    });
+});
     function editDados(email2, senha3){
           
         var nome = $("input[name=nome]").val();
@@ -542,6 +580,25 @@ function meu_callback2(conteudo) {
         var email = $("input[name=email]").val();
         var senha = $("input[name=senha]").val();
         var senha2 = $("input[name=senha2]").val();
+        
+        var forca = 0;
+
+        if(senha.length>5){
+            forca +=25;
+        }
+        var reg = new RegExp(/[0-9]/i);
+        if(reg.test(senha)){
+            forca += 25;
+        }
+        var reg = new RegExp(/[a-z]/i);
+        if(reg.test(senha)){
+            forca += 25;
+        }
+        var reg = new RegExp(/[^a-z0-9]/i);
+        if(reg.test(senha)){
+            forca += 25;
+        }
+        if(forca>=75){
         
         if (senha3 != senha || senha3 != senha2){
             if (senha === '' || senha <= 0 || senha2 === '' || senha2 <= 0){
@@ -636,4 +693,7 @@ function meu_callback2(conteudo) {
             } else {
                 $('#senhaserradas').modal('show'); 
             }
+        } else {
+            $('#SenhaFraca').modal('show');
+        }
     }

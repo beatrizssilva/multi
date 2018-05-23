@@ -39,15 +39,17 @@ $nasc = $n[8].$n[9].'/'.$n[5].$n[6].'/'.$n[0].$n[1].$n[2].$n[3];
             <div class="form-group">
                 <label for="pis" data-toggle="tooltip" data-placement="right" 
                        title="Informação Necessária para Liberação do Pagamento!">PIS:*</label>
-                <input type="text" class="form-control" id="pis" name="pis" value="<?php echo $perfil['dados']['pis'];?>">
+                <input type="text" class="form-control" id="pis" name="pis" 
+                       value="<?php echo (isset($perfil['dados']['pis']))?$perfil['dados']['pis']:'';?>">
             </div>
             <div class="form-group">
                 <label for="rg">RG:</label>
-                <input type="text" class="form-control" id="rg" name="rg" value="<?php echo $perfil['dados']['rg'];?>">
+                <input type="text" class="form-control" id="rg" name="rg" value="<?php echo (isset($perfil['dados']['rg']))?$perfil['dados']['rg']:'';?>">
             </div>
             <div class="form-group">
                 <label for="rg">Senha de Acesso:</label>
                 <input type="password" class="form-control" id="senha" name="senha" value="<?php echo $dadosUser['pass'];?>">
+                <br/><div id="forca" style="width: 0%;"></div>
             </div>
             <div class="form-group">
                 <label for="rg">Repita a Senha:</label>
@@ -113,6 +115,30 @@ $nasc = $n[8].$n[9].'/'.$n[5].$n[6].'/'.$n[0].$n[1].$n[2].$n[3];
       </div>
       <div class="modal-body">
         <p>As Senhas não são Iguais!</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal Senha Fraca-->
+<div class="modal fade" role='dialog' id='SenhaFraca' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificação</h4>
+      </div>
+      <div class="modal-body">
+        <p><strong>A Senha Deve Conter:</strong></p>
+        <p>Mínimo de 6 Caracteres;</p>
+        <p>Letras;</p>
+        <p>Números;</p>
+        <p>Caracteres Especiais.</p>
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>

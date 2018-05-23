@@ -115,25 +115,35 @@ foreach ($filhos as $usuario):     ?>
                   
               </div>
               <div class="dados-afiliados">
-                  <div class="afiliados-nome">
+                <div class="afiliados-nome">
                     <p> <strong>Nome: </strong></p>
                     
                     <p id="nome"></p>
                 </div>
-                  <div class="afiliados-telefone">
+                <div class="afiliados-telefone">
                     <strong>Telefone:</strong>
                     <p> </p>
                     <p id="tel"></p>
                 </div>
-                  <div class="afiliados-email">
+                <div class="afiliados-email">
                     <strong>E-mail:</strong>
                     <p> </p>
                     <p id="email"> </p>
                 </div>
-                  <div class="afiliados-data">
+                <div class="afiliados-data">
                     <strong>Ultima Compra:</strong>
                     <p> </p>
                     <p id="data"></p>
+                </div>
+                  <div class="afiliados-data">
+                    <strong>Cidade:</strong>
+                    <p> </p>
+                    <p id="cidade"></p>
+                </div>
+                  <div class="afiliados-data">
+                    <strong>ID:</strong>
+                    <p> </p>
+                    <p id="id"></p>
                 </div>
               </div>
           </div>

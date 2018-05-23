@@ -83,6 +83,10 @@ header{
     text-align: right;
     
 }
+#forca{
+    height: 7px;
+    background: #00FF00;
+}
 /*CSS esqueci Senha*/
 .login-esqueci{
     background: #FFF;

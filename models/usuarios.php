@@ -1,6 +1,26 @@
 <?php
 class usuarios extends model {
     
+    public function getIpUser($ip, $id){
+        $sql = "SELECT * FROM user WHERE ip = :ip AND id = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->bindValue(":ip", $ip);
+        $sql->execute();
+        
+        if($sql->rowCount() == 0){
+            return true;
+        }
+    }
+    
+    public function setIpUser($ip, $id){
+        $sql = "UPDATE user SET ip = :ip WHERE id = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->bindValue(":ip", $ip);
+        $sql->execute();
+    }
+
     public function redefinir($senha, $codigo){
         $sql = "SELECT * FROM recuperar WHERE codigo = :codigo AND usado = 0";
         $sql = $this->db->prepare($sql);
@@ -80,7 +100,7 @@ class usuarios extends model {
 
                 //Define os destinatário(s)
                 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                $mail->AddAddress($email, 'Teste Locaweb');
+                $mail->AddAddress($array['email'], 'Teste Locaweb');
 
                 //Campos abaixo são opcionais 
                 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -88,7 +108,7 @@ class usuarios extends model {
                 //$mail->AddBCC('destinatario_oculto@dominio.com.br', 'Destinatario2`'); // Cópia Oculta
                 //$mail->AddAttachment('images/phpmailer.gif');      // Adicionar um anexo
 
-                $name2 = ucfirst($name);
+                
                 //Define o corpo do email
                 $mail->MsgHTML('<img src="'.BASE_URL.'/assets/images/logoEmail.png" alt=""/><br/><br/>'
                         . '<h3>Para Redefinir sua senha '
@@ -447,8 +467,8 @@ class usuarios extends model {
         $data_cadastro = date("Y-m-d H:i:s");
         $id_dad = $array['id'];
         
-        $sql = "INSERT INTO user (id_dad, name, cpf, email, pass, ativo, data_cadastro) VALUES (:id_dad, :name, :cpf, "
-                . ":email, :pass, :ativo, :data_cadastro)";
+        $sql = "INSERT INTO user (id_dad, name, cpf, email, pass, ativo, data_cadastro, conta) VALUES (:id_dad, :name, :cpf, "
+                . ":email, :pass, :ativo, :data_cadastro, 1)";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id_dad", $id_dad);
         $sql->bindValue(":name", $nome);
@@ -464,7 +484,7 @@ class usuarios extends model {
         $token1 = str_split($token);
         $t = $token1[0].$token1[1].$token1[2].$token1[3];
         $n = intval(1000+$id_user); 
-        $identificador = $n.$t;
+        $identificador = strtoupper($n.$t);
         
         $sql = "UPDATE user SET identificador = :identificador WHERE id =:id";
         $sql = $this->db->prepare($sql);

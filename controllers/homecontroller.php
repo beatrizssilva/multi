@@ -10,7 +10,11 @@ class homecontroller extends controller {
         
         $u = new usuarios();
         $c = new comissao();
-    
+        $ip = $_SERVER['REMOTE_ADDR'];
+        if($u->getIpUser($ip, $_SESSION['multLogin'])){
+            unset($_SESSION['multLogin']);
+            header("Location: ".BASE_URL); 
+        }
     
     
         //getDadosUser -> seleciona as informações do usuario

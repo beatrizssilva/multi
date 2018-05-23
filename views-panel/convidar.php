@@ -1,6 +1,15 @@
-<h3>Convidar</h3>
+<h3>Compartilhe com seus amigos</h3>
 <div class="convidar">
+    <div class="convidar-link">
+        <h4>Compartilhe no Facebook:</h4>
+        <div class="fb-share-button" data-href="<?php echo BASE_URL.'usuarios/cadastro?id='.$dadosUser['identificador'];?>" 
+             data-layout="button" data-size="large" data-mobile-iframe="true">
+            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flaralimentos.com.br%2Fusuarios%2Fcadastro%3Fid%3D1001f437&amp;src=sdkpreparse" 
+               class="fb-xfbml-parse-ignore">Compartilhar</a>
+        </div>
+    </div>
     <div class="convidar-form">
+        <h4>Convide por E-mail:</h4>
         <form method="post" action="<?php echo BASE_URL;?>painel/convite" class="col-md-5">
             <div class="form-group">
                 <label for="nome">Nome do Convidado:*</label>
@@ -28,6 +37,7 @@
             </div>
       
     </div>
+    
     <div class="convidados">
         <?php if(isset($convidados) && !empty($convidados)):?>
         <h3>Convites Enviados</h3>
@@ -122,3 +132,4 @@
 
   </div>
 </div>
+

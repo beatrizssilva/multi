@@ -25,8 +25,11 @@ class usuarioscontroller extends controller {
                     $_SESSION['multLogin'] = $dados['user']['id'];
                     //getDadosUser -> seleciona as informações do usuario
                     $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
+                    
                     if ($dados['dadosUser']['conta'] == 1){
-                      
+                        
+                        $ip = $_SERVER['REMOTE_ADDR'];
+                        $u->setIpUser($ip, $_SESSION['multLogin']);
                         //getFilhos -> seleciona a arvore até a 5ª geração definida na global $config
                         $dados['filhos'] = $u->getFilhos($_SESSION['multLogin'], $config['limit']);
 
@@ -158,7 +161,7 @@ class usuarioscontroller extends controller {
     
     public function setDados(){
         $dados = array();
-        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+     
         $u = new usuarios();
         $id = $_SESSION['multLogin'];
         $d = addslashes($_POST['date']);
@@ -179,10 +182,7 @@ class usuarioscontroller extends controller {
         
         $u->editDados($id, $date, $nome, $email, $tel, $pis, $rg, $senha);
         
-        
-        } else {
-            $this->loadTemplateLogin('login', $dados);
-        }
+       
     }
 
     public function editFoto(){

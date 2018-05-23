@@ -9,7 +9,11 @@ class painelcontroller extends controller {
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $u = new usuarios();
-            
+            $ip = $_SERVER['REMOTE_ADDR'];
+            if($u->getIpUser($ip, $_SESSION['multLogin'])){
+                unset($_SESSION['multLogin']);
+                header("Location: ".BASE_URL); 
+            }
             $dados['premios'] = $u->getValorResgate($_SESSION['multLogin']);
             $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
             $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
@@ -24,7 +28,11 @@ class painelcontroller extends controller {
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $u = new usuarios();
-        
+            $ip = $_SERVER['REMOTE_ADDR'];
+            if($u->getIpUser($ip, $_SESSION['multLogin'])){
+                unset($_SESSION['multLogin']);
+                header("Location: ".BASE_URL); 
+            }
             $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
             $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
             $this->loadTemplatePanel('dados_pessoais', $dados);
@@ -37,7 +45,11 @@ class painelcontroller extends controller {
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $u = new usuarios();
-        
+            $ip = $_SERVER['REMOTE_ADDR'];
+            if($u->getIpUser($ip, $_SESSION['multLogin'])){
+                unset($_SESSION['multLogin']);
+                header("Location: ".BASE_URL); 
+            }
             $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
             $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
             $this->loadTemplatePanel('dados_enderecos', $dados);
@@ -50,7 +62,11 @@ class painelcontroller extends controller {
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $u = new usuarios();
-        
+            $ip = $_SERVER['REMOTE_ADDR'];
+            if($u->getIpUser($ip, $_SESSION['multLogin'])){
+                unset($_SESSION['multLogin']);
+                header("Location: ".BASE_URL); 
+            }
             $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
             $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
             $dados['dependentes'] = $u->getDependentes($_SESSION['multLogin']);
@@ -65,6 +81,11 @@ class painelcontroller extends controller {
        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){ 
             $u = new usuarios();
             $c = new comissao();
+            $ip = $_SERVER['REMOTE_ADDR'];
+            if($u->getIpUser($ip, $_SESSION['multLogin'])){
+                unset($_SESSION['multLogin']);
+                header("Location: ".BASE_URL); 
+            }
             $dados['premios'] = $c->getPremios($_SESSION['multLogin']);
             $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
             $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
@@ -78,6 +99,11 @@ class painelcontroller extends controller {
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){ 
             $u = new usuarios();
+            $ip = $_SERVER['REMOTE_ADDR'];
+            if($u->getIpUser($ip, $_SESSION['multLogin'])){
+                unset($_SESSION['multLogin']);
+                header("Location: ".BASE_URL); 
+            }
             $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
             $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
             $dados['convidados'] = $u->convidados($_SESSION['multLogin']);
@@ -97,6 +123,11 @@ class painelcontroller extends controller {
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $u = new usuarios();
             $p = new patentes();
+            $ip = $_SERVER['REMOTE_ADDR'];
+            if($u->getIpUser($ip, $_SESSION['multLogin'])){
+                unset($_SESSION['multLogin']);
+                header("Location: ".BASE_URL); 
+            }
             $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
             $dados['filhosAtivos'] = $p->cadeiaAtivos($_SESSION['multLogin']);
             $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
