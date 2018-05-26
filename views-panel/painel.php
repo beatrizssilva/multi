@@ -1,3 +1,4 @@
+
 <script src="<?php echo BASE_URL;?>assets/js/grafico.js" type="text/javascript"></script>
 <?php if ($dadosUser['ativo'] == 0):?>
 <div class="painel-inativo">

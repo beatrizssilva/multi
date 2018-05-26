@@ -251,8 +251,11 @@ class patentes extends model {
                     $sql->execute();
                     if($sql->rowCount() > 0) {
                         $f = $sql->fetch();
-                        $x = $valores['percentual'] - $f['percentual'];
-                        
+                        if($valores['percentual'] == 18 && $f['percentual'] == 18){
+                            $x = 1;   
+                        }else {
+                            $x = $valores['percentual'] - $f['percentual'];
+                        }
                         $comissao += floatval($f['valor_cadeia'] * $x)/100;   
                        
                     }

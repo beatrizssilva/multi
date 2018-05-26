@@ -45,21 +45,43 @@
                 <div class="painel-corpo-template">
                     <div class="user-profile">
                         <div class="mensage">
-                            <a href="">
-                                <i class="far fa-envelope"></i>
-                                <div class="mensage-qt">
-                                    <?PHP echo '0';?>
+                           <div class="dropdown">
+                                <button class="btn-dropdown dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <i class="far fa-envelope"></i>
+                                <div class="mensage-qt">                                    
                                 </div>
-                            </a>
+                                </button>
+                                <ul class="dropdown-menu" id="links-dropdown-msg">
+                                    <div class="cabeca"><h3>Mensagens</h3></div>
+                                    <div class="msg-info">
+                                    
+                                    </div>
+                                </ul>
+                            </div>
                         </div>
                         <div class="notificacoes">
-                            <a href="">
-                                <i class="far fa-bell"></i>
-                                <div class="notificacoes-qt">
-                                    <?PHP //echo (isset($viewData['qt_carrinho']))?$viewData['qt_carrinho']:'0';?>
-                                    <?PHP echo '0';?>
+                            <div class="dropdown">
+                                <button class="btn-dropdown dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <i class="far fa-bell"></i>
+                                    <div class="notificacoes-qt">                                    
+                                    </div>
+                                </button>
+                                <ul class="dropdown-menu" id="links-dropdown">
+                                    <div class="cabeca"><h3>Notificações</h3></div>
+                                    <li><a href="#">
+                                            <i class="fas fa-user-plus" style="color:#0000CD"></i>                                       
+                                        <p>Um Novo Cadastro Foi Realizado Em Sua Rede!</p>                                     
+                                    </a></li>
+                                    <li><a href="#">
+                                            <i class="fas fa-check" style="color:#006400"></i>
+                                        <p>Um Convite que Você Enviou, Foi Aceito!</p>
+                                    </a></li>
+                                    <li><a href="#">
+                                            <i class="fas fa-cart-plus"style="color:#DAA520"></i>
+                                        <p>Um Nova Compra Foi Realizado Em Sua Rede!</p>
+                                    </a></li>
+                                </ul>
                                 </div>
-                            </a>
                         </div>                    
                         <div class="dados-user">
                             <a href="<?php echo BASE_URL;?>painel/dados_pessoais">
@@ -213,6 +235,7 @@
                                 <ul id="lista-menu">
                                     <a href="<?php echo BASE_URL;?>painel/afiliados"><li><i class="fas fa-minus-square"></i> Afiliados</li></a>
                                     <a href="<?php echo BASE_URL;?>painel/convidar"><li><i class="fas fa-minus-square"></i> Convidar</li></a>
+                                    <a href="<?php echo BASE_URL;?>painel/convidar"><li><i class="fas fa-minus-square"></i> Mensagens</li></a>
                                 </ul>
                             </div>
                           </div>

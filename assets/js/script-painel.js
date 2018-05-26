@@ -7,8 +7,6 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-
-
 //Funções do Painel
 function novoDependente(){
     $('#cadastroDependente').modal('show');
@@ -697,3 +695,66 @@ $(function(){
             $('#SenhaFraca').modal('show');
         }
     }
+    function verificarNotificacao() {
+
+	$.ajax({
+            url:BASE_URL+"painel/setMensagens",
+            type:'POST',
+            dataType:'json',
+            success:function(json) {
+
+                if(json > 0) {
+                    $('.mensage-qt').html(json);
+                    $.ajax({
+                        url:BASE_URL+"painel/mensagens",
+                        type:'POST',                           
+                        dataType:'json',
+                        success:function(res) {
+                            var html = ' ';
+                            var x;
+                            for (x in res) {
+                                var date = res[x].data.split(" ");
+                                var data = date[0].split("-");
+                                var autor = res[x].autor.split(" ");
+                                html += '<li><a href="#"><i class="fas fa-envelope"></i><span>'+data[2]+'/'+data[1]+'/'+data[0]+'</span>\n\
+                                <p>Você Recebeu uma Mensagem de '+autor[0]+'.</p></a></li>';
+                                $(".msg-info").html(html);
+                            }
+                        }
+                    });
+                } else {			
+                    $('.mensage-qt').html('0');
+                }
+            }
+	});
+        $.ajax({
+            url:BASE_URL+"painel/setNotificacoes",
+            type:'POST',
+            dataType:'json',
+            success:function(json) {
+
+                if(json > 0) {
+                    $('.notificacoes-qt').html(json);
+                } else {			
+                    $('.notificacoes-qt').html('0');
+                }
+            }
+	});
+
+}
+    
+    $(function(){
+	setInterval(verificarNotificacao, 10000);
+	verificarNotificacao();
+
+//	$('.mensage-qt').on('click', function(){
+//
+//	});
+//
+//	$('.addNotif').on('click', function(){
+//		$.ajax({
+//			url:'add.php'
+//		});
+//	});
+        });
+        

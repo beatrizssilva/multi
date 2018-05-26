@@ -5,6 +5,38 @@ class painelcontroller extends controller {
     public function index() {
          
     }
+    public function mensagens() {
+        $dados = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id = $_SESSION['multLogin'];
+            $m = $d->mensagem($id);
+        }
+        echo json_encode($m);
+        exit;
+    }
+
+    public function setMensagens(){
+        $dados = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id = $_SESSION['multLogin'];
+            $m = $d->qtdeMensagem($id);
+        }
+        echo json_encode($m);
+        exit;
+    }
+
+    public function setNotificacoes(){
+        $dados = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id = $_SESSION['multLogin'];
+            $m = $d->qtdeNotificacoes($id);
+        }
+        echo json_encode($m);
+        exit;
+    }
     public function nova_compra(){
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
