@@ -235,7 +235,7 @@
                                 <ul id="lista-menu">
                                     <a href="<?php echo BASE_URL;?>painel/afiliados"><li><i class="fas fa-minus-square"></i> Afiliados</li></a>
                                     <a href="<?php echo BASE_URL;?>painel/convidar"><li><i class="fas fa-minus-square"></i> Convidar</li></a>
-                                    <a href="<?php echo BASE_URL;?>painel/convidar"><li><i class="fas fa-minus-square"></i> Mensagens</li></a>
+                                    <a href="<?php echo BASE_URL;?>painel/mensagens"><li><i class="fas fa-minus-square"></i> Mensagens</li></a>
                                 </ul>
                             </div>
                           </div>

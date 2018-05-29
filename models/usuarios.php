@@ -436,6 +436,19 @@ class usuarios extends model {
         return $array;
     }
 
+     public function dadosUser ($id){
+        $array = array();
+        
+        $sql = "SELECT * FROM user WHERE id = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue("id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+        }        
+        return $array;
+    }
     //Seleciona os dados do usuario após o login 
     public function getUser($id, $senha){
         $array = array();

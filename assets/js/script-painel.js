@@ -80,6 +80,12 @@ function formatar(mascara, documento){
 
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip(); 
+    $("#pesquisaMSG").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#table-mensagens tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
 });
 function abrirModalPerfil(id) {
     
@@ -698,7 +704,7 @@ $(function(){
     function verificarNotificacao() {
 
 	$.ajax({
-            url:BASE_URL+"painel/setMensagens",
+            url:BASE_URL+"painel/setQTMensagens",
             type:'POST',
             dataType:'json',
             success:function(json) {
@@ -706,7 +712,7 @@ $(function(){
                 if(json > 0) {
                     $('.mensage-qt').html(json);
                     $.ajax({
-                        url:BASE_URL+"painel/mensagens",
+                        url:BASE_URL+"painel/setMensagens/",
                         type:'POST',                           
                         dataType:'json',
                         success:function(res) {
@@ -716,7 +722,7 @@ $(function(){
                                 var date = res[x].data.split(" ");
                                 var data = date[0].split("-");
                                 var autor = res[x].autor.split(" ");
-                                html += '<li><a href="#"><i class="fas fa-envelope"></i><span>'+data[2]+'/'+data[1]+'/'+data[0]+'</span>\n\
+                                html += '<li><a href="'+BASE_URL+'painel/mensagens"><i class="fas fa-envelope"></i><span>'+data[2]+'/'+data[1]+'/'+data[0]+'</span>\n\
                                 <p>Você Recebeu uma Mensagem de '+autor[0]+'.</p></a></li>';
                                 $(".msg-info").html(html);
                             }
@@ -728,7 +734,7 @@ $(function(){
             }
 	});
         $.ajax({
-            url:BASE_URL+"painel/setNotificacoes",
+            url:BASE_URL+"painel/setQTNotificacoes",
             type:'POST',
             dataType:'json',
             success:function(json) {
@@ -757,4 +763,125 @@ $(function(){
 //		});
 //	});
         });
-        
+   
+function responderMensagem(id, de){   
+    
+    $.ajax({
+        url:BASE_URL+"usuarios/setDadosUsuario",
+        type:'POST',
+        data:{  
+            id:id
+        },
+        dataType:'json',
+        success:function(res) {
+            var nome = res.name;
+            $("#para").html(nome);  
+            document.getElementById('de').value = de; 
+            document.getElementById('id_para').value = res.id; 
+            $('#mensagem').modal('show');
+        }, error:function(){
+            alert("erro");
+        }
+    });
+    
+}
+function enviarMensagem(){
+    var id_de = $('input[name=de]').val();
+    var id_para = $('input[name=id_para]').val();
+    var msg = $('textarea[name=mensagem]').val();
+    $.ajax({
+        url:BASE_URL+"painel/addMensagem",
+        type:'POST',
+        data:{  
+            id_de:id_de,
+            id_para:id_para,
+            msg:msg
+        },
+        success:function() {
+            $('#mensagemEnviada').modal('hide');
+            window.setTimeout("location.href='"+BASE_URL+"painel/mensagens'",1000); 
+        }
+    });
+}
+function abrirMsg(id){
+    $.ajax({
+        url:BASE_URL+"painel/abrirMensagem",
+        type:'POST',
+        data:{  
+            id:id            
+        },
+        dataType:'json',
+        success:function(res) {
+           
+            var nome = res.de;
+            $("#msg_de").html(nome); 
+            document.getElementById('de').value = res.id_user_para; 
+            document.getElementById('id_para').value = res.id_user_de;
+            document.getElementById('abrir_mensagem').value = res.mensagem; 
+            $('#abrirMensagem').modal('show');
+            
+        }
+    });
+}
+function abrirMsgEnviada(id){
+    $.ajax({
+        url:BASE_URL+"painel/abrirMensagem",
+        type:'POST',
+        data:{  
+            id:id            
+        },
+        dataType:'json',
+        success:function(res) {
+            
+            var nome = res.para;
+            $("#msg_para").html(nome); 
+            document.getElementById('abrir_mensagem_enviada').value = res.mensagem; 
+            $('#abrirMensagemEnviada').modal('show');
+            
+        }
+    });
+}
+function fecharMensagem(){
+    $('#abrirMensagem').modal('hide');
+    window.setTimeout("location.href='"+BASE_URL+"painel/mensagens'",1000); 
+}
+function excluirMensagemRecebida(id){   
+    
+    document.getElementById('idmsg').value = id;   
+    $('#excluirMensagemRecebida').modal('show');
+}
+function dellMensagemRecebida(){   
+    var id = $('input[name=idmsg]').val();
+    
+    $.ajax({
+        url:BASE_URL+"painel/apagarMensagemRecebida",
+        type:'POST',
+        data:{  
+            id:id                    
+        },
+        success:function() {
+            $('#excluirMensagem').modal('hide');
+            window.setTimeout("location.href='"+BASE_URL+"painel/mensagens'",1000); 
+        }
+    });
+}
+function excluirMensagemEnviada(id){   
+ 
+    document.getElementById('idmsg').value = id;   
+    $('#excluirMensagemEnviada').modal('show');
+}
+function dellMensagemEnviada(){   
+    var id = $('input[name=idmsg]').val();
+    
+    $.ajax({
+        url:BASE_URL+"painel/apagarMensagemEnviada",
+        type:'POST',
+        data:{  
+            id:id                    
+        },
+        success:function() {
+            $('#excluirMensagemEnviada').modal('hide');
+            window.setTimeout("location.href='"+BASE_URL+"painel/mensagens'",1000); 
+        }
+    });
+}

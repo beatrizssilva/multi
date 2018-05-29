@@ -5,7 +5,73 @@ class painelcontroller extends controller {
     public function index() {
          
     }
-    public function mensagens() {
+    public function mensagens(){
+        $dados = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $u = new usuarios();
+            
+            $dados['mensagensEnviadas'] = $this->setMensagensEnviadas();
+            $dados['mensagensRecebidas'] = $this->setMensagensRecebidas();
+            $dados['premios'] = $u->getValorResgate($_SESSION['multLogin']);
+            $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
+            $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
+            $this->loadTemplatePanel('mensagens', $dados);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+    
+    public function abrirMensagem(){
+        $dados = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id = addslashes($_POST['id']);
+            $m = $d->openMensagemRecebida($id);
+        }
+        echo json_encode($m);
+        exit;
+    }
+
+    public function apagarMensagemRecebida(){
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id = addslashes($_POST['id']);
+            $d->dellMensagemRecebidas($id);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+    
+    public function apagarMensagemEnviada(){
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id = addslashes($_POST['id']);
+            $d->dellMensagemEnviadas($id);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+
+    public function setMensagensEnviadas() {
+        $array = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id = $_SESSION['multLogin'];
+            $array = $d->mensagemEnviada($id);
+        }
+        return $array;
+    }
+    public function setMensagensRecebidas() {
+        $array = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id = $_SESSION['multLogin'];
+            $array = $d->mensagemRecebida($id);
+        }
+        return $array;
+    }
+
+    public function setMensagens() {
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $d = new dados();
@@ -16,7 +82,17 @@ class painelcontroller extends controller {
         exit;
     }
 
-    public function setMensagens(){
+    public function addMensagem(){
+        
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id_de = addslashes($_POST['id_de']);
+            $id_para = addslashes($_POST['id_para']);
+            $msg = addslashes($_POST['msg']);
+            $d->enviarMensagem($id_de, $id_para, $msg);
+        }       
+    }
+    public function setQTMensagens(){
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $d = new dados();
@@ -27,7 +103,7 @@ class painelcontroller extends controller {
         exit;
     }
 
-    public function setNotificacoes(){
+    public function setQTNotificacoes(){
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
             $d = new dados();

@@ -860,3 +860,11 @@ header{
 #table-dependentes{
     border-bottom: 1px solid #ccc;
 }
+/*Modal Mensagem*/
+#mensagem .modal-footer, #abrirMensagem .modal-footer{
+    display: flex;
+    justify-content: space-between;
+}
+#table-mensagens td{
+    cursor: pointer;
+}

@@ -49,6 +49,18 @@ class usuarioscontroller extends controller {
     
     }
     
+    public function setDadosUsuario(){
+       $u = new usuarios();
+        
+        $id = addslashes($_POST['id']);
+        
+        if(!empty($id)) {
+            $array = $u->dadosUser($id);
+            echo json_encode($array);
+            exit();
+        }
+    }
+
     public function esqueciSenha(){
         
             $u = new usuarios();            
