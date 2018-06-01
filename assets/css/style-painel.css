@@ -50,7 +50,7 @@ header{
     font-size: 18px;
     
 }
-#links-dropdown li, .msg-info li {
+#links-dropdown li, .msg-info li, .not-info li {
     border-bottom: 1px solid #000;
     color:#000;
 }
@@ -58,13 +58,14 @@ header{
     font-size: 25px;
     font-weight: bold;    
 }
-#links-dropdown li a p, .msg-info li a p, .msg-info li a span, .msg-info li a i {
+#links-dropdown li a p, .msg-info li a p, .msg-info li a span, .msg-info li a i, 
+.not-info li a p, .not-info li a span, .not-info li a i {
     font-size: 13px;
     text-align: center;
     margin-left: 10px;
     color:#000;
 }
-#links-dropdown li a, .msg-info li a{
+#links-dropdown li a, .msg-info li a, .not-info li a{
     display: flex;
     padding: 0 5px 0 8px;
     align-items: center;
@@ -74,7 +75,7 @@ header{
     min-height: 50px;
     word-wrap: break-word;    
 }
-#links-dropdown li a:hover, .msg-info li a:hover{
+#links-dropdown li a:hover, .msg-info li a:hover, .not-info li a:hover{
     background: #FAF0E6;
 }
 .painel-template-corpo, .painel-home{
@@ -861,10 +862,14 @@ header{
     border-bottom: 1px solid #ccc;
 }
 /*Modal Mensagem*/
+#mensagem, #mensagem2{
+    color: #000;
+}
 #mensagem .modal-footer, #abrirMensagem .modal-footer{
     display: flex;
     justify-content: space-between;
+    
 }
-#table-mensagens td{
+#table-mensagens td, #table-notificacao td{
     cursor: pointer;
 }

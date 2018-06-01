@@ -505,6 +505,9 @@ class usuarios extends model {
         $sql->bindValue(":id", $id_user);
         $sql->execute();
         
+        //Insere Notificação de Cadastro para cada Usuário acima da Cadeia
+            $this->insertNotificacaoCadastro($id_dad, $id_user);
+        
         $sql = "SELECT * FROM convites WHERE convite = :convite";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":convite", $convite);
@@ -519,6 +522,32 @@ class usuarios extends model {
             $sql->execute();
         }
         return true;
+    }
+    
+    public function insertNotificacaoCadastro($dad, $identificador) {
+        $data = date("Y-m-d H:i:s");
+        $sql = "INSERT INTO notificacoes (id_user_para, data, tipo, identificador) VALUES (:id_user, :data, :tipo, :id)";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id_user", $dad);
+        $sql->bindValue(":data", $data);
+        $sql->bindValue(":tipo", 1);
+        $sql->bindValue(":id", $identificador);
+        $sql->execute();
+       
+        
+        //seelciona o pai deste usuario, se existe repete a função insertPontosTotal
+        $sql = "SELECT id_dad FROM user WHERE id = :id";
+        $sql = $this->db->prepare($sql);        
+        $sql->bindValue(":id", $dad);
+        $sql->execute();
+            
+            if($sql->rowCount() > 0) {
+                $id = $sql->fetch(PDO::FETCH_ASSOC);
+                if($id['id_dad'] <> 0){
+                    $this->insertNotificacaoCadastro($id['id_dad'], $identificador);
+                }
+            }
+       
     }
     
     //seleciona a arvore até a 5ª geração definida na global $config

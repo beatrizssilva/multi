@@ -49,6 +49,8 @@ class transacoes extends model {
             $this->insertPontosTotal($dad['id_dad'], $qtde);
             //Insere quantidade de pontos na tabela comissoes
             $this->insertPontosMes($dad['id_dad'], $qtde);
+            //Insere Notificação de Compra para cada Usuário acima da Cadeia
+            $this->insertNotificacaoCompra($dad['id_dad'], $id);
            
         }
         
@@ -72,6 +74,31 @@ class transacoes extends model {
         return $pedido;
     }
     
+    public function insertNotificacaoCompra($dad, $identificador) {
+        $data = date("Y-m-d H:i:s");
+        $sql = "INSERT INTO notificacoes (id_user_para, data, tipo, identificador) VALUES (:id_user, :data, :tipo, :id)";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id_user", $dad);
+        $sql->bindValue(":data", $data);
+        $sql->bindValue(":tipo", 2);
+        $sql->bindValue(":id", $identificador);
+        $sql->execute();
+       
+        
+        //seelciona o pai deste usuario, se existe repete a função insertPontosTotal
+        $sql = "SELECT id_dad FROM user WHERE id = :id";
+        $sql = $this->db->prepare($sql);        
+        $sql->bindValue(":id", $dad);
+        $sql->execute();
+            
+            if($sql->rowCount() > 0) {
+                $id = $sql->fetch(PDO::FETCH_ASSOC);
+                if($id['id_dad'] <> 0){
+                    $this->insertNotificacaoCompra($id['id_dad'], $identificador);
+                }
+            }
+       
+    }
       
     //Inserir pontos total no cadastro do usuario
     public function insertPontosTotal($id, $qt) {

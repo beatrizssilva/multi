@@ -145,10 +145,12 @@ foreach ($filhos as $usuario):     ?>
                     <p> </p>
                     <p id="id"></p>
                 </div>
+                  <input type="hidden" id="id_user" />
               </div>
           </div>
       </div>
       <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="mensagem()">Enviar Mensagem</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
         </div>
     </div>
@@ -191,11 +193,106 @@ foreach ($filhos as $usuario):     ?>
                     <p> </p>
                     <p id="data2"></p>
                 </div>
+                  <div class="afiliados-data">
+                    <strong>Cidade:</strong>
+                    <p> </p>
+                    <p id="cidade2"></p>
+                </div>
+                  <div class="afiliados-data">
+                    <strong>ID:</strong>
+                    <p> </p>
+                    <p id="id2"></p>
+                </div>
+                  <input type="hidden" id="id_user2" />
               </div>
           </div>
       </div>
       <div class="modal-footer">
+          <button type="button" class="btn btn-success" onclick="mensagem2()">Enviar Mensagem</button>
           <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+<!--Modal Abrir Mensagem-->
+<div class="modal fade" role='dialog' id='mensagem' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Mensagem</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label for="usr">Para <span id="msg_para"></span>:</label>
+            
+        </div>        
+          <div class="form-group">            
+            <textarea class="form-control" rows="5" id="mensagem" name="mensagem"></textarea>
+        </div>
+          <input type="hidden" name="de" id="de" value="<?php echo $_SESSION['multLogin'];?>"/>
+          <input type="hidden" name="id_para" id="id_para"/>
+      </div>
+          
+    
+        <div class="modal-footer" id="modalFooter">
+            <button type="button" class="btn btn-default" onclick="fecharMensagemAfiliados()">Fechar</button>
+         <button type="button" class="btn btn-success"  onclick="enviarMensagemAfiliados()">Enviar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<!--Modal Abrir Mensagem-->
+<div class="modal fade" role='dialog' id='mensagem2' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Mensagem</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+            <label for="usr">Para <span id="msg_para2"></span>:</label>
+            
+        </div>        
+          <div class="form-group">            
+            <textarea class="form-control" rows="5" id="mensagem2" name="mensagem2"></textarea>
+        </div>
+          <input type="hidden" name="de2" id="de2" value="<?php echo $_SESSION['multLogin'];?>"/>
+          <input type="hidden" name="id_para2" id="id_para2"/>
+      </div>
+          
+    
+        <div class="modal-footer" id="modalFooter">
+            <button type="button" class="btn btn-default" onclick="fecharMensagemAfiliados2()">Fechar</button>
+         <button type="button" class="btn btn-success"  onclick="enviarMensagemAfiliados2()">Enviar</button>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!--Modal Mensagem Enviada-->
+<div class="modal fade" role='dialog' id='mensagemEnviada' >
+<div class="modal-dialog">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notificação</h4>
+      </div>
+      <div class="modal-body">
+        <p>Mensagem Enviada com Sucesso</p>
+        <input type="hidden" name="idmsg" id="idmsg"/>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>          
         </div>
     </div>
 

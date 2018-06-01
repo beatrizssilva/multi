@@ -21,7 +21,10 @@ function excluirDependente(id){
          },
         success:function(){            
             $('#excluidoSucesso').modal('show');
-            window.setTimeout("location.href='"+BASE_URL+"painel/dados_dependentes'",3000); 
+            var url = document.URL;
+            var r = url.split("/");
+            r.reverse();             
+            window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",3000); 
          
         }
      });
@@ -62,7 +65,10 @@ function salvarDependente(){
          },
         success:function(){            
             $('#CadastroSucesso').modal('show');
-            window.setTimeout("location.href='"+BASE_URL+"painel/dados_dependentes'",3000); 
+            var url = document.URL;
+            var r = url.split("/");
+            r.reverse();             
+            window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",3000); 
          
         }
      });
@@ -115,6 +121,7 @@ function abrirModalPerfil(id) {
                 $("#nome").html(nome);
                 $("#data").html(data);
                 $(".foto-afiliados").html(foto);
+                document.getElementById('id_user').value = dados.id;
                 $('#vejaMais').modal('show'); 
                  
             }
@@ -135,14 +142,19 @@ function abrirModalPerfil2(id) {
                 var data = date[2]+"/"+date[1]+"/"+date[0];
                 
                 var nome = " "+dados.name;
+                var cidade = dados.dados.cidade;
+                var id_user = dados.identificador;
                 var email = dados.email;
                 var tel = dados.dados.telefone;
                 var foto = "<img src='"+BASE_URL+"assets/images/perfil/"+dados.dados.foto_perfil+"' />";
                 $("#email2").html(email);
                 $("#tel2").html(tel);
+                $("#cidade2").html(cidade);
+                $("#id2").html(id_user);
                 $("#nome2").html(nome);
                 $("#data2").html(data);
                 $(".foto-afiliados2").html(foto);
+                document.getElementById('id_user2').value = dados.id;
                 $('#vejaMais2').modal('show'); 
                  
             }
@@ -206,7 +218,10 @@ function enviarConvite(){
                
                 if (res === '1') {
                     $('#conviteSucesso').modal('show');
-                    window.setTimeout("location.href='"+BASE_URL+"painel/convidar'",3000); 
+                    var url = document.URL;
+                    var r = url.split("/");
+                    r.reverse();             
+                    window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",3000); 
                 } 
             }
         });
@@ -223,7 +238,10 @@ function excluirConvite(convite){
         success:function() {             
 
                 $('#excluidoSucesso').modal('show');
-                window.setTimeout("location.href='"+BASE_URL+"painel/convidar'",3000); 
+                var url = document.URL;
+                var r = url.split("/");
+                r.reverse();             
+                window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",3000); 
 
         }
     });
@@ -351,7 +369,10 @@ function meu_callback_comprar(conteudo) {
                 success:function() {
                    
                     $('#enderecoSucesso').modal('show');
-                    window.setTimeout("location.href='"+BASE_URL+"painel/nova_compra'",2000); 
+                    var url = document.URL;
+                    var r = url.split("/");
+                    r.reverse();             
+                    window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",2000); 
                 },error:function(){
                     alert('Erro');
                 }
@@ -444,7 +465,10 @@ function meu_callback2_comprar(conteudo) {
                 success:function() {
                    
                     $('#enderecoSucesso').modal('show');
-                    window.setTimeout("location.href='"+BASE_URL+"painel/dados_enderecos'",3000); 
+                    var url = document.URL;
+                    var r = url.split("/");
+                    r.reverse();             
+                    window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",3000); 
                 },error:function(){
                     alert('Erro');
                 }
@@ -623,7 +647,10 @@ $(function(){
                         },
                         success:function() {
                             $('#dadosSucesso').modal('show');
-                            window.setTimeout("location.href='"+BASE_URL+"painel/dados_pessoais'",3000); 
+                            var url = document.URL;
+                            var r = url.split("/");
+                            r.reverse();             
+                            window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",3000); 
                         }
                     });
                 } else {
@@ -642,7 +669,10 @@ $(function(){
                                     },
                                     success:function() {
                                         $('#dadosSucesso').modal('show');
-                                        window.setTimeout("location.href='"+BASE_URL+"painel/dados_pessoais'",3000); 
+                                        var url = document.URL;
+                                        var r = url.split("/");
+                                        r.reverse();             
+                                        window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",3000); 
                                     }
                                 });
                             }
@@ -668,7 +698,10 @@ $(function(){
                         },
                         success:function() {
                             $('#dadosSucesso').modal('show');
-                            window.setTimeout("location.href='"+BASE_URL+"painel/dados_pessoais'",3000); 
+                            var url = document.URL;
+                            var r = url.split("/");
+                            r.reverse();             
+                            window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",3000); 
                         }
                     });
                 } else {
@@ -687,7 +720,10 @@ $(function(){
                                     },
                                     success:function() {
                                         $('#dadosSucesso').modal('show');
-                                        window.setTimeout("location.href='"+BASE_URL+"painel/dados_pessoais'",3000); 
+                                        var url = document.URL;
+                                        var r = url.split("/");
+                                        r.reverse();             
+                                        window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",3000); 
                                     }
                                 });
                             }
@@ -717,15 +753,16 @@ $(function(){
                         dataType:'json',
                         success:function(res) {
                             var html = ' ';
-                            var x;
-                            for (x in res) {
-                                var date = res[x].data.split(" ");
-                                var data = date[0].split("-");
-                                var autor = res[x].autor.split(" ");
-                                html += '<li><a href="'+BASE_URL+'painel/mensagens"><i class="fas fa-envelope"></i><span>'+data[2]+'/'+data[1]+'/'+data[0]+'</span>\n\
-                                <p>Você Recebeu uma Mensagem de '+autor[0]+'.</p></a></li>';
-                                $(".msg-info").html(html);
-                            }
+                                var x;
+                                for (x in res) {
+                                    var date = res[x].data.split(" ");
+                                    var data = date[0].split("-");
+                                    var autor = res[x].autor.split(" ");
+                                    html += '<li><a href="'+BASE_URL+'painel/mensagens"><i class="fas fa-envelope"></i><span>'+data[2]+'/'+data[1]+'/'+data[0]+'</span>\n\
+                                    <p>Você Recebeu uma Mensagem de '+autor[0]+'.</p></a></li>';
+                                    $(".msg-info").html(html);
+                                }
+                           
                         }
                     });
                 } else {			
@@ -741,6 +778,28 @@ $(function(){
 
                 if(json > 0) {
                     $('.notificacoes-qt').html(json);
+                    $.ajax({
+                        url:BASE_URL+"painel/setNotificacoes/",
+                        type:'POST',                           
+                        dataType:'json',
+                        success:function(res) {
+                            var html = ' ';
+                                var x;
+                                for (x in res) {
+                                    var date = res[x].data.split(" ");
+                                    var data = date[0].split("-"); 
+                                    if(res[x].tipo === '1'){
+                                        html += '<li><a href="'+BASE_URL+'painel/notificacoes"><i class="fas fa-user-plus"></i><span>'+data[2]+'/'+data[1]+'/'+data[0]+'</span>\n\
+                                        <p>'+res[x].nome_tipo+' em Sua Rede.</p></a></li>';
+                                        $(".not-info").html(html);
+                                    } else if(res[x].tipo === '2'){
+                                        html += '<li><a href="'+BASE_URL+'painel/notificacoes"><i class="fas fa-cart-plus"></i><span>'+data[2]+'/'+data[1]+'/'+data[0]+'</span>\n\
+                                        <p>'+res[x].nome_tipo+' em Sua Rede.</p></a></li>';
+                                        $(".not-info").html(html);                                    
+                                    }
+                                }                           
+                        }
+                    });
                 } else {			
                     $('.notificacoes-qt').html('0');
                 }
@@ -764,6 +823,101 @@ $(function(){
 //	});
         });
    
+function mensagem(){
+    var id = $('input[id=id_user]').val();
+        $.ajax({
+             url:BASE_URL+"usuarios/setDadosUsuario",
+             type:'POST',
+             data:{  
+                 id:id
+             },
+             dataType:'json',
+             success:function(res) {
+                 var nome = res.name;
+                 $("#msg_para").html(nome);  
+                 document.getElementById('id_para').value = res.id; 
+                 $('#mensagem').modal('show');
+             }, error:function(){
+                 alert("erro");
+             }
+         });
+    
+}
+function fecharMensagemAfiliados(){
+    $('#mensagem').modal('hide');
+    $('#vejaMais').modal('hide');
+    var url = document.URL;
+    var r = url.split("/");
+    r.reverse();             
+    window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",1000);
+}
+function enviarMensagemAfiliados(){
+    var id_de = $('input[name=de]').val();
+    var id_para = $('input[name=id_para]').val();
+    var msg = $('textarea[name=mensagem]').val();
+    $.ajax({
+        url:BASE_URL+"painel/addMensagem",
+        type:'POST',
+        data:{  
+            id_de:id_de,
+            id_para:id_para,
+            msg:msg
+        },
+        success:function() {
+            $('#mensagemEnviada').modal('show');            
+            var url = document.URL;
+            var r = url.split("/");
+            r.reverse();             
+            window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",2000); 
+        }
+    });
+}
+function mensagem2(){
+    var id = $('input[id=id_user2]').val();
+        $.ajax({
+             url:BASE_URL+"usuarios/setDadosUsuario",
+             type:'POST',
+             data:{  
+                 id:id
+             },
+             dataType:'json',
+             success:function(res) {
+                 var nome = res.name;
+                 $("#msg_para2").html(nome);  
+                 document.getElementById('id_para2').value = res.id; 
+                 $('#mensagem2').modal('show');
+             }, error:function(){
+                 alert("erro");
+             }
+         });
+    
+}
+function fecharMensagemAfiliados2(){
+    $('#mensagem2').modal('hide');
+    $('#vejaMais2').modal('hide');
+    window.setTimeout("location.href='"+BASE_URL+"painel/afiliados'",1000); 
+}
+function enviarMensagemAfiliados2(){
+    var id_de = $('input[name=de2]').val();
+    var id_para = $('input[name=id_para2]').val();
+    var msg = $('textarea[name=mensagem2]').val();
+    $.ajax({
+        url:BASE_URL+"painel/addMensagem",
+        type:'POST',
+        data:{  
+            id_de:id_de,
+            id_para:id_para,
+            msg:msg
+        },
+        success:function() {
+            $('#mensagemEnviada').modal('show');
+            var url = document.URL;
+            var r = url.split("/");
+            r.reverse();             
+            window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",2000); 
+        }
+    });
+}
 function responderMensagem(id, de){   
     
     $.ajax({
@@ -799,10 +953,14 @@ function enviarMensagem(){
         },
         success:function() {
             $('#mensagemEnviada').modal('hide');
-            window.setTimeout("location.href='"+BASE_URL+"painel/mensagens'",1000); 
+            var url = document.URL;
+            var r = url.split("/");
+            r.reverse();             
+            window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",1000);
         }
     });
 }
+
 function abrirMsg(id){
     $.ajax({
         url:BASE_URL+"painel/abrirMensagem",
@@ -843,7 +1001,10 @@ function abrirMsgEnviada(id){
 }
 function fecharMensagem(){
     $('#abrirMensagem').modal('hide');
-    window.setTimeout("location.href='"+BASE_URL+"painel/mensagens'",1000); 
+    var url = document.URL;
+    var r = url.split("/");
+    r.reverse();             
+    window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",1000); 
 }
 function excluirMensagemRecebida(id){   
     
@@ -861,7 +1022,10 @@ function dellMensagemRecebida(){
         },
         success:function() {
             $('#excluirMensagem').modal('hide');
-            window.setTimeout("location.href='"+BASE_URL+"painel/mensagens'",1000); 
+            var url = document.URL;
+            var r = url.split("/");
+            r.reverse();             
+            window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",1000);
         }
     });
 }
@@ -881,7 +1045,75 @@ function dellMensagemEnviada(){
         },
         success:function() {
             $('#excluirMensagemEnviada').modal('hide');
-            window.setTimeout("location.href='"+BASE_URL+"painel/mensagens'",1000); 
+            var url = document.URL;
+            var r = url.split("/");
+            r.reverse();             
+            window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",1000);
         }
     });
+}
+function excluirNotificacao(id){   
+    
+    document.getElementById('idnot').value = id;   
+    $('#excluirNotificacao').modal('show');
+}
+function dellNotificacao(){   
+    var id = $('input[name=idnot]').val();
+    
+    $.ajax({
+        url:BASE_URL+"painel/apagarNotificacao",
+        type:'POST',
+        data:{  
+            id:id                    
+        },
+        success:function() {
+            $('#excluirNotificacao').modal('hide');
+            var url = document.URL;
+            var r = url.split("/");
+            r.reverse();             
+            window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",1000);
+        }
+    });
+}
+function abrirNotificacao(id){
+  
+    $.ajax({
+        url:BASE_URL+"painel/abrirNotificacao",
+        type:'POST',
+        data:{  
+            id:id            
+        },
+        dataType:'json',
+        success:function(dados) {
+           
+            var date3 = dados.compra.data.split(" "); 
+
+            var date = date3[0].split("-");                
+            var data = date[2]+"/"+date[1]+"/"+date[0];
+
+            var nome = " "+dados.name;
+            var cidade = dados.dados.cidade;
+            var id_user = dados.identificador;
+            var email = dados.email;
+            var tel = dados.dados.telefone;
+            var foto = "<img src='"+BASE_URL+"assets/images/perfil/"+dados.dados.foto_perfil+"' />";
+            $("#email").html(email);
+            $("#tel").html(tel);
+            $("#cidade").html(cidade);
+            $("#id").html(id_user);
+            $("#nome").html(nome);
+            $("#data").html(data);
+            $(".foto-afiliados").html(foto);
+            document.getElementById('id_user').value = dados.id;
+            $('#abrirNotificacao').modal('show'); 
+
+        }, error:function(){alert("ERRO");}
+    });
+}
+function fecharNotificacao(){    
+    $('#abrirNotificacao').modal('hide');
+    var url = document.URL;
+    var r = url.split("/");
+    r.reverse();             
+    window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",1000);
 }

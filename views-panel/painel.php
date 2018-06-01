@@ -178,7 +178,8 @@
                         $patent = $dados['dados'][$p];
                         $np = $patent*33;
                         if ($np>100){$np=100;}
-                        $c = ($premios['pontos']*100)/$pontos;
+                        if(isset($premios['pontos']) && !empty($premios['pontos'])){
+                        $c = ($premios['pontos']*100)/$pontos;} else {$c=0; $premios['pontos'] = 0;}
                         if ($c>100){$c=100;}
                         ?>
                         <span>Necessário 1 Afiliado Ativo da 1ª Geração</span>

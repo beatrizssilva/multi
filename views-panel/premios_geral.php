@@ -3,8 +3,35 @@ if(isset($premios['ativos']) && $premios['ativos'] > 0) {$ativos = $premios['ati
 if(isset($premios['indicados']) && $premios['indicados'] > 0) {$indicados = $premios['indicados']*8;}  else { $indicados = 0;}
 if(isset($dadosUser['patent']) && $dadosUser['patent'] > 1) {$lideranca = $premios['com_lider'];}  else { $lideranca = 0;}
 $bruto = $lideranca+$indicados+$ativos;
-if(isset($premios['inss']) && $premios['inss'] > 0) {$inss = $premios['inss']*8;}  else { $inss = 0;}
-if(isset($premios['ir']) && $premios['ir'] > 0) {$ir = $premios['ir']*8;}  else { $ir = 0;}
+
+switch ($bruto){
+    case $bruto > 0  && $bruto <= 1903.98:
+        $ir = 0;
+        break;;
+    case $bruto >= 1903.99 && $bruto <= 2826.65:
+        $ir = ($bruto*7.5)/100;
+        break;
+    case $bruto >= 2826.66 && $bruto <= 3751.05:
+        $ir = ($bruto*15)/100;
+        break;
+    case $bruto >= 3751.06 && $bruto <= 4664.68:
+        $ir = ($bruto*22.5)/100;
+        break;
+    case $bruto >= 4664.68:
+        $ir = ($bruto*27.5)/100;
+        break;
+}
+switch ($bruto){
+    case $bruto > 0  && $bruto <= 1693.72:
+        $inss = ($bruto*8)/100;
+        break;;
+    case $bruto >= 1693.73 && $bruto <= 2822.90:
+        $inss = ($bruto*9)/100;
+        break;
+    case $bruto >= 2822.91 && $bruto <= 5645.80:
+        $inss = ($bruto*11)/100;
+        break;    
+}
 $liquido = $bruto - $inss - $ir;
 ?>
 

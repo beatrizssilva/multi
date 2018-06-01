@@ -68,18 +68,9 @@
                                 </button>
                                 <ul class="dropdown-menu" id="links-dropdown">
                                     <div class="cabeca"><h3>Notificações</h3></div>
-                                    <li><a href="#">
-                                            <i class="fas fa-user-plus" style="color:#0000CD"></i>                                       
-                                        <p>Um Novo Cadastro Foi Realizado Em Sua Rede!</p>                                     
-                                    </a></li>
-                                    <li><a href="#">
-                                            <i class="fas fa-check" style="color:#006400"></i>
-                                        <p>Um Convite que Você Enviou, Foi Aceito!</p>
-                                    </a></li>
-                                    <li><a href="#">
-                                            <i class="fas fa-cart-plus"style="color:#DAA520"></i>
-                                        <p>Um Nova Compra Foi Realizado Em Sua Rede!</p>
-                                    </a></li>
+                                    <div class="not-info">
+                                    
+                                    </div>
                                 </ul>
                                 </div>
                         </div>                    
@@ -175,29 +166,7 @@
                     <h4 id="home"><a href="<?php echo BASE_URL;?>"><i class="fas fa-home"></i> Home</a></h4>
                     <hr>
                     <div class="panel-group colapse" id="accordion" role="tablist" aria-multiselectable="false">
-                        <div class="panel panel-default colapse">
-                          <div class="panel-heading" role="tab" id="headingOne">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                    <i class="fas fa-user"></i> Meus Dados
-                                </a>
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                    <i class="fas fa-angle-down"></i>
-                                </a>
-                            </h4>
-                          </div>
-                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                            <div class="panel-body" id="lista">
-                                <ul id="lista-menu">
-                                    <a href="<?php echo BASE_URL;?>painel/dados_pessoais"><li><i class="fas fa-minus-square"></i> Pessoais</li></a>
-                                    <a href="<?php echo BASE_URL;?>painel/dados_enderecos"><li><i class="fas fa-minus-square"></i> Endereço</li></a>
-                                    <a href="<?php echo BASE_URL;?>painel/dados_dependentes"><li><i class="fas fa-minus-square"></i> Dependentes</li></a>
-                                    <a href="<?php echo BASE_URL;?>painel/dados_bancarios"><li><i class="fas fa-minus-square"></i> Bancários</li></a>
-                                   
-                                </ul>
-                            </div>
-                          </div>
-                        </div><hr>
+                        
                         <div class="panel panel-default colapse">
                           <div class="panel-heading" role="tab" id="headingTwo">
                             <h4 class="panel-title">
@@ -236,6 +205,7 @@
                                     <a href="<?php echo BASE_URL;?>painel/afiliados"><li><i class="fas fa-minus-square"></i> Afiliados</li></a>
                                     <a href="<?php echo BASE_URL;?>painel/convidar"><li><i class="fas fa-minus-square"></i> Convidar</li></a>
                                     <a href="<?php echo BASE_URL;?>painel/mensagens"><li><i class="fas fa-minus-square"></i> Mensagens</li></a>
+                                    <a href="<?php echo BASE_URL;?>painel/notificacoes"><li><i class="fas fa-minus-square"></i> Notificações</li></a>
                                 </ul>
                             </div>
                           </div>
@@ -280,6 +250,29 @@
                                     <a href=""><li><i class="fas fa-minus-square"></i> Premiação</li></a>
                                     <a href=""><li><i class="fas fa-minus-square"></i> Compras</li></a>
                                 </ul> 
+                            </div>
+                          </div>
+                        </div><hr>
+                        <div class="panel panel-default colapse">
+                          <div class="panel-heading" role="tab" id="headingOne">
+                            <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    <i class="fas fa-user"></i> Meus Dados
+                                </a>
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    <i class="fas fa-angle-down"></i>
+                                </a>
+                            </h4>
+                          </div>
+                          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                            <div class="panel-body" id="lista">
+                                <ul id="lista-menu">
+                                    <a href="<?php echo BASE_URL;?>painel/dados_pessoais"><li><i class="fas fa-minus-square"></i> Pessoais</li></a>
+                                    <a href="<?php echo BASE_URL;?>painel/dados_enderecos"><li><i class="fas fa-minus-square"></i> Endereço</li></a>
+                                    <a href="<?php echo BASE_URL;?>painel/dados_dependentes"><li><i class="fas fa-minus-square"></i> Dependentes</li></a>
+                                    <a href="<?php echo BASE_URL;?>painel/dados_bancarios"><li><i class="fas fa-minus-square"></i> Bancários</li></a>
+                                   
+                                </ul>
                             </div>
                           </div>
                         </div>

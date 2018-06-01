@@ -2,7 +2,7 @@
 
 class testecontroller extends controller {
  
-    public function testeSQlite(){
+    public function testeSMS(){
         
         $dados = array();
         

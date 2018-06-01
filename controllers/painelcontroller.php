@@ -5,6 +5,52 @@ class painelcontroller extends controller {
     public function index() {
          
     }
+    public function notificacoes(){
+        $dados = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $u = new usuarios();
+            
+            $dados['notificacoes'] = $this->listNotificacoes();
+            $dados['premios'] = $u->getValorResgate($_SESSION['multLogin']);
+            $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
+            $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
+            $this->loadTemplatePanel('notificacoes', $dados);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+    
+    public function listNotificacoes() {
+        $array = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id = $_SESSION['multLogin'];
+            $array = $d->setNotificacao($id);
+        }
+        return $array;
+    }
+    
+    public function apagarNotificacao(){
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id = addslashes($_POST['id']);
+            $d->dellNotificacao($id);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+    
+     public function abrirNotificacao(){
+        $d = new dados();
+        
+        $id = addslashes($_POST['id']);
+        
+        if(!empty($id)) {
+            $array = $d->getDadosAfiliado($id);
+            echo json_encode($array);
+            exit();
+        }
+    }
     public function mensagens(){
         $dados = array();
         if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
@@ -79,6 +125,17 @@ class painelcontroller extends controller {
             $m = $d->mensagem($id);
         }
         echo json_encode($m);
+        exit;
+    }
+    
+    public function setNotificacoes() {
+        $dados = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $d = new dados();
+            $id = $_SESSION['multLogin'];
+            $n = $d->notificacoes($id);
+        }
+        echo json_encode($n);
         exit;
     }
 
