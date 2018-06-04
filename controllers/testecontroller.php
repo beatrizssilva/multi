@@ -2,11 +2,24 @@
 
 class testecontroller extends controller {
  
-    public function testeSMS(){
+    
+    public function testeWhatsJS() {
+        $dados = array();
+        
+            $d = new dados();
+            $id = $_SESSION['multLogin'];
+            $m = $d->whatsapp($id);
+       
+        echo json_encode($m);
+        exit;
+    }
+    public function teste(){
         
         $dados = array();
         
         $u = new usuarios();
+        
+        
             
         $dados['premios'] = $u->getValorResgate($_SESSION['multLogin']);
         $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);

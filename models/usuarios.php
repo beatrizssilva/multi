@@ -1,6 +1,20 @@
 <?php
 class usuarios extends model {
-    
+    public function Acompanhamento($id){
+        $array = array();
+        $mes = date('m');
+        $sql = "SELECT * FROM acompanhamento WHERE id_user = :id AND mes = :mes";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->bindValue(":mes", $mes);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0){
+            $array = $sql->fetch(PDO::FETCH_ASSOC);
+        }
+        return $array;
+    }
+
     public function getIpUser($ip, $id){
         $sql = "SELECT * FROM user WHERE ip = :ip AND id = :id";
         $sql = $this->db->prepare($sql);
@@ -110,7 +124,7 @@ class usuarios extends model {
 
                 
                 //Define o corpo do email
-                $mail->MsgHTML('<img src="'.BASE_URL.'/assets/images/logoEmail.png" alt=""/><br/><br/>'
+                $mail->MsgHTML('<img src="'.BASE_URL.'assets/images/logoEmail.png" alt=""/><br/><br/>'
                         . '<h3>Para Redefinir sua senha '
                         . '<h2 style="text-align:center"><strong>Clique '
                         . '<a href="'.BASE_URL.'usuarios/recuperar?pass='.$codigo.'">Aqui</a> '

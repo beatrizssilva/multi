@@ -1,6 +1,22 @@
 <?php
 class dados extends model {
     
+    public function whatsapp($id){
+        
+        $sql = "SELECT *, (select user.name from user where mensagens_recebidas.id_user_de = user.id)as autor "
+                . "FROM mensagens_recebidas WHERE id_user_para = :id AND lido = 0 ORDER BY data DESC LIMIT 5 ";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            $array = '';
+        }
+        return $array;
+    }
+    
     public function getDadosAfiliado($id){
         $array = array();
         $sql = "UPDATE notificacoes SET lido = 1 WHERE id = :id";

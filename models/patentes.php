@@ -32,7 +32,7 @@ class patentes extends model {
                 $linha = array();
     
     //['filhosAtivos']['ativos'] -> quantidade de filhos ativos na primeira camada
-     if($usuarios[$chave]['resultado']['filhosAtivos']['ativos'] >= 1){
+//     if($usuarios[$chave]['resultado']['filhosAtivos']['ativos'] >= 1){
                
         foreach ($usuarios[$chave]['resultado'] as $user){    
 
@@ -66,7 +66,7 @@ class patentes extends model {
                 $linha[$l]['DuploDiamante'] += $user['duploDiamante']; 
             }
             
-            if($user['ativo'] > 0){
+            if(isset($user['ativo']) && $user['ativo'] > 0){
                 switch ($user['patent']){
                     case '1':
                     $linha[$l]['pre'] += 1;
@@ -143,7 +143,7 @@ class patentes extends model {
             
                 $l++;
         }
-    } 
+//    } 
         $linhas = count($linha);    
 
         $qtdePre = 0;
@@ -153,10 +153,10 @@ class patentes extends model {
         $qtdeRubi = 0;
         $qtdeDiamante = 0;
         $qtdeDuploDiamante = 0;
-
+       
         for($q = 1; $q < $linhas; $q++){
             if($linha[$q]['pre'] >= 1){
-                $qtdePre += 1;
+                $qtdePre += 1; 
             }
             if($linha[$q]['bronze'] >= 1){
                 $qtdeBronze += 1;
@@ -210,12 +210,71 @@ class patentes extends model {
             $sql->bindValue(":id", $usuario['id']);
             $sql->execute();
             
+            $acompanhamento['pre'] = $qtdePre;
+            $acompanhamento['bronze'] = $qtdeBronze;
+            $acompanhamento['prata'] = $qtdePrata;
+            $acompanhamento['ouro'] = $qtdeOuro;
+            $acompanhamento['rubi'] = $qtdeRubi;
+            $acompanhamento['diamante'] = $qtdeDiamante;
+            $acompanhamento['duploDiamante'] = $qtdeDuploDiamante;
+            $acompanhamento['AtivosPrimeiraCamada'] = $usuarios[$chave]['resultado']['filhosAtivos']['ativos'];
+            $acompanhamento['pontos'] = $usuarios[$chave]['pontuacao'];
+            $this->acompanhamento($acompanhamento, $usuario['id']);
             }
         }
         
+        
+                        
         return $usuarios;
     }
-    
+        
+    public function acompanhamento($a, $id){
+        $sql = "SELECT * FROM acompanhamento WHERE id_user = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        $mes = date('m');
+        $ano = date('Y');
+
+        if($sql->rowCount() > 0) {            
+            $sql = "UPDATE acompanhamento SET ativos_primeira_camada = :ativos, qt_pre = :pre, qt_bronze = :bronze"
+                    . ", qt_prata = :prata, qt_ouro = :ouro, qt_rubi = :rubi, qt_diamante = :diamante, qt_duploDiamante = :duplo, "
+                    . "pontos = :pontos WHERE id_user = :id AND mes = :mes AND ano = :ano";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->bindValue(":ativos", $a['AtivosPrimeiraCamada']);
+            $sql->bindValue(":pre", $a['pre']);
+            $sql->bindValue(":bronze", $a['bronze']);
+            $sql->bindValue(":prata", $a['prata']);
+            $sql->bindValue(":ouro", $a['ouro']);
+            $sql->bindValue(":rubi", $a['rubi']);
+            $sql->bindValue(":diamante", $a['diamante']);
+            $sql->bindValue(":duplo", $a['duploDiamante']);
+            $sql->bindValue(":pontos", $a['pontos']);
+            $sql->bindValue(":mes", $mes);
+            $sql->bindValue(":ano", $ano);
+            $sql->execute();
+        } else {
+            $sql = "INSERT INTO acompanhamento (id_user, ativos_primeira_camada, qt_pre, qt_bronze, qt_prata, qt_ouro, qt_rubi"
+                    . ", qt_diamante, qt_duploDiamante, pontos, mes, ano) VALUES (:id, :ativos, :pre, :bronze, :prata, :ouro, "
+                    . ":rubi, :diamante, :duplo, :pontos, :mes, :ano)";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id", $id);
+            $sql->bindValue(":ativos", $a['AtivosPrimeiraCamada']);
+            $sql->bindValue(":pre", $a['pre']);
+            $sql->bindValue(":bronze", $a['bronze']);
+            $sql->bindValue(":prata", $a['prata']);
+            $sql->bindValue(":ouro", $a['ouro']);
+            $sql->bindValue(":rubi", $a['rubi']);
+            $sql->bindValue(":diamante", $a['diamante']);
+            $sql->bindValue(":duplo", $a['duploDiamante']);
+            $sql->bindValue(":pontos", $a['pontos']);
+            $sql->bindValue(":mes", $mes);
+            $sql->bindValue(":ano", $ano);
+            $sql->execute();  
+        }
+    }
+
     //atualiza as comissoes do usuario na tabela comissao
     public function getComissao(){
         $sql = "SELECT id FROM user ORDER BY id ASC";
@@ -379,9 +438,13 @@ class patentes extends model {
 
     //pega a quantidade de pontos do usuario
     public function getPontos($id){
-        $sql = "SELECT pontos FROM comissoes WHERE id_user = :id";
+        $mes = date('m');
+        $ano = date('Y');
+        $sql = "SELECT pontos FROM comissoes WHERE id_user = :id AND mes = :mes AND ano = :ano";
         $sql = $this->db->prepare($sql);
 	$sql->bindValue(":id", $id);
+        $sql->bindValue(":mes", $mes);
+        $sql->bindValue(":ano", $ano);
 	$sql->execute();
         $p = 0;
         if($sql->rowCount() > 0) {
@@ -558,12 +621,15 @@ class patentes extends model {
     }
     //função complementar da função cadeiaAtivos
     public function cadeiaComplementar($id){
-        $array = array();
-       
-        
-        $sql = "SELECT *, (select user.ativo from user where user.id = qualificados.id_user) as ativo FROM qualificados WHERE id_dad = :id_dad";
+        $array = array();       
+        $mes = date('m');
+        $ano = date('Y');
+        $sql = "SELECT *, (select user.ativo from user where user.id = qualificados.id_user) as ativo "
+                . "FROM qualificados WHERE id_dad = :id_dad AND mes = :mes AND ano = :ano";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id_dad", $id);
+        $sql->bindValue(":mes", $mes);
+        $sql->bindValue(":ano", $ano);
         $sql->execute();
         
         if($sql->rowCount() > 0) { 

@@ -1,4 +1,4 @@
-
+           
 <script src="<?php echo BASE_URL;?>assets/js/grafico.js" type="text/javascript"></script>
 <?php if ($dadosUser['ativo'] == 0):?>
 <div class="painel-inativo">
@@ -171,19 +171,19 @@
             <div class="acompanhamento-dados">
                 <div class="acompanhamento-afiliado">
                     <div class="ac-afiliado-info">
-                        <?php if($dados['dados']['F.Ativos'] > 0){ $f = 1;} else {$f = 0;}
+                        <?php if($dados['ativos_primeira_camada'] > 0){ $f = 1;} else {$f = 0;}
                         $nf = $f*100;
                         $b = 100-$nf;
                         
-                        $patent = $dados['dados'][$p];
-                        $np = $patent*33;
+                        $patent = $dados['qt_'.$p];
+                        $np = $patent*33.33;
                         if ($np>100){$np=100;}
                         if(isset($premios['pontos']) && !empty($premios['pontos'])){
                         $c = ($premios['pontos']*100)/$pontos;} else {$c=0; $premios['pontos'] = 0;}
                         if ($c>100){$c=100;}
                         ?>
                         <span>Necessário 1 Afiliado Ativo da 1ª Geração</span>
-                        <span><?php echo $dados['dados']['F.Ativos'];?> / 1</span>
+                        <span><?php echo $dados['ativos_primeira_camada'];?> / 1</span>
                     </div>
                     <div class="ac-afiliado-barras">
                         
@@ -200,13 +200,13 @@
                 <div class="acompanhamento-linhas">
                     <div class="ac-afiliado-info">
                         <span>Necessário 3 Linhas (<?php echo $l;?>) Diferentes Ativas </span>
-                        <span><?php echo $patent;?> / 3</span>
+                        <span><?php echo $dados['qt_'.$p];;?> / 3</span>
                     </div>
                     <div class="ac-afiliado-barras">
                         <div id="barraAfiliado" style="width: <?php echo $np;?>%"></div>
                         <div id="barraGeral2" style="width: <?php echo 100-$np;?>%"></div>
                         <span><?php
-                        if ($np >= 100){
+                        if ($np >= 99){
                             echo '<i class="fas fa-check-circle"></i>'; } else {
                             echo '<i class="far fa-circle"></i>';
                         } ?></span>
