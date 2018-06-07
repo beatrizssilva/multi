@@ -24,7 +24,7 @@ switch ($bruto){
 switch ($bruto){
     case $bruto > 0  && $bruto <= 1693.72:
         $inss = ($bruto*8)/100;
-        break;;
+        break;
     case $bruto >= 1693.73 && $bruto <= 2822.90:
         $inss = ($bruto*9)/100;
         break;
@@ -47,37 +47,37 @@ $liquido = $bruto - $inss - $ir;
         <tr>
             <td>Total Prêmio por Indicação:</td>
             <td><input type="text" class="form-control" id="credito" name="indicacao" 
-               value="<?php echo 'R$ '.number_format($indicados, 2, ',', '.');?>"></td>                    
+                       value="<?php echo 'R$ '.number_format($indicados, 2, ',', '.');?>" disabled="disabled"></td>                    
         </tr>
         <tr>
             <td>Total Prêmio por Ativação:</td>
             <td colspan="2"><input type="text" class="form-control" id="credito" name="ativacao" 
-                       value="<?php echo 'R$ '.number_format($ativos, 2, ',', '.');?>"></td>                    
+                       value="<?php echo 'R$ '.number_format($ativos, 2, ',', '.');?>" disabled="disabled"></td>                    
         </tr>
         <tr>
             <td>Total Prêmio de Liderança:</td>
             <td colspan="2"><input type="text" class="form-control" id="credito" name="lideranca" 
-                       value="<?php echo 'R$ '.number_format($lideranca, 2, ',', '.');?>"></td>                    
+                       value="<?php echo 'R$ '.number_format($lideranca, 2, ',', '.');?>" disabled="disabled"></td>                    
         </tr>
         <tr>
             <td>Total Bruto:</td>
             <td colspan="2"><input type="email" class="form-control" id="total" name="totalBruto" 
-                       value="<?php echo 'R$ '.number_format($bruto, 2, ',', '.');?>"></td>                    
+                       value="<?php echo 'R$ '.number_format($bruto, 2, ',', '.');?>" disabled="disabled"></td>                    
         </tr>
         <tr>
             <td>INSS:</td>
             <td colspan="2"><input type="text" class="form-control" id="debito" name="INSS" 
-                       value="<?php echo 'R$ '.number_format($inss, 2, ',', '.');?>"></td>                    
+                       value="<?php echo 'R$ '.number_format($inss, 2, ',', '.');?>" disabled="disabled"></td>                    
         </tr>
         <tr>
             <td>IR:</td>
             <td colspan="2"><input type="text" class="form-control" id="debito" name="IR" 
-                       value="<?php echo 'R$ '.number_format($ir, 2, ',', '.');?>"></td>                    
+                       value="<?php echo 'R$ '.number_format($ir, 2, ',', '.');?>" disabled="disabled"></td>                    
         </tr>
         <tr>
             <td>Total Líquido:</td>
             <td colspan="2"><input type="text" class="form-control" id="total" name="totalLiquido" 
-                       value="<?php echo 'R$ '.number_format($liquido, 2, ',', '.');?>"></td>                    
+                       value="<?php echo 'R$ '.number_format($liquido, 2, ',', '.');?>" disabled="disabled"></td>                    
         </tr>
     </tbody>
 </table>

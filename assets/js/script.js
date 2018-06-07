@@ -342,7 +342,14 @@ function login(){
             success:function(res) {
               
                 if (res === '1') {                    
-                    window.setTimeout("location.href='"+BASE_URL+"'"); 
+                    var url = document.URL;
+                    var r = url.split("/");
+                    r.reverse();         
+                    if(r[0] != ''){
+                    window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",1000);
+                    } else {
+                        window.setTimeout("location.href='"+BASE_URL+"'"); 
+                    }
                 } else if(res === '2') {                  
                     $('#contaCancelada').modal('show');
                     window.setTimeout("location.href='"+BASE_URL+"'",3000); 

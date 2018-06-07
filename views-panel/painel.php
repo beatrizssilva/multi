@@ -232,14 +232,14 @@
         </div>
     </div>
 </div>
-<div class="grafico">
+<!--<div class="grafico">
     <div class="grafico-titulo">
         <h3>Comparativo Indicados e Ativados Durante o Ano Vigente</h3>
     </div>
     <div class="grafico-canvas">
         <canvas id="grafico"></canvas>
     </div>
-</div>
+</div>-->
 <?php endif;?>
 <!--Modal Campos Obrigatórios-->
 <div class="modal fade" role='dialog' id='cancelarConta' >

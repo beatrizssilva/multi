@@ -746,14 +746,12 @@ header{
 .compraStatusValores{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
+    align-items: flex-end;
     font-size: 14px;
-    font-weight: bold;
-    width:100%;
+    font-weight: bold;   
 }
-.compraStatusValores span{
-    width:100%;
-}
+
 .compraStatusBarra{
     height: 5px;
     margin-bottom: 20px;
@@ -770,6 +768,8 @@ header{
     z-index: 999;
 }
 .compraStatusDados{
+    display: flex;
+    flex-direction: column;    
     width: 100%;
 }
 
@@ -872,4 +872,34 @@ header{
 }
 #table-mensagens td, #table-notificacao td{
     cursor: pointer;
+}
+/*CSS Modal Bancos*/
+.modalBancos{
+    display: none;
+    width: 400px;
+    height: auto;
+    margin-top: 40px;
+    margin-left: 180px;
+    position: absolute;
+    background: #FFF;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 999999;
+}
+#nomeBancos inpuy:disabled{
+    cursor: text;
+    background: none;
+}
+#credito, #total, #debito{
+    border:0;
+}
+#bancos li{
+    list-style: none;
+    padding-left: 5px
+}
+#banco1, #credito, #total, #debito{
+    background: none;
+}
+#banco1:hover, #credito:hover, #total:hover, #debito:hover{
+    cursor:text;
 }

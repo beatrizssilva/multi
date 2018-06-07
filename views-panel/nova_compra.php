@@ -2,11 +2,19 @@
 <h2>Nova Compra</h2><br>
 <?php 
 if(isset($premios['total']) && $premios['total'] > 0){
-if($premios['total'] > 220){
-    $premios['total'] = 220;
+if($premios['total'] > 220){ 
+    
+    $x = 220*100;
+    $n = $x/220;
+} else {
+    $x = $premios['total'];
+    $n = $x/220;
+} if ($n < 10){
+    $w = 10;
+} else {
+    $w = $n;
 }
-    $x = $premios['total'] *100;
-$n = $x/220;
+    
 //$n = $n1+1;
 if(!isset($dadosUser['data_ativacao']) && $dadosUser['data_ativacao'] <= 0){
     $v = 300-$premios['total'];
@@ -42,9 +50,9 @@ if(!isset($dadosUser['data_ativacao']) && $dadosUser['data_ativacao'] <= 0){
                 </div>
             </div>
             <div class="compraStatusDados">
-                <div class="compraStatusValores" style="width:95%">
+                <div class="compraStatusValores" style="width:<?php echo '10px'; ?>%; background:red">
                     <?php if(isset($premios['total']) && $premios['total'] > 0) :?>
-                    <span style="padding-left: <?php echo number_format($n, 0);?>%; padding-right:20px ">                        
+                    <span>
                         <?php echo 'R$ '.number_format($premios['total'], 2, ',', '.');?>
                         <?php else: $premios['total'] = 0;?>
                         <?php echo 'R$ '.number_format($premios['total'], 2, ',', '.');?>

@@ -16,13 +16,13 @@ class atualizarcontroller extends controller {
     }
     public function atualizarMes(){
         $u = new usuarios();
-        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin']) && $_SESSION['multLogin'] == 1){
+//        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin']) && $_SESSION['multLogin'] == 1){
             $u->resetMes();
             $u->resgate();
             header("Location: ".BASE_URL);
-        } else {
-            header("Location: ".BASE_URL);
-        }
+//        } else {
+//            header("Location: ".BASE_URL);
+//        }
     }
 
     public function resetar($id){

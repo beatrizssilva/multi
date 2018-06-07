@@ -259,6 +259,24 @@ class painelcontroller extends controller {
             $this->loadTemplateLogin('login', $dados);
         }
     }
+    
+    public function dados_bancarios(){
+        $dados = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $u = new usuarios();
+            $ip = $_SERVER['REMOTE_ADDR'];
+            if($u->getIpUser($ip, $_SESSION['multLogin'])){
+                unset($_SESSION['multLogin']);
+                header("Location: ".BASE_URL); 
+            }
+            $dados['dadosUser'] = $u->getDadosUser($_SESSION['multLogin']);
+            $dados['perfil'] = $u->getDadosAfiliados($_SESSION['multLogin']);
+            $dados['bancarios'] = $u->getDadosBancarios($_SESSION['multLogin']);
+            $this->loadTemplatePanel('dados_bancarios', $dados);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
    
     public function convidar(){
         $dados = array();

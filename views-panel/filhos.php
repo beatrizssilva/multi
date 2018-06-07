@@ -33,7 +33,7 @@ foreach ($filho as $usuario):
             <?php else: ?>
                 <li style="color:#008000">  
             <?php endif; ?>
-            <?php echo '<span id="linha-filhos"></span>'.$nome.' ('.$patent.')';?>
+            <?php echo '<span id="linha-filhos"></span>'.utf8_encode($nome).' ('.$patent.')';?>
                     <span class="abrir-sobre" id="afiliados-sobre" onclick="abrirModalPerfil2(<?php echo $usuario['id'];?>)" data-toggle="tooltip" data-placement="right" title="Veja Mais!"> 
                         <i class="fas fa-eye"></i></span> </li>           
         <?php

@@ -14,7 +14,7 @@ $cep =$n[0].$n[1].'.'.$n[2].$n[3].$n[4].'-'.$n[5].$n[6].$n[7];
             <div class="form-group col-md-10">
                 <label>Rua:</label>
                 <input type="text" class="form-control" id="rua" name="rua" 
-                       value="<?php echo (!empty($perfil['dados']['rua']))?$perfil['dados']['rua']:'';?>">
+                       value="<?php echo (!empty($perfil['dados']['rua']))?mb_convert_case($perfil['dados']['rua'], MB_CASE_TITLE, 'UTF-8'):'';?>">
             </div>
             <div class="form-group col-md-2">
                 <label>Numero:</label>
@@ -24,17 +24,17 @@ $cep =$n[0].$n[1].'.'.$n[2].$n[3].$n[4].'-'.$n[5].$n[6].$n[7];
             <div class="form-group col-md-7">
                 <label>Complemento:</label>
                 <input type="email" class="form-control" id="complemento" name="complemento" 
-                       value="<?php echo (!empty($perfil['dados']['complemento']))?$perfil['dados']['complemento']:'';?>">
+                       value="<?php echo (!empty($perfil['dados']['complemento']))?mb_convert_case($perfil['dados']['complemento'], MB_CASE_TITLE, 'UTF-8'):'';?>">
             </div>
             <div class="form-group col-md-5">
                 <label>Bairro:</label>
                 <input type="text" class="form-control" id="bairro" name="bairro"
-                       value="<?php echo (!empty($perfil['dados']['bairro']))?$perfil['dados']['bairro']:'';?>">
+                       value="<?php echo (!empty($perfil['dados']['bairro']))?mb_convert_case($perfil['dados']['bairro'], MB_CASE_TITLE, 'UTF-8'):'';?>">
             </div>            
             <div class="form-group col-md-5">
                 <label>Cidade:</label>
                 <input type="text" class="form-control" id="cidade" name="cidade"
-                       value="<?php echo (!empty($perfil['dados']['cidade']))?$perfil['dados']['cidade']:'';?>">
+                       value="<?php echo (!empty($perfil['dados']['cidade']))?mb_convert_case($perfil['dados']['cidade'], MB_CASE_TITLE, 'UTF-8'):'';?>">
             </div>
             <div class="form-group col-md-2">
                 <label>UF:</label>

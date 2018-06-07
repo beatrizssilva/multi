@@ -70,7 +70,7 @@ foreach ($filhos as $usuario):     ?>
                                     $patent = 'Duplo Diamante';
                                     break;
                             }
-                    echo '<span>'.$nome.' ('.$patent.')';?> </span> 
+                    echo '<span>'.utf8_encode($nome).' ('.$patent.')';?> </span> 
               </a>
                 <span class="abrir-sobre" id="afiliados-sobre" onclick="abrirModalPerfil(<?php echo $usuario['id'];?>)" data-toggle="tooltip" data-placement="right" title="Veja Mais!">
                     <i class="fas fa-eye"></i>

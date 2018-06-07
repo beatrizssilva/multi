@@ -8,6 +8,99 @@
 }(document, 'script', 'facebook-jssdk'));
 
 //Funções do Painel
+
+//Função Autocomplete Cadastro Conta Bancária
+$(function(){
+    $('#banco').on('keyup', function(){
+       var texto = $(this).val();
+       if (texto !== ''){
+           document.querySelector(".modalBancos").style.display = 'block';
+       $.ajax({
+            type:'POST',
+            url:BASE_URL+"usuarios/bancos",
+            data:{                
+                 texto:texto           
+             },
+             dataType:'json',
+            success:function(json){            
+                var html = '';
+                for(var i in json){
+                    html += '<li onclick="selecionarBanco('+"'"+json[i].banco+"'"+', '+json[i].id+')">'+json[i].banco+'</li>';
+                }
+                $('#bancos').html(html);
+            }
+         });
+     } else {
+         $('#bancos').html('');
+         document.querySelector(".modalBancos").style.display = 'none';
+     }
+    });
+});
+function selecionarBanco(banco, id){
+    document.getElementById('banco1').value = banco;
+    document.getElementById('id_banco').value = id;
+    document.getElementById('banco').value = '';
+    document.querySelector(".modalBancos").style.display = 'none';
+    $('#bancos').html('');
+}
+function novaConta(){    
+    document.getElementById('banco').value = '';
+    document.getElementById('id_banco').value = '';
+    document.querySelector(".modalBancos").style.display = 'none';
+    document.getElementById('banco1').value = '';
+    $('#bancos').html('');
+    $('#cadastrarConta').modal('show');
+}
+function salvarConta(){
+    var id_banco = $('input[name=id_banco]').val();
+    var agencia = $('input[name=agencia]').val();
+    var conta = $('input[name=conta]').val();
+    var digito = $('input[name=digito]').val();
+    var tipo = $('select[name=tipo]').val();
+   if(id_banco === '' || agencia === '' || conta === '' || digito === '' || tipo === ''){
+       $('#camposobrigatorios').modal('show');
+   } else {
+//       alert("ID: "+id_banco+" Agencia: "+agencia+" Conta: "+conta+" Digito: "+digito+" Tipo: "+tipo);
+//       exit;
+        $.ajax({
+            type:'POST',
+            url:BASE_URL+"usuarios/addContaBancaria",
+            data:{                
+                 id_banco:id_banco,
+                 agencia:agencia,
+                 conta:conta,
+                 digito:digito,
+                 tipo:tipo
+             },
+            success:function(){            
+                $('#CadastroSucesso').modal('show');
+                var url = document.URL;
+                var r = url.split("/");
+                r.reverse();             
+                window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",3000); 
+
+            }
+         });
+    }
+}
+function excluirContaBancaria(id){
+    $.ajax({
+        type:'POST',
+        url:BASE_URL+"usuarios/dellContaBancaria",
+        data:{                
+             id:id            
+         },
+        success:function(){            
+            $('#excluidoSucesso').modal('show');
+            var url = document.URL;
+            var r = url.split("/");
+            r.reverse();             
+            window.setTimeout("location.href='"+BASE_URL+r[1]+"/"+r[0]+"'",3000); 
+         
+        }
+     });
+}
+
 function novoDependente(){
     $('#cadastroDependente').modal('show');
 }

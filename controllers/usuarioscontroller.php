@@ -49,6 +49,43 @@ class usuarioscontroller extends controller {
     
     }
     
+    public function bancos(){
+        $u = new usuarios();
+        $array = array();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $texto = addslashes($_POST['texto']);
+            $array = $u->getBancos($texto);
+            echo json_encode($array);        
+        }
+    }
+
+    public function addContaBancaria(){
+        $u = new usuarios();
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $id_banco = addslashes($_POST['id_banco']);
+            $conta = addslashes($_POST['conta']);
+            $agencia = addslashes($_POST['agencia']);
+            $digito = addslashes($_POST['digito']);
+            $tipo = addslashes($_POST['tipo']);
+            $id_user = $_SESSION['multLogin'];
+            
+            $u->setContaBancaria($id_user, $id_banco, $agencia, $conta, $digito, $tipo);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+    public function dellContaBancaria() {
+        if(isset($_SESSION['multLogin']) && !empty($_SESSION['multLogin'])){
+            $u = new usuarios();
+            
+            $id = addslashes($_POST['id']);
+            
+            $u->apagarContaBancaria($id);
+        } else {
+            $this->loadTemplateLogin('login', $dados);
+        }
+    }
+
     public function setDadosUsuario(){
        $u = new usuarios();
         

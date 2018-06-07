@@ -13,7 +13,7 @@
 //ini_set("max_file_uploads", "50");
 //
 ini_set("memory_limit", "1024M");
-
+set_time_limit(120);
 session_start();
 
 require 'config.php';

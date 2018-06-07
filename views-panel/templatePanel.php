@@ -80,7 +80,7 @@
                                 <img src="<?php echo BASE_URL; ?>assets/images/perfil/<?php echo $viewData['perfil']['dados']['foto_perfil'];?>" class="img-circle" alt="Cinque Terre">
                                 <?PHP //echo (isset($viewData['qt_carrinho']))?$viewData['qt_carrinho']:'0';?>
                                 <span><?php 
-                                $nome1 = explode(' ', $viewData['dadosUser']['name']);
+                                $nome1 = explode(' ', utf8_encode($viewData['dadosUser']['name']));
                                 $nome = strtolower($nome1[0]);
                                 echo ucfirst($nome);?></span>
                             </a>
@@ -103,7 +103,7 @@
                         <img src="<?php echo BASE_URL; ?>assets/images/perfil/<?php echo $viewData['perfil']['dados']['foto_perfil'];?>" class="img-circle" alt="Cinque Terre">                        
                         <span id="edit_foto" onclick="edit_foto(<?php echo $viewData['dadosUser']['id'];?>)">Editar</span>
                         <span><?php 
-                        $nome1 = explode(' ', $viewData['dadosUser']['name']);
+                        $nome1 = explode(' ', utf8_encode($viewData['dadosUser']['name']));
                         $nome = strtolower($nome1[0]);
                         echo ucfirst($nome);?></span>                        
                     </div>
@@ -183,7 +183,7 @@
                                 <ul id="lista-menu">
                                     <a href="<?php echo BASE_URL;?>painel/nova_compra"><li><i class="fas fa-minus-square"></i> Nova</li></a>
                                     <a href=""><li><i class="fas fa-minus-square"></i> Efetuadas</li></a>
-                                    <a href=""><li><i class="fas fa-minus-square"></i> Canceladas</li></a>
+                                   
                                 </ul>
                             </div>
                           </div>
@@ -225,9 +225,7 @@
                               <div class="panel-body" id="lista">
                                 <ul id="lista-menu">
                                     <a href="<?php echo BASE_URL;?>painel/premios_geral"><li><i class="fas fa-minus-square"></i> Geral</li></a>
-                                    <a href=""><li><i class="fas fa-minus-square"></i> Indicação</li></a>
-                                    <a href=""><li><i class="fas fa-minus-square"></i> Ativação</li></a>
-                                    <a href=""><li><i class="fas fa-minus-square"></i> Liderança</li></a>
+                                    
                                 </ul>
                               </div>
                             </div>
@@ -236,7 +234,7 @@
                           <div class="panel-heading" role="tab" id="headingFive">
                             <h4 class="panel-title">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
-                                   <i class="fas fa-file-alt"></i> Relatórios
+                                   <i class="fas fa-file-alt"></i> Transações
                                 </a>
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree">
                                     <i class="fas fa-angle-down"></i>
@@ -246,9 +244,9 @@
                           <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
                             <div class="panel-body" id="lista">
                                 <ul id="lista-menu">
-                                    <a href=""><li><i class="fas fa-minus-square"></i> Geral</li></a>
-                                    <a href=""><li><i class="fas fa-minus-square"></i> Premiação</li></a>
-                                    <a href=""><li><i class="fas fa-minus-square"></i> Compras</li></a>
+                                    <a href=""><li><i class="fas fa-minus-square"></i> Extrato</li></a>
+                                    <a href=""><li><i class="fas fa-minus-square"></i> Resgate</li></a>
+                                    
                                 </ul> 
                             </div>
                           </div>

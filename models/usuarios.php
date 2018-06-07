@@ -168,8 +168,55 @@ class usuarios extends model {
         return $array;
     }
     
+    public function getDadosBancarios($id) {
+        $array = array();
+        
+        $sql = "SELECT *, (select bancos.banco from bancos where user_dados_bancarios.id_banco = bancos.id) as nome_banco,"
+                . " (select tipo_conta_bancaria.tipo from tipo_conta_bancaria where user_dados_bancarios.tipo = tipo_conta_bancaria.id)"
+                . " as nome_tipo FROM user_dados_bancarios WHERE id_user = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0){
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+        } 
+        return $array;
+    }
+    
+    public function getBancos($texto){
+        $array = array();
+        $sql = "SELECT * FROM bancos WHERE banco LIKE :texto";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":texto", '%'.$texto.'%');
+        $sql->execute();
+        
+        if($sql->rowCount() > 0){
+          $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+        } 
+        return $array;
+    }
+    public function setContaBancaria($id_user, $id_banco, $agencia, $conta, $digito, $tipo){
+        $sql = "INSERT INTO user_dados_bancarios (id_user, id_banco, ag, conta, digito, tipo)"
+                    . " values (:id_user, :id_banco, :agencia, :conta, :digito, :tipo)";
+            $sql = $this->db->prepare($sql);
+            $sql->bindValue(":id_user", $id_user);
+            $sql->bindValue(":id_banco", $id_banco);
+            $sql->bindValue(":agencia", $agencia);
+            $sql->bindValue(":conta", $conta);
+            $sql->bindValue(":digito", $digito);
+            $sql->bindValue(":tipo", $tipo);
+            $sql->execute();
+    }
+    
     public function apagarDependente($id){
         $sql = "DELETE FROM dependentes WHERE id = :id";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":id", $id);
+        $sql->execute();
+    }
+    public function apagarContaBancaria($id){
+        $sql = "DELETE FROM user_dados_bancarios WHERE id = :id";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id", $id);
         $sql->execute();
@@ -347,7 +394,147 @@ class usuarios extends model {
         $sql->bindValue(":ativo", 0);
         $sql->bindValue(":patent", 1);        
         $sql->execute();
+        
+        $ano = date('Y');
+        $mes = date('m')-1;
+        $sql = "SELECT * FROM ganhos WHERE mes = :mes AND ano = :ano";
+        $sql = $this->db->prepare($sql);
+        $sql->bindValue(":mes", $mes);
+        $sql->bindValue(":ano", $ano);        
+        $sql->execute();
 
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetchAll(PDO::FETCH_ASSOC);
+            if(isset($array) && !empty($array > 0)){
+                foreach ($array as $ganhos){
+                    $bruto = $ganhos['valor_total'];
+                    $ir = 0;
+                    $inss = 0;
+                    $liquido = 0;
+                    switch ($bruto){
+                    case $bruto > 0  && $bruto <= 1903.98:
+                        $ir = 0;
+                        break;;
+                    case $bruto >= 1903.99 && $bruto <= 2826.65:
+                        $ir = number_format(($bruto*7.5)/100, 2);
+                        break;
+                    case $bruto >= 2826.66 && $bruto <= 3751.05:
+                        $ir = number_format(($bruto*15)/100, 2);
+                        break;
+                    case $bruto >= 3751.06 && $bruto <= 4664.68:
+                        $ir = number_format(($bruto*22.5)/100, 2);
+                        break;
+                    case $bruto >= 4664.68:
+                        $ir = number_format(($bruto*27.5)/100, 2);
+                        break;
+                    }
+                    switch ($bruto){
+                        case $bruto > 0  && $bruto <= 1693.72:
+                            $inss = number_format(($bruto*8)/100, 2);
+                            break;
+                        case $bruto >= 1693.73 && $bruto <= 2822.90:
+                            $inss = number_format(($bruto*9)/100, 2);
+                            break;
+                        case $bruto >= 2822.91 && $bruto <= 5645.80:
+                            $inss = number_format(($bruto*11)/100, 2);
+                            break;    
+                    }
+                    $liquido = $bruto - $inss - $ir;
+                
+                    $sql = "UPDATE ganhos SET inss = :inss, ir = :ir, total_liquido = :liquido WHERE id =:id";
+                    $sql = $this->db->prepare($sql);
+                    $sql->bindValue(":id", $ganhos['id']);
+                    $sql->bindValue(":inss", $inss);
+                    $sql->bindValue(":ir", $ir);
+                    $sql->bindValue(":liquido", $liquido);
+                    $sql->execute();                    
+                }ob_start();
+                foreach ($array as $ganhos){
+                    //3 = Fixo
+                    //000001 = numero de cadastro
+                    //0007 = numero da contabilidade
+                    //0000000 = valor (tamanho 7 com 2 casas decimais)
+                    $cadastro = str_pad($ganhos['id_user'], 6, "0", STR_PAD_LEFT); 
+                    $t = number_format($ganhos['valor_total'], 2, '', ',');
+                    $t1 = str_replace('.', '', $t);
+                    $total = str_pad($t1, 7, "0", STR_PAD_LEFT); 
+                    echo '3' . $cadastro. '0007' . $total . "\r\n";
+                }
+                $html = ob_get_contents();
+                    ob_end_clean();
+                        $name = 'contabil/pagamentos/'.date('mY').'.txt';
+                        $fp = fopen($name, "a");
+                        $escreve = fwrite($fp, $html);
+                        fclose($fp);
+                        
+                //Inserir Nome do Arquivo no banco
+                $nome = date('mY').'.txt';
+                $tipo = 'pagamentos';
+                $ano = date('Y');
+                $mes = date('m')-1;
+                $sql = "INSERT INTO contabil (nome, tipo, mes, ano) VALUES (:nome, :tipo, :mes, :ano)";
+                $sql = $this->db->prepare($sql);
+                $sql->bindValue(":nome", $nome);
+                $sql->bindValue(":tipo", $tipo);
+                $sql->bindValue(":mes", $mes);
+                $sql->bindValue(":ano", $ano);        
+                $sql->execute();
+                        
+                // Inclui o arquivo class.phpmailer.php localizado na pasta class
+                require_once("class/class.phpmailer.php");
+
+                // Inicia a classe PHPMailer
+                $mail = new PHPMailer(true);
+
+                // Define os dados do servidor e tipo de conexão
+                // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                $mail->IsSMTP(); // Define que a mensagem será SMTP
+
+                try {
+                    $mail->Host = 'mail.laralimentos.com.br'; // Endereço do servidor SMTP (Autenticação, utilize o host smtp.seudomínio.com.br)
+                    $mail->SMTPAuth   = true;  // Usar autenticação SMTP (obrigatório para smtp.seudomínio.com.br)
+                    $mail->Port       = 587; //  Usar 587 porta SMTP
+                    $mail->Username = 'contato@laralimentos.com.br'; // Usuário do servidor SMTP (endereço de email)
+                    $mail->Password = 'Lar@357147'; // Senha do servidor SMTP (senha do email usado)
+
+                    //Define o remetente
+                    // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=    
+                    $mail->SetFrom('contato@laralimentos.com.br', 'Lar Alimentos'); //Seu e-mail
+                    $mail->AddReplyTo('contato@laralimentos.com.br', 'Lar Alimentos'); //Seu e-mail
+                    $mail->Subject = 'Arquivo Pagamentos de Terceiros';//Assunto do e-mail
+
+
+                    //Define os destinatário(s)
+                    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                    $mail->AddAddress('danielcandidocel@gmail.com', 'Inoveh');
+                    $mail->AddAddress('dp01@contexcontabilidade.com.br', 'Contabilidade');
+                    
+                    //Campos abaixo são opcionais 
+                    //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                    //$mail->AddCC('destinarario@dominio.com.br', 'Destinatario'); // Copia
+                    //$mail->AddBCC('destinatario_oculto@dominio.com.br', 'Destinatario2`'); // Cópia Oculta
+                    //$mail->AddAttachment('images/phpmailer.gif');      // Adicionar um anexo
+
+                    $name2 = ucfirst($name);
+                    //Define o corpo do email
+                    $mail->MsgHTML('<img src="'.BASE_URL.'/assets/images/logoEmail.png" alt=""/><br/><br/>'
+                    . '<h3>Foi Gerado um novo Arquivo de Importação dos Pagamentos de Terceiros - Lar Alimentos<br/><br/>'
+                    . '<h2 style="text-align:center"><strong>Clique '
+                    . '<a href="http://painel.laralimentos.com.br/contabilidade/arquivos">Aqui</a>');
+                    
+                   
+                    ////Caso queira colocar o conteudo de um arquivo utilize o método abaixo ao invés da mensagem no corpo do e-mail.
+//                    $mail->MsgHTML(file_get_contents('arquivo.html'));
+//                    $mail->AddAttachment(BASE_URL.'contabil/pagamentos');
+                    $mail->Send();
+        //            echo "Mensagem enviada com sucesso</p>\n";
+
+                   //caso apresente algum erro é apresentado abaixo com essa exceção.
+                   }catch (phpmailerException $e) {
+                     echo $e->errorMessage(); //Mensagem de erro costumizada do PHPMailer
+               }
+            }
+        }
         
     }
     public function resgate() {
@@ -372,7 +559,7 @@ class usuarios extends model {
                 
                 if($sql->rowCount() > 0) {
                     $resgate = $sql->fetch(PDO::FETCH_ASSOC);
-                    $total = $id['valor_total'] + $resgate['total'];
+                    $total = $id['total_liquido'] + $resgate['total'];
                     $sql = "UPDATE resgate SET total = :total WHERE id_user =:id";
                     $sql = $this->db->prepare($sql);
                     $sql->bindValue(":total", $total);
@@ -385,9 +572,9 @@ class usuarios extends model {
                             . " :valor_resgatado, :total)";
                     $sql = $this->db->prepare($sql);
                     $sql->bindValue(":id_user", $id['id_user']);
-                    $sql->bindValue(":valor_inicial", $id['valor_total']);
+                    $sql->bindValue(":valor_inicial", $id['total_liquido']);
                     $sql->bindValue(":valor_resgatado", 0);
-                    $sql->bindValue(":total", $id['valor_total']);
+                    $sql->bindValue(":total", $id['total_liquido']);
                     $sql->execute();
                 }
             }

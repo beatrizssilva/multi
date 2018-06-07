@@ -1,7 +1,21 @@
 <?php
 class dados extends model {
     
-    public function whatsapp($id){
+    public function contabil(){
+        $array = array();
+        $sql = "SELECT * FROM contabil";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetch();
+        }
+        
+        return $array;
+    }
+
+
+    /*  public function whatsapp($id){
         
         $sql = "SELECT *, (select user.name from user where mensagens_recebidas.id_user_de = user.id)as autor "
                 . "FROM mensagens_recebidas WHERE id_user_para = :id AND lido = 0 ORDER BY data DESC LIMIT 5 ";
@@ -15,7 +29,7 @@ class dados extends model {
             $array = '';
         }
         return $array;
-    }
+    }*/
     
     public function getDadosAfiliado($id){
         $array = array();

@@ -15,7 +15,7 @@ $nasc = $n[8].$n[9].'/'.$n[5].$n[6].'/'.$n[0].$n[1].$n[2].$n[3];
     <div class="dadosPessoais-form col-md-5">        
             <div class="form-group">
                 <label for="nome">Nome Completo:</label>
-                <input type="text" class="form-control" id="nome" name="nome" value="<?php echo ucfirst($dadosUser['name']);?>">
+                <input type="text" class="form-control" id="nome" name="nome" value="<?php echo mb_convert_case($dadosUser['name'], MB_CASE_TITLE, 'UTF-8');?>">
             </div>
             <div class="form-group">
                 <label for="cpf">CPF:*</label>
