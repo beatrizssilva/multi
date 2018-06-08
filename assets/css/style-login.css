@@ -36,7 +36,7 @@ header{
     width: 320px;
     border: 1px #ccc solid;
     padding: 26px 24px 36px;
-    background: #00FF00;
+    background: #fff;
     box-shadow: 0 1px 3px rgba(0,0,0,.13);
 }
 .cadastrar-form {    
