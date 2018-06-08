@@ -160,11 +160,10 @@ class comissao extends model {
         $mes = date('m');
         $ano = date('Y');  
         
-        $sql = "SELECT * FROM ganhos WHERE id_user = :id AND mes = :mes AND ano = :ano";
+        $sql = "SELECT * FROM ganhos WHERE id_user = :id";
         $sql = $this->db->prepare($sql);
         $sql->bindValue(":id", $id);
-        $sql->bindValue(":mes", $mes);
-        $sql->bindValue(":ano", $ano);
+        
         $sql->execute();
 
         if($sql->rowCount() > 0){

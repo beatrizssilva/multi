@@ -1,0 +1,255 @@
+Updatecheck<|||>3<|||>1
+DoUsageStatistics<|||>3<|||>1
+UpdatecheckLastrun<|||>1<|||>2018-06-05 09:34:05
+LastUsageStatisticCall<|||>1<|||>2018-05-25 20:47:41
+ColWidths_connform.ListSessions<|||>1<|||>163,50,50,50,50,50,53
+ColsVisible_connform.ListSessions<|||>1<|||>0
+ColPositions_connform.ListSessions<|||>1<|||>0,1,2,3,4,5,6
+ColSort_connform.ListSessions<|||>1<|||>0,0
+CoolBand0Index<|||>3<|||>0
+CoolBand0Break<|||>3<|||>1
+CoolBand0Width<|||>3<|||>1354
+CoolBand1Index<|||>3<|||>1
+CoolBand1Break<|||>3<|||>1
+CoolBand1Width<|||>3<|||>1354
+MainWinLeft<|||>3<|||>1366
+ColWidths_MainForm.ListDatabases<|||>1<|||>150,80,50,50,50,50,50,50,50,50,120
+ColsVisible_MainForm.ListDatabases<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10
+ColPositions_MainForm.ListDatabases<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10
+ColSort_MainForm.ListDatabases<|||>1<|||>0,0
+ColWidths_MainForm.ListVariables<|||>1<|||>160,200,275
+ColsVisible_MainForm.ListVariables<|||>1<|||>0,1,2
+ColPositions_MainForm.ListVariables<|||>1<|||>0,1,2
+ColSort_MainForm.ListVariables<|||>1<|||>0,0
+ColWidths_MainForm.ListStatus<|||>1<|||>160,275,100,100
+ColsVisible_MainForm.ListStatus<|||>1<|||>0,1,2,3
+ColPositions_MainForm.ListStatus<|||>1<|||>0,1,2,3
+ColSort_MainForm.ListStatus<|||>1<|||>0,0
+ColWidths_MainForm.ListProcesses<|||>1<|||>70,80,80,80,80,50,50,145
+ColsVisible_MainForm.ListProcesses<|||>1<|||>0,1,2,3,4,5,6,7
+ColPositions_MainForm.ListProcesses<|||>1<|||>0,1,2,3,4,5,6,7
+ColSort_MainForm.ListProcesses<|||>1<|||>0,1
+ColWidths_MainForm.ListCommandStats<|||>1<|||>120,100,100,100,215
+ColsVisible_MainForm.ListCommandStats<|||>1<|||>0,1,2,3,4
+ColPositions_MainForm.ListCommandStats<|||>1<|||>0,1,2,3,4
+ColSort_MainForm.ListCommandStats<|||>1<|||>1,1
+ColWidths_MainForm.ListTables<|||>1<|||>172,70,70,120,120,70,100,50,70,70,70,70,70,90,120,70,70,70,50
+ColsVisible_MainForm.ListTables<|||>1<|||>0,1,2,3,4,5,6,18
+ColPositions_MainForm.ListTables<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+ColSort_MainForm.ListTables<|||>1<|||>0,0
+LastSessions<|||>1<|||>localhost
+LastActiveSession<|||>1<|||>localhost
+FileDialogEncoding_MainForm<|||>3<|||>0
+DateTimeEditor_CursorPos_Type4<|||>3<|||>12
+ColWidths_frmTableEditor.listColumns<|||>1<|||>44,100,156,90,60,65,50,119,130,140,100,100
+ColsVisible_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
+ColPositions_frmTableEditor.listColumns<|||>1<|||>0,1,2,3,4,5,6,7,8,9,10,11
+ColSort_frmTableEditor.listColumns<|||>1<|||>-1,0
+ColWidths_frmTableEditor.treeIndexes<|||>1<|||>289,100,80
+ColsVisible_frmTableEditor.treeIndexes<|||>1<|||>0,1,2
+ColPositions_frmTableEditor.treeIndexes<|||>1<|||>0,1,2
+ColSort_frmTableEditor.treeIndexes<|||>1<|||>-1,0
+ColWidths_frmTableEditor.listForeignKeys<|||>1<|||>87,80,100,80,80,80
+ColsVisible_frmTableEditor.listForeignKeys<|||>1<|||>0,1,2,3,4,5
+ColPositions_frmTableEditor.listForeignKeys<|||>1<|||>0,1,2,3,4,5
+ColSort_frmTableEditor.listForeignKeys<|||>1<|||>-1,0
+MainWinMaximized<|||>3<|||>1
+ExportSQL_Filenames<|||>1<|||>C:\xampp\htdocs\multi\backup 07.06.18.sql<{{{><}}}>C:\xampp\htdocs\multi\tabelas_bancos.sql<{{{><}}}>C:\xampp\htdocs\multi\table_contabil.sql<{{{><}}}>C:\xampp\htdocs\multi\table_ganhos.sql<{{{><}}}>C:\xampp\htdocs\multi\backup servidor 04.06.18.sql<{{{><}}}>C:\xampp\htdocs\multi\table_acompanhamento.sql<{{{><}}}>C:\xampp\htdocs\multi\table_dependentes.sql<{{{><}}}>C:\xampp\htdocs\multi\table_not_msg.sql<{{{><}}}>C:\xampp\htdocs\multi\table_resgate.sql<{{{><}}}>C:\xampp\htdocs\multi\backup 11.05.18.sql<{{{><}}}>C:\xampp\htdocs\multi\backup 09.05.18.sql<{{{><}}}>C:\xampp\htdocs\multi\backup 02.05.18.sql<{{{><}}}>C:\xampp\htdocs\multi\backup 26.04.18.sql<{{{><}}}>
+MemoEditorWidth<|||>3<|||>136
+MainWinOnMonitor<|||>3<|||>1
+SQLHelp_WindowLeft<|||>3<|||>1366
+ExportSQL_CreateDatabases<|||>3<|||>0
+ExportSQL_CreateTables<|||>3<|||>1
+ExportSQL_DataHow<|||>3<|||>2
+ColWidths_UserManagerForm.listUsers<|||>1<|||>96,80
+ColsVisible_UserManagerForm.listUsers<|||>1<|||>0,1
+ColPositions_UserManagerForm.listUsers<|||>1<|||>0,1
+ColSort_UserManagerForm.listUsers<|||>1<|||>0,0
+GridExportOutputCopy<|||>3<|||>0
+GridExportOutputFile<|||>3<|||>1
+GridExportFilename<|||>1<|||>C:\xampp\htdocs\multi\cadastro_usuarios_lar.csv
+GridExportRecentFiles<|||>1<|||>C:\xampp\htdocs\multi\cadastro_usuarios_lar.csv
+GridExportEncoding<|||>3<|||>0
+FileDialogEncoding_loaddataform<|||>3<|||>0
+loadfilename<|||>1<|||>C:\xampp\htdocs\multi\cadastro_usuarios_lar.csv
+CSVImportDuplicateHandling<|||>3<|||>0
+FindDialogSearchHistory<|||>1<|||>1<{{{><}}}>
+SQLFile0<|||>1<|||>C:\xampp\htdocs\multi\tabelas_bancos.sql
+SQLFile1<|||>1<|||>C:\xampp\htdocs\multi\table_contabil.sql
+SQLFile2<|||>1<|||>C:\xampp\htdocs\multi\table_ganhos.sql
+SQLFile3<|||>1<|||>C:\xampp\htdocs\multi\table_acompanhamento.sql
+SQLFile4<|||>1<|||>C:\xampp\htdocs\multi\table_dependentes.sql
+SQLFile5<|||>1<|||>C:\xampp\htdocs\multi\table_not_msg.sql
+SQLFile6<|||>1<|||>C:\Users\danie\Desktop\projeto_notificacao.sql
+SQLFile7<|||>1<|||>C:\xampp\htdocs\multi\table_resgate.sql
+SQLFile8<|||>1<|||>C:\xampp\htdocs\multi\backup 11.05.18.sql
+SQLFile9<|||>1<|||>C:\xampp\htdocs\multi\backup 09.05.18.sql
+SQLFile10<|||>1<|||>C:\xampp\htdocs\inoveh\backup 28.02.18.sql
+SQLFile11<|||>1<|||>C:\xampp\htdocs\mercadoleo\backup DB 23.01.18.sql
+SQLFile12<|||>1<|||>C:\xampp\htdocs\multi\backup 18.04.18.sql
+SQLFile13<|||>1<|||>C:\xampp\htdocs\multi\backup 21.03.18.sql
+Servers\Eletrica Padrao\SessionCreated<|||>1<|||>2018-05-04 08:42:48
+Servers\Eletrica Padrao\Host<|||>1<|||>216.172.172.200
+Servers\Eletrica Padrao\WindowsAuth<|||>3<|||>0
+Servers\Eletrica Padrao\User<|||>1<|||>eletr350_caixa
+Servers\Eletrica Padrao\Password<|||>1<|||>6D746D7C7A716B6978696C7A6977488
+Servers\Eletrica Padrao\LoginPrompt<|||>3<|||>0
+Servers\Eletrica Padrao\Port<|||>1<|||>3306
+Servers\Eletrica Padrao\NetType<|||>3<|||>0
+Servers\Eletrica Padrao\Compressed<|||>3<|||>0
+Servers\Eletrica Padrao\LocalTimeZone<|||>3<|||>0
+Servers\Eletrica Padrao\QueryTimeout<|||>3<|||>0
+Servers\Eletrica Padrao\KeepAlive<|||>3<|||>0
+Servers\Eletrica Padrao\FullTableStatus<|||>3<|||>1
+Servers\Eletrica Padrao\Databases<|||>1<|||>
+Servers\Eletrica Padrao\Comment<|||>1<|||>
+Servers\Eletrica Padrao\StartupScriptFilename<|||>1<|||>
+Servers\Eletrica Padrao\SSHtunnelHost<|||>1<|||>
+Servers\Eletrica Padrao\SSHtunnelHostPort<|||>3<|||>0
+Servers\Eletrica Padrao\SSHtunnelUser<|||>1<|||>
+Servers\Eletrica Padrao\SSHtunnelPassword<|||>1<|||>3
+Servers\Eletrica Padrao\SSHtunnelTimeout<|||>3<|||>4
+Servers\Eletrica Padrao\SSHtunnelPrivateKey<|||>1<|||>
+Servers\Eletrica Padrao\SSHtunnelPort<|||>3<|||>3307
+Servers\Eletrica Padrao\SSL_Active<|||>3<|||>0
+Servers\Eletrica Padrao\SSL_Key<|||>1<|||>
+Servers\Eletrica Padrao\SSL_Cert<|||>1<|||>
+Servers\Eletrica Padrao\SSL_CA<|||>1<|||>
+Servers\Eletrica Padrao\SSL_Cipher<|||>1<|||>
+Servers\Eletrica Padrao\ServerVersionFull<|||>1<|||>5.5.51-38.2 - Percona Server (GPL), Release 38.2, Revision 727
+Servers\Eletrica Padrao\ConnectCount<|||>3<|||>2
+Servers\Eletrica Padrao\ServerVersion<|||>3<|||>50551
+Servers\Eletrica Padrao\LastConnect<|||>1<|||>2018-05-04 09:35:17
+Servers\Eletrica Padrao\lastUsedDB<|||>1<|||>eletr350_caixa
+Servers\Eletrica Padrao\eletr350_caixa|transacoes\Sort<|||>1<|||>1_data|
+Servers\Inoveh\SessionCreated<|||>1<|||>2018-05-05 15:28:49
+Servers\Inoveh\Host<|||>1<|||>bdhost0110.servidorwebfacil.com
+Servers\Inoveh\WindowsAuth<|||>3<|||>0
+Servers\Inoveh\User<|||>1<|||>inoveh1_webstore
+Servers\Inoveh\Password<|||>1<|||>4947373A3B3938376E73747B6A6D5
+Servers\Inoveh\LoginPrompt<|||>3<|||>0
+Servers\Inoveh\Port<|||>1<|||>3306
+Servers\Inoveh\NetType<|||>3<|||>0
+Servers\Inoveh\Compressed<|||>3<|||>0
+Servers\Inoveh\LocalTimeZone<|||>3<|||>0
+Servers\Inoveh\QueryTimeout<|||>3<|||>0
+Servers\Inoveh\KeepAlive<|||>3<|||>0
+Servers\Inoveh\FullTableStatus<|||>3<|||>1
+Servers\Inoveh\Databases<|||>1<|||>
+Servers\Inoveh\Comment<|||>1<|||>
+Servers\Inoveh\StartupScriptFilename<|||>1<|||>
+Servers\Inoveh\SSHtunnelHost<|||>1<|||>
+Servers\Inoveh\SSHtunnelHostPort<|||>3<|||>0
+Servers\Inoveh\SSHtunnelUser<|||>1<|||>
+Servers\Inoveh\SSHtunnelPassword<|||>1<|||>9
+Servers\Inoveh\SSHtunnelTimeout<|||>3<|||>4
+Servers\Inoveh\SSHtunnelPrivateKey<|||>1<|||>
+Servers\Inoveh\SSHtunnelPort<|||>3<|||>3307
+Servers\Inoveh\SSL_Active<|||>3<|||>0
+Servers\Inoveh\SSL_Key<|||>1<|||>
+Servers\Inoveh\SSL_Cert<|||>1<|||>
+Servers\Inoveh\SSL_CA<|||>1<|||>
+Servers\Inoveh\SSL_Cipher<|||>1<|||>
+Servers\Inoveh\ServerVersionFull<|||>1<|||>5.5.48-log - MySQL Community Server (GPL)
+Servers\Inoveh\ConnectCount<|||>3<|||>3
+Servers\Inoveh\ServerVersion<|||>3<|||>50548
+Servers\Inoveh\LastConnect<|||>1<|||>2018-05-07 08:25:25
+Servers\Inoveh\lastUsedDB<|||>1<|||>inoveh1_webstore
+Servers\Lar Alimentos\SessionCreated<|||>1<|||>2018-04-27 11:51:00
+Servers\Lar Alimentos\Host<|||>1<|||>191.252.143.229
+Servers\Lar Alimentos\WindowsAuth<|||>3<|||>0
+Servers\Lar Alimentos\User<|||>1<|||>laralime_all_use
+Servers\Lar Alimentos\Password<|||>1<|||>4E6374423537393336392
+Servers\Lar Alimentos\LoginPrompt<|||>3<|||>0
+Servers\Lar Alimentos\Port<|||>1<|||>3306
+Servers\Lar Alimentos\NetType<|||>3<|||>0
+Servers\Lar Alimentos\Compressed<|||>3<|||>0
+Servers\Lar Alimentos\LocalTimeZone<|||>3<|||>0
+Servers\Lar Alimentos\QueryTimeout<|||>3<|||>0
+Servers\Lar Alimentos\KeepAlive<|||>3<|||>0
+Servers\Lar Alimentos\FullTableStatus<|||>3<|||>1
+Servers\Lar Alimentos\Databases<|||>1<|||>
+Servers\Lar Alimentos\Comment<|||>1<|||>
+Servers\Lar Alimentos\StartupScriptFilename<|||>1<|||>
+Servers\Lar Alimentos\SSHtunnelHost<|||>1<|||>
+Servers\Lar Alimentos\SSHtunnelHostPort<|||>3<|||>0
+Servers\Lar Alimentos\SSHtunnelUser<|||>1<|||>
+Servers\Lar Alimentos\SSHtunnelPassword<|||>1<|||>7
+Servers\Lar Alimentos\SSHtunnelTimeout<|||>3<|||>4
+Servers\Lar Alimentos\SSHtunnelPrivateKey<|||>1<|||>
+Servers\Lar Alimentos\SSHtunnelPort<|||>3<|||>3307
+Servers\Lar Alimentos\SSL_Active<|||>3<|||>0
+Servers\Lar Alimentos\SSL_Key<|||>1<|||>
+Servers\Lar Alimentos\SSL_Cert<|||>1<|||>
+Servers\Lar Alimentos\SSL_CA<|||>1<|||>
+Servers\Lar Alimentos\SSL_Cipher<|||>1<|||>
+Servers\Lar Alimentos\ServerVersionFull<|||>1<|||>5.6.35-log - MySQL Community Server (GPL)
+Servers\Lar Alimentos\ConnectCount<|||>3<|||>44
+Servers\Lar Alimentos\ServerVersion<|||>3<|||>50635
+Servers\Lar Alimentos\LastConnect<|||>1<|||>2018-06-07 16:39:53
+Servers\Lar Alimentos\lastUsedDB<|||>1<|||>laralime_db_lar
+Servers\Lar Alimentos\RefusedCount<|||>3<|||>10
+Servers\Lar Alimentos\laralime_db_lar|transacoes\Sort<|||>1<|||>1_data|
+Servers\Lar Alimentos\QueryHistory\1<|||>1<|||>2018-05-11 17:04:40|laralime_db_lar|156|drop table convites;
+Servers\Lar Alimentos\QueryHistory\2<|||>1<|||>2018-05-15 17:04:38|laralime_db_lar|47|UPDATE user SET ativo = 0, patent = 1, pontos = 0, saldo = 0
+Servers\Lar Alimentos\QueryHistory\3<|||>1<|||>2018-05-17 14:23:59|laralime_db_lar|31|UPDATE user SET patent = 1, ativo = 0, saldo = 0
+Servers\Lar Alimentos\QueryHistory\4<|||>1<|||>2018-05-18 21:32:49|laralime_db_lar|31|UPDATE user SET data_ativacao = data_cadastro
+Servers\Lar Alimentos\QueryHistory\6<|||>1<|||>2018-05-21 16:43:27|laralime_db_lar|32|UPDATE user SET conta = 1
+Servers\Lar Alimentos\QueryHistory\5<|||>1<|||>2018-05-22 17:05:56|laralime_db_lar|62|UPDATE user SET email = id+"@uol.com.br" WHERE email = ''
+Servers\Lar Alimentos\QueryHistory\7<|||>1<|||>2018-05-22 17:06:43|laralime_db_lar|63|UPDATE user SET email = '' WHERE id <= 170
+Servers\Lar Alimentos\QueryHistory\8<|||>1<|||>2018-05-22 17:10:49|laralime_db_lar|16|UPDATE user SET email = id+@uol.com.br WHERE email = ''
+Servers\Lar Alimentos\QueryHistory\9<|||>1<|||>2018-05-22 17:17:26|laralime_db_lar|47|UPDATE user SET email = concat(id, '@uol.com.br') WHERE email = ''
+Servers\Lar Alimentos\QueryHistory\10<|||>1<|||>2018-05-22 17:24:01|laralime_db_lar|32|UPDATE user SET data_cadastro = 2018-05-21 WHERE id >=170
+Servers\Lar Alimentos\QueryHistory\11<|||>1<|||>2018-05-22 17:27:24|laralime_db_lar|203|create table user20180522 select * from user
+Servers\Lar Alimentos\QueryHistory\12<|||>1<|||>2018-05-22 17:28:38|laralime_db_lar|63|update user u set <{{{><}}}>u.data_cadastro = current_timestamp,<{{{><}}}>u.data_ativacao = current_timestamp
+Servers\Lar Alimentos\QueryHistory\13<|||>1<|||>2018-05-22 17:30:17|laralime_db_lar|32|update user u set u.data_ativacao = null where u.id >= 170
+Servers\Lar Alimentos\QueryHistory\14<|||>1<|||>2018-05-28 18:10:26|laralime_db_lar|31|SELECT * FROM transacoes WHERE id_user = 64
+Servers\Lar Alimentos\QueryHistory\15<|||>1<|||>2018-05-29 09:30:21|laralime_db_lar|16|SELECT * FROM transacoes WHERE id_user = 51<{{{><}}}>
+Servers\Lar Alimentos\QueryHistory\16<|||>1<|||>2018-05-29 09:30:43|laralime_db_lar|16|SELECT count(qtde) FROM transacoes WHERE id_user = 51<{{{><}}}>
+Servers\Lar Alimentos\QueryHistory\17<|||>1<|||>2018-05-29 10:22:21|laralime_db_lar|31|SELECT count(qtde) FROM transacoes WHERE id_user = 52<{{{><}}}>
+Servers\localhost\SessionCreated<|||>1<|||>2018-04-25 03:42:44
+Servers\localhost\Host<|||>1<|||>127.0.0.1
+Servers\localhost\WindowsAuth<|||>3<|||>0
+Servers\localhost\User<|||>1<|||>root
+Servers\localhost\Password<|||>1<|||>6
+Servers\localhost\LoginPrompt<|||>3<|||>0
+Servers\localhost\Port<|||>1<|||>3306
+Servers\localhost\NetType<|||>3<|||>0
+Servers\localhost\Compressed<|||>3<|||>0
+Servers\localhost\LocalTimeZone<|||>3<|||>0
+Servers\localhost\QueryTimeout<|||>3<|||>0
+Servers\localhost\KeepAlive<|||>3<|||>0
+Servers\localhost\FullTableStatus<|||>3<|||>1
+Servers\localhost\Databases<|||>1<|||>
+Servers\localhost\Comment<|||>1<|||>
+Servers\localhost\StartupScriptFilename<|||>1<|||>
+Servers\localhost\SSHtunnelHost<|||>1<|||>
+Servers\localhost\SSHtunnelHostPort<|||>3<|||>0
+Servers\localhost\SSHtunnelUser<|||>1<|||>
+Servers\localhost\SSHtunnelPassword<|||>1<|||>9
+Servers\localhost\SSHtunnelTimeout<|||>3<|||>4
+Servers\localhost\SSHtunnelPrivateKey<|||>1<|||>
+Servers\localhost\SSHtunnelPort<|||>3<|||>3307
+Servers\localhost\SSL_Active<|||>3<|||>0
+Servers\localhost\SSL_Key<|||>1<|||>
+Servers\localhost\SSL_Cert<|||>1<|||>
+Servers\localhost\SSL_CA<|||>1<|||>
+Servers\localhost\SSL_Cipher<|||>1<|||>
+Servers\localhost\ServerVersionFull<|||>1<|||>10.1.25-MariaDB - mariadb.org binary distribution
+Servers\localhost\ConnectCount<|||>3<|||>66
+Servers\localhost\ServerVersion<|||>3<|||>100125
+Servers\localhost\LastConnect<|||>1<|||>2018-06-08 11:41:18
+Servers\localhost\FavoriteObjects<|||>1<|||>
+Servers\localhost\lastUsedDB<|||>1<|||>multi
+Servers\localhost\multi|mensagens\Sort<|||>1<|||>1_data|
+Servers\localhost\multi|transacoes\Sort<|||>1<|||>1_data|
+Servers\localhost\multi|user\Sort<|||>1<|||>1_id|
+Servers\localhost\QueryHistory\1<|||>1<|||>2018-05-14 09:41:07|multi|156|UPDATE user SET ativo = 0 , patent = 1
+Servers\localhost\QueryHistory\2<|||>1<|||>2018-05-14 09:41:32|multi|62|UPDATE user SET ativo = 0 , patent = 1, pontos = 0
+Servers\localhost\QueryHistory\3<|||>1<|||>2018-05-18 17:56:29|multi|109|UPDATE user SET data_ativacao = data_cadastro WHERE id <> 42
+Servers\localhost\QueryHistory\4<|||>1<|||>2018-05-21 08:44:26|multi|63|UPDATE user SET conta = 1
+Servers\localhost\QueryHistory\5<|||>1<|||>2018-05-23 12:17:08|multi|15|SELECT SUM(qtde) as qtde FROM transacoes WHERE id_user = 1
+Servers\localhost\QueryHistory\6<|||>1<|||>2018-05-23 12:17:34|multi|0|SELECT SUM(qtde) as qtde FROM transacoes WHERE id_user = 1 AND MONTH(data) = 5
+Servers\localhost\QueryHistory\7<|||>1<|||>2018-05-24 12:17:57|multi|109|UPDATE mensagens SET lido = ''
+Servers\localhost\QueryHistory\8<|||>1<|||>2018-05-24 12:18:16|multi|94|UPDATE mensagens SET lido = null
+Servers\localhost\QueryHistory\9<|||>1<|||>2018-05-24 12:21:16|multi|47|UPDATE mensagens SET lido = 0
