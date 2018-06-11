@@ -20,3 +20,7 @@ header{
     justify-content: space-between;
     padding-right: 80px;
 }
+
+@media only screen and (max-width:800px) {
+    
+}
